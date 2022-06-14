@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receita Fácil Digital</title>
+
+    <link rel="stylesheet" href="css/libraries/icons.css">
+    <link rel="stylesheet" href="css/libraries/bootstrap.css">
+    <link rel="stylesheet" href="css/headerFooter.css">
+
+</head>
+
+<body>
+    <div class="container-fluid mb-4">
+        <header class="row">
+            <nav class="navbar navbar-expand-lg navbar-light col-md-12 d-flex justify-content-between align-items-center">
+                <div class="container-fluid">
+                    <a href="#" class="navbar-brand">
+                        <img src="/img/logo.png" alt="Logo Receita Fácil Digital">
+                    </a>
+                    <button class="navbar-toggler iconToggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse navbarHeader" id="navbarTogglerDemo02">
+                        <ul class="navbar-nav ">
+                            <li class="nav-item">
+                                <a href="#" class="menuText d-flex align-items-center">
+                                    <span class="material-icons-outlined icon">info</span>
+                                    O que é?
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="menuText d-flex align-items-center">
+                                    <span class="material-icons-outlined icon">thumb_up</span>
+                                    Benefícios
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="menuText d-flex align-items-center">
+                                    <span class="material-icons-outlined icon">help_outline</span>
+                                    Como funciona
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="menuText d-flex align-items-center">
+                                    <span class="material-icons-outlined icon">mail</span>
+                                    Fale conosco
+                                </a>
+                            </li>
+                            <li class="nav-item nav-itemLogin">
+                                <a href="#" class="menuText login d-flex align-items-center">
+                                    <span class="material-icons-outlined icon">account_circle</span>
+                                    Acesse Aqui
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+
+        <section>
+            <?= $this->content(); ?>
+        </section>
+
+
+        <footer class="footer">
+            <div class="row justify-content-center">
+                <div class="col-md-3 d-flex flex-column justify-content-center align-items-center support">
+                    <h1 class="">Apoio</h1>
+                    <a href="https://www.paranapanema.sp.gov.br" target="_blank" class="logoFooter">
+                        <img src="img/paranapanema.webp" alt="Prefeitura de Paranapanema">
+                    </a>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-9 d-flex flex-column justify-content-center align-items-center menuFooter">
+                    <hr>
+                    <nav>
+                        <ul class="navbarFooter">
+                            <li class="footerNavItem">
+                                <a href="#">Suporte</a>
+                            </li>
+                            <li class="footerNavItem">
+                                <a href="#">Termos de Uso</a>
+                            </li>
+                            <li class="footerNavItem">
+                                <a href="#">Fale Conosco</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-12 developer">
+                    <h1><a href="https://www.linkedin.com/in/joao-vitor-m-siqueira/" target="__blank">Desenvolvido por: <b>João Vitor Martins de Siqueira</b></a></h1>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+
+
+
+    <script src="js/libraries/jquery.js"></script>
+    <script src="js/libraries/bootstrap.js"></script>
+</body>
+
+</html>

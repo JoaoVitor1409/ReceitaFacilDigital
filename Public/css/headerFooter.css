@@ -1,0 +1,187 @@
+body *,
+.row *,
+.row {
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+a:hover {
+    color: #53585c;
+    transition: 0.2s;
+}
+
+li {
+    list-style: none;
+}
+
+
+/* HEADER */
+
+.login {
+    background-color: #B3E5FD;
+    padding: 10px;
+    border-radius: 34px;
+}
+
+.icon {
+    margin-right: 5px;
+}
+
+.navbar-nav {
+    align-items: center;
+}
+
+.navbarHeader {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.nav-item {
+    margin-left: 15px;
+}
+
+.navbar-brand img {
+    width: 70%;
+}
+
+/* HEADER END */
+
+
+
+/* FOOTER */
+
+.footer .row {
+    margin-top: 50px;
+}
+
+.support h1 {
+    font-size: 2.5em;
+}
+
+.support .logoFooter {
+    text-align: center;
+}
+
+.support .logoFooter img {
+    width: 100%;
+}
+
+.menuFooter hr {
+    border: 1px solid #aeb3b8;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.menuFooter nav {
+    width: 90%;
+}
+
+.menuFooter nav .navbarFooter{
+    display: flex;
+    justify-content: space-between;
+}
+
+.developer h1 {
+    text-align: center;
+}
+
+.developer h1 a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+/* FOOTER END */
+
+
+
+@media screen and (max-width: 991px) {
+
+    .navbarHeader {
+        display: block;
+    }
+
+
+    .navbar-brand {
+        align-items: end;
+        width: 50%;
+    }
+
+    .navbar-brand img {
+        width: 70%;
+    }
+
+    .nav-item {
+        margin-bottom: 15px;
+        margin-right: 15px;
+        border-bottom: 1px solid #aeb3b8;
+        width: 100%;
+        display: flex;
+        justify-content: end;
+    }
+
+    .nav-itemLogin {
+        border-bottom: 0;
+    }
+
+    .nav-item a {
+        margin-bottom: 5px;
+    }
+
+    .iconToggler {
+        font-size: 1.5em;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .support h1 {
+        font-size: 2em;
+    }
+
+    .support .logoFooter img {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .iconToggler {
+        font-size: 1em;
+    }
+
+    .menuFooter nav .navbarFooter{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footerNavItem{
+        margin-bottom: 15px;
+    }
+
+    .footerNavItem a{
+        font-size: .8em;
+    }
+
+    .developer h1{
+        font-size: .8em;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .menuText {
+        font-size: .8em;
+    }
+
+    .support h1 {
+        font-size: 1.5em;
+    }
+
+    .developer h1{
+        font-size: .65em;
+    }
+}
