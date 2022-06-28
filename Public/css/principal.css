@@ -1,0 +1,194 @@
+/* INTRODUCTION */
+
+.introduction header{
+    height: 60%;
+}
+
+.introduction h1 {
+    font-size: 1.8em;
+}
+
+.introduction a {
+    background-color: #236fc5;
+    color: #fff;
+    padding: 10px;
+    border-radius: 30px;
+    width: 40%;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.introduction .imgPrincipal img{
+    width: 100%;
+}
+
+/* INTRODUCTION END */
+
+/* WHAT IS */
+
+.whatIs{
+    margin-top: 5%;
+}
+
+.whatIs header{
+    text-align: center;
+}
+
+.whatIs h1{
+    font-size: 1.8em;
+}
+
+.whatIs p{
+    font-size: 1.1em;
+    margin-top: 3%;
+}
+
+/* WHAT IS END */
+
+/* ADVANTAGE */
+
+.advantage{
+    text-align: center;
+    background-color: #222743;
+    margin-top: -0.5px;
+}
+
+.advantage h1{
+    color: #fff;
+    font-size: 1.8em;
+}
+
+.advantage .cards{
+    margin: 5% 0;
+}
+
+.advantage .cards .cardAdvantage{
+    background-color: #fff;
+    width: 30%;
+    padding: 2%;
+    border-radius: 8%;
+    height: 400px;
+}
+
+.advantage .cards .cardAdvantage h1{
+    color: #000;
+    font-size: 1.5em;
+}
+
+.advantage .cards .cardAdvantage p{
+    margin: 6% 0;
+}
+
+.advantage .cards .cardAdvantage ul li{
+    text-align: start;
+    display: flex;
+    align-items: flex-start;
+    margin: 2% 0;
+}
+
+.advantage .cards .cardAdvantage ul span{
+    font-size: 1.5em;
+}
+
+/* ADVANTAGE END */
+
+/* WAVES */
+
+.wave{
+    margin-top: -5%;
+}
+
+/* WAVES END */
+
+/* HOWWORKS */
+
+.howWorks{
+    text-align: center;
+    margin: 3% 0;
+}
+
+.howWorks h1{
+    font-size: 1.8em;
+}
+
+.howWorks .video{
+    background-color: #000;
+    height: 250px;
+    margin: 4% 0;
+}
+
+.howWorks .video h1{
+    color: #fff;
+    font-size: 1.5em;    
+}
+
+/* HOWWORKS END */
+
+/* CONTACT */
+
+.contact{
+    text-align: center;
+    background-color: #222743;
+    margin-top: -7%;
+}
+
+.contact h1{
+    color: #fff;
+    font-size: 1.8em;
+}
+
+.contact p{
+    color: #fff;
+    margin: 3% 0;
+    font-size: 1.1em;
+    margin: 5% 0 8% 0;
+}
+
+.contact form{
+    margin-bottom: 7%;
+}
+
+.contact form > span{
+    color: #8E9398;
+    font-size: 1.5em;  
+    background-color: #fff;
+    padding: 1.2%;
+    border-radius: 60% 0 0 60%;
+    margin-right: -1px;
+}
+
+.contact form input{
+    padding: 1.2% 0;
+    border: none;
+    width: 45%;
+}
+
+.contact form input::placeholder{
+    color: #8E9398;
+}
+
+.contact form input:focus{
+    margin: none;
+    outline: 0;
+    box-shadow: 0;
+}
+
+.contact form button{
+    border: none;
+    border-radius: 0 60% 60% 0;
+    background-color: #fff;
+    margin-left: -1px;
+}
+
+.contact form button div{
+    border-radius: 60%;
+    background-color: #b3e5fd; 
+    padding: 8px;
+}
+
+.contact form button span{
+    font-size: 1.5em;  
+}
+
+/* CONTACT END */
