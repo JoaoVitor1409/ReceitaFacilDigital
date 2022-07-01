@@ -1,25 +1,42 @@
 /* INTRODUCTION */
 
-.introduction header{
+.introduction header {
     height: 60%;
 }
+
+.introduction>div {
+    display: flex;
+    justify-content: center;
+    margin-top: 4%;
+}
+
 
 .introduction h1 {
     font-size: 1.8em;
 }
 
-.introduction a {
+.introduction .btnLogin {
+    margin-top: 5%;
+}
+
+.introduction .btnLogin .btn {
     background-color: #236fc5;
     color: #fff;
-    padding: 10px;
+    padding: 2.5%;
     border-radius: 30px;
     width: 40%;
     text-align: center;
     font-size: 1.2em;
     font-weight: 500;
+    transition: 0.2s;
 }
 
-.introduction .imgPrincipal img{
+.introduction .btnLogin .btn:hover {
+    opacity: 85%;
+    transition: 0.5s;
+}
+
+.introduction .imgPrincipal img {
     width: 100%;
 }
 
@@ -27,19 +44,19 @@
 
 /* WHAT IS */
 
-.whatIs{
+#whatIs {
     margin-top: 5%;
 }
 
-.whatIs header{
+#whatIs header {
     text-align: center;
 }
 
-.whatIs h1{
+#whatIs h1 {
     font-size: 1.8em;
 }
 
-.whatIs p{
+#whatIs p {
     font-size: 1.1em;
     margin-top: 3%;
 }
@@ -48,46 +65,47 @@
 
 /* ADVANTAGE */
 
-.advantage{
+#advantage {
     text-align: center;
     background-color: #222743;
     margin-top: -0.5px;
+    padding-bottom: 1%;
 }
 
-.advantage h1{
+#advantage h1 {
     color: #fff;
     font-size: 1.8em;
 }
 
-.advantage .cards{
+#advantage .cards {
     margin: 5% 0;
 }
 
-.advantage .cards .cardAdvantage{
+#advantage .cards .cardAdvantage {
     background-color: #fff;
-    width: 30%;
-    padding: 2%;
-    border-radius: 8%;
-    height: 400px;
+    width: 85%;
+    padding: 4%;
+    border-radius: 4%;
+    text-align: center;
 }
 
-.advantage .cards .cardAdvantage h1{
+#advantage .cards .cardAdvantage h1 {
     color: #000;
     font-size: 1.5em;
 }
 
-.advantage .cards .cardAdvantage p{
+#advantage .cards .cardAdvantage p {
     margin: 6% 0;
 }
 
-.advantage .cards .cardAdvantage ul li{
+#advantage .cards .cardAdvantage ul li {
     text-align: start;
     display: flex;
     align-items: flex-start;
     margin: 2% 0;
 }
 
-.advantage .cards .cardAdvantage ul span{
+#advantage .cards .cardAdvantage ul span {
     font-size: 1.5em;
 }
 
@@ -95,7 +113,7 @@
 
 /* WAVES */
 
-.wave{
+.wave {
     margin-top: -5%;
 }
 
@@ -103,92 +121,337 @@
 
 /* HOWWORKS */
 
-.howWorks{
+#howWorks {
     text-align: center;
     margin: 3% 0;
 }
 
-.howWorks h1{
+#howWorks h1 {
     font-size: 1.8em;
 }
 
-.howWorks .video{
-    background-color: #000;
-    height: 250px;
+#howWorks .video-container {
     margin: 4% 0;
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
 }
 
-.howWorks .video h1{
-    color: #fff;
-    font-size: 1.5em;    
+#howWorks .video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 /* HOWWORKS END */
 
 /* CONTACT */
 
-.contact{
+#contact {
     text-align: center;
     background-color: #222743;
     margin-top: -7%;
 }
 
-.contact h1{
+#contact h1 {
     color: #fff;
     font-size: 1.8em;
 }
 
-.contact p{
+#contact p {
     color: #fff;
     margin: 3% 0;
     font-size: 1.1em;
     margin: 5% 0 8% 0;
 }
 
-.contact form{
+#contact form {
     margin-bottom: 7%;
 }
 
-.contact form > span{
+#contact form .mail {
     color: #8E9398;
-    font-size: 1.5em;  
+    font-size: 1.5em;
     background-color: #fff;
-    padding: 1.2%;
     border-radius: 60% 0 0 60%;
     margin-right: -1px;
-}
-
-.contact form input{
-    padding: 1.2% 0;
     border: none;
-    width: 45%;
+    padding: 1%;
 }
 
-.contact form input::placeholder{
+#contact form input {
+    padding: 1.2% 0 1.2% 1%;
+    border: none;
+    box-shadow: none;
+}
+
+#contact form input::placeholder {
     color: #8E9398;
 }
 
-.contact form input:focus{
+#contact form input:focus {
     margin: none;
     outline: 0;
     box-shadow: 0;
 }
 
-.contact form button{
+#contact form button {
     border: none;
     border-radius: 0 60% 60% 0;
     background-color: #fff;
     margin-left: -1px;
+    padding: 1%;
 }
 
-.contact form button div{
-    border-radius: 60%;
-    background-color: #b3e5fd; 
-    padding: 8px;
+#contact form button span {
+    font-size: 1.5em;
+    color: #8E9398;
 }
 
-.contact form button span{
-    font-size: 1.5em;  
+#contact form [type=submit]:not(:disabled) {
+    cursor: context-menu;
+}
+
+#contact form button span:hover {
+    color: #000;
+    transition: 0.2s;
+    cursor: pointer;
 }
 
 /* CONTACT END */
+
+/* RESPONSIBILITY */
+
+@media screen and (max-width: 1000px) {
+
+    .introduction h1,
+    #whatIs h1,
+    #advantage h1,
+    #howWorks h1,
+    #contact h1 {
+        font-size: 1.5em;
+    }
+
+    .introduction .btnLogin .btn {
+        font-size: 1.1em;
+    }
+
+    #whatIs p,
+    #contact p {
+        font-size: 1em;
+    }
+
+    #advantage .cards .cardAdvantage h1 {
+        font-size: 1.35em;
+    }
+
+    #advantage .cards .cardAdvantage p,
+    #advantage .cards .cardAdvantage ul li,
+    #contact form input {
+        font-size: 0.9em;
+    }
+}
+
+@media screen and (max-width: 830px) {
+
+    .introduction h1,
+    #whatIs h1,
+    #advantage h1,
+    #howWorks h1,
+    #contact h1 {
+        font-size: 1.3em;
+    }
+
+    .introduction .btnLogin .btn {
+        font-size: 1em;
+    }
+
+    #whatIs p,
+    #contact p {
+        font-size: 0.9em;
+    }
+
+    #advantage .cards .cardAdvantage h1 {
+        font-size: 1.1em;
+    }
+
+    #advantage .cards .cardAdvantage p,
+    #advantage .cards .cardAdvantage ul li,
+    #contact form input {
+        font-size: 0.8em;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .introduction header {
+        text-align: center;
+        width: 80%;
+    }
+
+    .introduction h1,
+    #whatIs h1,
+    #advantage h1,
+    #howWorks h1,
+    #contact h1 {
+        font-size: 1.5em;
+    }
+
+    .introduction .btnLogin {
+        margin-top: 4%;
+    }
+
+    .introduction .btnLogin .btn {
+        width: 35%;
+        padding: 2%;
+        font-size: 1.1em
+    }
+
+    .introduction .imgPrincipal {
+        text-align: center;
+    }
+
+    .introduction .imgPrincipal img {
+        width: 80%;
+    }
+
+    #whatIs p,
+    #contact p {
+        font-size: 1em;
+    }
+
+    #advantage .cards .cardAdvantage {
+        width: 55%;
+        border-radius: 14px;
+        margin-bottom: 5%;
+    }
+
+    #advantage .cards .cardAdvantage h1 {
+        font-size: 1.3em;
+    }
+
+    #advantage .cards .cardAdvantage p,
+    #advantage .cards .cardAdvantage ul li,
+    #contact form input {
+        font-size: 0.9em;
+    }
+
+    #contact form .input-group {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 604px) {
+
+    .introduction h1,
+    #whatIs h1,
+    #advantage h1,
+    #howWorks h1,
+    #contact h1 {
+        font-size: 1.3em;
+    }
+
+    .introduction .btnLogin .btn {
+        font-size: 1em;
+        width: 40%;
+    }
+
+    .introduction .imgPrincipal img {
+        width: 100%;
+    }
+
+    #whatIs p,
+    #contact p {
+        font-size: 0.9em;
+    }
+
+    #advantage .cards .cardAdvantage h1 {
+        font-size: 1.1em;
+    }
+
+    #advantage .cards .cardAdvantage p,
+    #advantage .cards .cardAdvantage ul li,
+    #contact form input {
+        font-size: 0.8em;
+    }
+}
+
+@media screen and (max-width: 510px) {
+    #advantage .cards .cardAdvantage {
+        width: 70%;
+    }
+
+    #contact form .input-group {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 470px) {
+
+    #whatIs p,
+    #contact p {
+        font-size: 0.8em;
+    }
+}
+
+@media screen and (max-width: 410px) {
+    .introduction header {
+        width: 100%;
+    }
+
+    .introduction h1,
+    #whatIs h1,
+    #advantage h1,
+    #howWorks h1,
+    #contact h1 {
+        font-size: 1.1em;
+    }
+
+    .introduction .btnLogin .btn {
+        font-size: 0.9em;
+    }
+
+    #whatIs p,
+    #contact p {
+        font-size: 0.7em;
+    }
+
+    #advantage .cards .cardAdvantage h1 {
+        font-size: 0.9em;
+    }
+
+    #advantage .cards .cardAdvantage p,
+    #advantage .cards .cardAdvantage ul li,
+    #contact form input {
+        font-size: 0.7em;
+    }
+
+    #contact form .input-group {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    #advantage .cards .cardAdvantage {
+        width: 80%;
+    }
+
+    #contact form .input-group {
+        width: 100%;
+    }
+
+    #contact form .mail {
+        font-size: 1.3em;
+    }
+
+    #contact form button span {
+        font-size: 1.3em;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .introduction .btnLogin .btn {
+        font-size: 0.8em;
+    }
+}

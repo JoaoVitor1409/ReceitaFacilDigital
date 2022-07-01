@@ -35,7 +35,7 @@ li {
     margin-right: 5px;
 }
 
-.navbar{
+.navbar {
     padding: 0 0.8%;
 }
 
@@ -64,7 +64,7 @@ li {
 /* FOOTER */
 
 .footer .row {
-    margin-top: 50px;
+    margin-top: 5%;
 }
 
 .support h1 {
@@ -90,7 +90,7 @@ li {
     width: 90%;
 }
 
-.menuFooter nav .navbarFooter{
+.menuFooter nav .navbarFooter {
     display: flex;
     justify-content: space-between;
 }
@@ -109,7 +109,6 @@ li {
 
 
 @media screen and (max-width: 991px) {
-
     .navbarHeader {
         display: block;
     }
@@ -146,6 +145,12 @@ li {
     }
 }
 
+@media screen and (max-width: 770px) {
+    .navbar-brand img {
+        width: 60%
+    }
+}
+
 @media screen and (max-width: 550px) {
     .support h1 {
         font-size: 2em;
@@ -161,20 +166,20 @@ li {
         font-size: 1em;
     }
 
-    .menuFooter nav .navbarFooter{
+    .menuFooter nav .navbarFooter {
         flex-direction: column;
         align-items: center;
     }
 
-    .footerNavItem{
+    .footerNavItem {
         margin-bottom: 15px;
     }
 
-    .footerNavItem a{
+    .footerNavItem a {
         font-size: .8em;
     }
 
-    .developer h1{
+    .developer h1 {
         font-size: .8em;
     }
 }
@@ -188,7 +193,7 @@ li {
         font-size: 1.5em;
     }
 
-    .developer h1{
+    .developer h1 {
         font-size: .65em;
     }
 }

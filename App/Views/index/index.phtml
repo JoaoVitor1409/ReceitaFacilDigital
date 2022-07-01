@@ -1,11 +1,21 @@
-<div class="container">
+<div class="container-xl">
     <section class="row introduction">
-        <div class="col-md-5 d-flex justify-content-center align-items-start flex-column">
-            <header class="d-flex justify-content-between flex-column">
-                <h1>
-                    Se você é habitante de Paranapanema/SP e dependente de medicamentos controlados, venha adquirir aqui sua receita digital de forma 100% gratuita.
-                </h1>
-                <a href="#">Acesse aqui</a>
+        <div class="col-md-5">
+            <header>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>
+                            Se você é habitante de Paranapanema/SP e dependente de medicamentos controlados, venha adquirir aqui sua receita digital de forma 100% gratuita.
+                        </h1>
+                    </div>
+                </div>
+                <div class="row btnLogin">
+                    <div class="col-md-12">
+                        <a href="/login">
+                            <div class="btn">Acesse aqui</div>
+                        </a>
+                    </div>
+                </div>
             </header>
         </div>
         <figure class="col-md-7 imgPrincipal">
@@ -13,7 +23,7 @@
         </figure>
     </section>
 
-    <section class="row whatIs justify-content-center">
+    <section class="row justify-content-center" id="whatIs">
         <header class="col-md-7">
             <h1>O que é?</h1>
             <p>
@@ -30,13 +40,16 @@
     <path fill="#222743" fill-opacity="1" d="M0,192L40,192C80,192,160,192,240,208C320,224,400,256,480,261.3C560,267,640,245,720,224C800,203,880,181,960,186.7C1040,192,1120,224,1200,224C1280,224,1360,192,1400,176L1440,160L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path>
 </svg>
 
-<div class="advantage">
-    <div class="container">
-        <section class="row">
-            <div class="col-md-12">
-                <h1>Vantagens</h1>
-
-                <div class="d-flex justify-content-around align-items-center cards">
+<div id="advantage">
+    <div class="container-xl">
+        <section>
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Vantagens</h1>
+                </div>
+            </div>
+            <div class="row justify-content-between align-items-center cards">
+                <div class="col-md-4 d-flex justify-content-center align-items-center">
                     <article class="pacient cardAdvantage">
                         <h1>Paciente</h1>
                         <p>Acesse nosso site e tenha todas as vantagens abaixo:</p>
@@ -55,7 +68,8 @@
                             </li>
                         </ul>
                     </article>
-
+                </div>
+                <div class="col-md-4 d-flex justify-content-center align-items-center">
                     <article class="doctor cardAdvantage">
                         <h1>Médico</h1>
                         <p>Acesse nosso site e tenha todas as vantagens abaixo:</p>
@@ -74,6 +88,8 @@
                             </li>
                         </ul>
                     </article>
+                </div>
+                <div class="col-md-4 d-flex justify-content-center align-items-center">
                     <article class="pharmaceutical cardAdvantage">
                         <h1>Farmacêutico</h1>
                         <p>Acesse nosso site e tenha todas as vantagens abaixo:</p>
@@ -94,20 +110,22 @@
                     </article>
                 </div>
             </div>
-
         </section>
     </div>
 </div>
 
-<section class="row howWorks align-items-center flex-column">
-    <div class="col-md-2">
-        <h1>Como funciona</h1>
+<section id="howWorks">
+    <div class="row align-items-center">
+        <div class="col-md-12">
+            <h1>Como funciona</h1>
+        </div>
     </div>
-
-    <div class="col-md-8">
-        <article class="video d-flex justify-content-center align-items-center">
-            <h1>Vídeo</h1>
-        </article>
+    <div class="row align-items-center justify-content-center">
+        <div class="col-md-7 d-flex align-items-center justify-content-center">
+            <div class="video-container">
+                <iframe class="video" src="https://www.youtube-nocookie.com/embed/QH2-TGUlwu4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -115,25 +133,31 @@
     <path fill="#222743" fill-opacity="1" d="M0,64L40,80C80,96,160,128,240,128C320,128,400,96,480,96C560,96,640,128,720,128C800,128,880,96,960,96C1040,96,1120,128,1200,122.7C1280,117,1360,75,1400,53.3L1440,32L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path>
 </svg>
 
-<div class="contact">
-    <div class="container">
-        <section class="row justify-content-center align-items-center">
-            <div class="col-md-7">
-                <h1>Fale conosco</h1>
-                <p>Mande um e-mail para a gente, caso tenha alguma dúvida ou sugestão </p>
+<div id="contact">
+    <div class="container-xl">
+        <section>
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-7">
+                    <h1>Fale conosco</h1>
+                    <p>Mande um e-mail para a gente, caso tenha alguma dúvida ou sugestão </p>
+                </div>
 
-                <form action="#" method="post" class="d-flex align-items-center justify-content-center">
-                    <span class="material-icons-outlined">mail</span>
-                    <input type="text" placeholder="Digite seu E-mail">
+            </div>
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-5">
+                    <form action="/contato" method="post" class="d-flex align-items-center justify-content-center">
+                        <div class="input-group">
+                            <span class="input-group-text material-icons-outlined mail">mail</span>
+                            <input type="text" class="form-control" placeholder="Digite seu E-mail">
 
-                    <button type="submit">
-                        <div class="d-flex justify-content-center align-items-center">
-                            <span class="material-icons">
-                                send
-                            </span>
+                            <button type="submit" class="input-group-text d-flex justify-content-center align-items-center">
+                                <span class="material-icons">
+                                    send
+                                </span>
+                            </button>
                         </div>
-                    </button>
-                </form>
+                    </form>
+                </div>
             </div>
         </section>
     </div>
