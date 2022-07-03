@@ -95,6 +95,10 @@ li {
     justify-content: space-between;
 }
 
+.menuFooter nav .navbarFooter .footerNavItem h1{
+    font-weight: 400;
+}
+
 .developer h1 {
     text-align: center;
 }

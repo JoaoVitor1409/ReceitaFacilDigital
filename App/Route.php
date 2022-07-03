@@ -2,7 +2,7 @@
 
     namespace App;
 
-    use MF\Init\Bootstrap; // Require
+    use MF\Init\Bootstrap;
 
     class Route extends Bootstrap{
         
@@ -11,6 +11,12 @@
                 'route' => '/',
                 'controller' => 'indexController',
                 'action' => 'index'
+            );
+
+            $routes['contact'] = array(
+                'route' => '/contato',
+                'controller' => 'indexController',
+                'action' => 'contact'
             );
 
             $this->setRoutes($routes);  
