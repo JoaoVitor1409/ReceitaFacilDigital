@@ -19,6 +19,24 @@
                 'action' => 'contact'
             );
 
+            $routes['access'] = array(
+                'route' => '/acessar',
+                'controller' => 'indexController',
+                'action' => 'access'
+            );
+
+            $routes['modal'] = array(
+                'route' => '/modals',
+                'controller' => 'indexController',
+                'action' => 'modal'
+            );
+
+            $routes['login'] = array(
+                'route' => '/autenticar',
+                'controller' => 'authController',
+                'action' => 'login'
+            );
+
             $this->setRoutes($routes);  
         }        
     }

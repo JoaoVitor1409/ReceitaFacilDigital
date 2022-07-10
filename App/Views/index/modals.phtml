@@ -1,0 +1,87 @@
+<div class="modal fade" id="changePasswordModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title">Esqueceu sua senha?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="POST">
+                <div class="modal-body">
+                    <div class="row justify-content-center inputs">
+                        <div class="col-md-8 inputArea inputModal">
+                            <div class="input-group">
+                                <label for="cpf" class="input-group-text inputIcon">
+                                    <span class="material-icons-outlined">person</span>
+                                </label>
+                                <input type="text" name="cpf" class="form-control cpfInput" id="cpf" placeholder="Digite seu CPF" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btnModal" id="btnChangePassword">Mudar minha senha</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="VerifyCodeModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title">Código enviado!</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="POST">
+                <div class="modal-body">
+                    <p>Foi enviado um código para o telefone (**)*****-**99 e para o e-mail ****1414@gmail.com</p>
+                    <div class="row justify-content-center inputs">
+                        <div class="col-md-8 inputArea inputModal">
+                            <div class="input-group">
+                                <label for="inputCode" class="input-group-text inputIcon">
+                                    <span class="material-icons-outlined">lock</span>
+                                </label>
+                                <input type="text" name="Code" class="form-control codeInput" id="inputCode" placeholder="Digite seu código aqui" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btnModal" id="btnVerifyCode">Verificar código</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="newPasswordModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title">Digite sua nova senha</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="POST">
+                <div class="modal-body">
+                    <div class="row justify-content-center inputs">
+                        <div class="col-md-8 inputArea inputModal">
+                            <div class="input-group">
+                                <label for="newPassword" class="input-group-text inputIcon">
+                                    <span class="material-icons-outlined">lock</span>
+                                </label>
+                                <input type="password" name="newPassword" class="form-control passwordInput" id="newPassword" placeholder="Digite sua nova senha" required>
+                                <div class="input-group-text d-flex justify-content-center align-items-center viewPass">
+                                    <span class="material-icons-outlined viewPassIcon">visibility</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btnModal" id="btnNewPassword">Mudar senha</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

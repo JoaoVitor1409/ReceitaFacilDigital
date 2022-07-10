@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receita Fácil Digital</title>
+
+
+    <link rel="stylesheet" href="css/libraries/icons.css">
+    <link rel="stylesheet" href="css/libraries/bootstrap.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+    <div class="container-fluid shadow d-flex justify-content-center align-items-center">
+        <section class="loginBack d-flex justify-content-center align-items-center flex-column">
+            <header class="row">
+                <div class="col-md-12">
+                    <h1>Acesse a Receita Fácil Digital</h1>
+                </div>
+            </header>
+            <form action="/autenticar" method="POST" class="row">
+                <div class="row justify-content-center inputs">
+                    <div class="col-md-8 inputArea">
+                        <div class="input-group">
+                            <label for="cpf" class="input-group-text inputIcon">
+                                <span class="material-icons-outlined">person</span>
+                            </label>
+                            <input type="text" name="cpf" class="form-control cpfInput" id="cpf" placeholder="CPF" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row inputs">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-md-8 inputArea">
+                            <div class="input-group">
+                                <label for="password" class="input-group-text inputIcon">
+                                    <span class="material-icons-outlined">lock</span>
+                                </label>
+                                <input type="password" name="password" class="form-control passwordInput" id="password" placeholder="Senha" required>
+                                <div class="input-group-text d-flex justify-content-center align-items-center viewPass">
+                                    <span class="material-icons-outlined viewPassIcon">visibility</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-md-8 text-start">
+                            <button type="button" id="btnforgotPassword">
+                                Esqueci minha senha
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 d-flex justify-content-center align-items-center">
+                        <button type="submit" class="btnLogin">Acessar</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <div class="modals"></div>
+
+    <script src="js/libraries/jquery.js"></script>
+    <script src="js/libraries/bootstrap.js"></script>
+    <script src="js/libraries/jqueryMask.js"></script>
+    <script src="js/login.js"></script>
+</body>
+
+</html>
