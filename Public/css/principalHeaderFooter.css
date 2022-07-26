@@ -110,7 +110,7 @@ li {
 
 /* FOOTER END */
 
-
+/* RESPONSIBILITY */
 
 @media screen and (max-width: 991px) {
     .navbarHeader {
@@ -201,3 +201,5 @@ li {
         font-size: .65em;
     }
 }
+
+/* RESPONSIBILITY END */

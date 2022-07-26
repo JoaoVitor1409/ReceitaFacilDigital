@@ -37,6 +37,12 @@
                 'action' => 'login'
             );
 
+            $routes['userArea'] = array(
+                'route' => '/plataforma',
+                'controller' => 'userAreaController',
+                'action' => 'userArea'
+            );
+
             $this->setRoutes($routes);  
         }        
     }

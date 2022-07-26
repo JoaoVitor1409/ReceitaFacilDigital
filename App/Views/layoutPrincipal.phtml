@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="css/libraries/icons.css">
     <link rel="stylesheet" href="css/libraries/bootstrap.css">
-    <link rel="stylesheet" href="css/headerFooter.css">
+    <link rel="stylesheet" href="css/principalHeaderFooter.css">
     <link rel="stylesheet" href="css/<?= $this->view->page ?>.css">
 </head>
 
@@ -17,47 +17,45 @@
     <div class="container-fluid mb-4">
         <header class="row">
             <nav class="navbar navbar-expand-lg navbar-light col-md-12 d-flex justify-content-between align-items-center">
-                <div class="container-fluid">
-                    <a href="/" class="navbar-brand">
-                        <img src="/img/logo.png" alt="Logo Receita Fácil Digital">
-                    </a>
-                    <button class="navbar-toggler iconToggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse navbarHeader" id="navbarTogglerDemo02">
-                        <ul class="navbar-nav ">
-                            <li class="nav-item">
-                                <a href="#whatIs" class="menuText d-flex align-items-center">
-                                    <span class="material-icons-outlined icon">info</span>
-                                    O que é?
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#advantage" class="menuText d-flex align-items-center">
-                                    <span class="material-icons-outlined icon">thumb_up</span>
-                                    Benefícios
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#howWorks" class="menuText d-flex align-items-center">
-                                    <span class="material-icons-outlined icon">help_outline</span>
-                                    Como funciona
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#contact" class="menuText d-flex align-items-center">
-                                    <span class="material-icons-outlined icon">mail</span>
-                                    Fale conosco
-                                </a>
-                            </li>
-                            <li class="nav-item nav-itemLogin">
-                                <a href="/acessar" class="menuText login d-flex align-items-center">
-                                    <span class="material-icons-outlined icon">account_circle</span>
-                                    Acesse Aqui
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                <a href="/" class="navbar-brand">
+                    <img src="/img/logo.png" alt="Logo Receita Fácil Digital">
+                </a>
+                <button class="navbar-toggler iconToggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse navbarHeader" id="navbarTogglerDemo02">
+                    <ul class="navbar-nav ">
+                        <li class="nav-item">
+                            <a href="#whatIs" class="menuText d-flex align-items-center">
+                                <span class="material-icons-outlined icon">info</span>
+                                O que é?
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#advantage" class="menuText d-flex align-items-center">
+                                <span class="material-icons-outlined icon">thumb_up</span>
+                                Benefícios
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#howWorks" class="menuText d-flex align-items-center">
+                                <span class="material-icons-outlined icon">help_outline</span>
+                                Como funciona
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#contact" class="menuText d-flex align-items-center">
+                                <span class="material-icons-outlined icon">mail</span>
+                                Fale conosco
+                            </a>
+                        </li>
+                        <li class="nav-item nav-itemLogin">
+                            <a href="/acessar" class="menuText login d-flex align-items-center">
+                                <span class="material-icons-outlined icon">account_circle</span>
+                                Acesse Aqui
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </nav>
         </header>
