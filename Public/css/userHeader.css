@@ -70,16 +70,6 @@ li {
 /* HEADER END */
 
 
-/* CONTENT */
-
-.content{
-    background-color: #f0f0f0;
-    height: 90vh;
-}
-
-/* CONTENT END */
-
-
 /* RESPONSIBILITY */
 
 @media screen and (max-width: 991px) {

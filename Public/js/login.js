@@ -1,6 +1,6 @@
 $(document).ready(() => {
 
-    // CPF mask    
+    // Masks Popup
     $(document).on("focus",".cpfInput", ()=>{
         $(".cpfInput").mask("000.000.000-00");
     });

@@ -1,0 +1,122 @@
+/* CONTENT */
+
+.content{
+    background-color: #f0f0f0;
+    height: 90vh;
+    padding: 4%;
+    border-radius: 0 14px 14px 0;
+}
+
+/* CONTENT END */
+
+/* PRINCIPAL */
+
+.principal .welcome{
+    font-size: 1.6em;
+}
+
+.principal .title{
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.principal .cards{
+    height: 65%;
+}
+
+.principal .cardOption{
+    background-color: #fff;
+    border-radius: 14px;
+    padding: 10px;
+    border-top: 0.5px solid #000;
+    border-right: 0.5px solid #000;
+    border-bottom: 2px solid #000;
+    border-left: 2px solid #000;
+    height: 120px;
+    width: 90%;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.principal .cardOption:hover{
+    opacity: 0.7;
+    transition: 0.2s;
+}
+
+.principal .cardOption span{
+    font-size: 1.5em;
+}
+
+.principal .cardOption h1{
+    font-weight: 500;
+    font-size: 1.1em;
+}
+
+.principal .cardOption hr{
+    height: .5px;
+    width: 100%;
+    opacity: 1;
+}
+
+/* PRINCIPAL END */
+
+/* RESPONSIBILITY */
+
+@media screen and (max-width: 1010px){
+    .principal .welcome{
+        font-size: 1.4em;
+    }
+    
+    .principal .title{
+        font-size: 1.2em;
+    }
+
+    .principal .cardOption h1{
+        font-weight: 500;
+        font-size: 1em;
+    }
+
+    .principal .cardOption span{
+        font-size: 1.3em;
+    }
+}
+
+
+@media screen and (max-width: 800px){
+    .principal .welcome{
+        font-size: 1.3em;
+    }
+    
+    .principal .title{
+        font-size: 1.1em;
+    }
+
+    .principal .cardOption h1{
+        font-weight: 500;
+        font-size: 0.9em;
+    }
+
+    .principal .cardOption span{
+        font-size: 1.2em;
+    }
+}
+
+@media screen and (max-width: 767px){
+    .principal .welcome{
+        font-size: 1.4em;
+    }
+    
+    .principal .title{
+        font-size: 1.2em;
+    }
+
+    .principal .cardOption h1{
+        font-weight: 500;
+        font-size: 1em;
+    }
+
+    .principal .cardOption span{
+        font-size: 1.3em;
+    }
+}
+/* RESPONSIBILITY END */

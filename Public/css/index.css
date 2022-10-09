@@ -325,6 +325,10 @@
         font-size: 1em;
     }
 
+    #advantage {
+        margin-top: -2px;
+    }
+
     #advantage .cards .cardAdvantage {
         width: 55%;
         border-radius: 14px;
