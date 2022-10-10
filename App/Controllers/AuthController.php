@@ -7,6 +7,22 @@
 
     class AuthController extends Action{
         public function login(){
-            
+
+        }
+
+        public function register(){
+
+        }
+
+        public function sendVerificationCode(){
+
+        }
+
+        public function verifyCode(){
+
+        }
+
+        public function changePassword(){
+
         }
     }

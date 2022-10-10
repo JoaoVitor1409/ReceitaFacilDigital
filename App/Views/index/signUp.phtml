@@ -1,22 +1,27 @@
 <header class="row">
     <div class="col-md-12">
-        <h1>Acesse a Receita Fácil Digital</h1>
+        <h1>Crie sua conta aqui!</h1>
     </div>
 </header>
-<form action="/autenticar" method="POST" class="row">
-    <div class="row justify-content-center inputs">
-        <div class="col-md-8 inputArea">
-            <div class="input-group">
-                <label for="email" class="input-group-text inputIcon emailIcon">
-                    <span class="material-icons-outlined">email</span>
-                </label>
-                <input type="email" name="email" class="form-control emailInput" id="email" placeholder="E-mail" required>
-            </div>
-            <div class="errorDiv text-start d-none emailError">
-                <p class="error text-danger emailErrorMsg"></p>
+<form action="/registrar" method="POST" class="row needs-validation">
+    <?php foreach ($this->view->inputs as $input) { ?>
+        <div class="row justify-content-center inputs">
+            <div class="col-md-8 inputArea">
+                <div class="input-group">
+                    <label for="<?= $input['input'] ?>" class="input-group-text inputIcon <?= $input['input'] ?>Icon">
+                        <span class="material-icons-outlined"><?= $input['icon'] ?></span>
+                    </label>
+                    <input type="<?= $input['type'] ?>" name="<?= $input['input'] ?>" class="form-control <?= $input['input'] ?>Input" id="<?= $input['input'] ?>" placeholder="<?= $input['placeholder'] ?>" required>
+
+                </div>
+                <div class="errorDiv text-start d-none <?= $input['input'] ?>Error">
+                    <p class="ErrorMsg error text-danger <?= $input['input'] ?>ErrorMsg"></p>
+                </div>
             </div>
         </div>
-    </div>
+    <?php } ?>
+
+
     <div class="row inputs">
         <div class="row justify-content-center align-items-center">
             <div class="col-md-8 inputArea">
@@ -36,18 +41,11 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center align-items-center">
-            <div class="col-md-8 text-start">
-                <button type="button" id="btnforgotPassword">
-                    Esqueci minha senha
-                </button>
-            </div>
-        </div>
     </div>
 
-    <div class="row">
+    <div class="col-md-12 row">
         <div class="col-md-12 d-flex justify-content-center align-items-center">
-            <button type="submit" class="btnAction">Acessar</button>
+            <button type="submit" class="btnAction">Criar sua conta</button>
         </div>
     </div>
 </form>

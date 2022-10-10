@@ -22,7 +22,7 @@ body{
     background-color: rgba(0, 0, 0, .3);
 }
 
-.loginBack{    
+.background{    
     background-color: rgba(255, 255, 255, .3);
     padding: 5% 0;
     border-radius: 14px;
@@ -30,7 +30,7 @@ body{
     text-align: center;
 }
 
-.loginBack h1{
+.background h1{
     font-size: 1.8em;
     margin-bottom: 8%;
 }
@@ -48,11 +48,17 @@ form .inputs .inputIcon {
     padding: 2%;
 }
 
-form .inputs .viewPass{
+form .inputs .viewPassDiv{
     background-color: #fff;
     border-radius: 0% 30% 30% 0%;
     border: none;
     padding: 2%;
+    cursor: pointer;
+}
+
+form .inputs .viewPass{
+    background-color: #fff;
+    border: none;
 }
 
 form .inputs span {
@@ -64,6 +70,35 @@ form .inputs span {
 
 form .inputs .viewPass span{
     cursor: pointer;
+}
+
+form .inputs .inputError{
+    border-top: 3px solid #f00;
+    border-right: 3px solid #f00;
+    border-bottom: 3px solid #f00;
+}
+
+form .inputs .inputErrorPassword{
+    border-top: 3px solid #f00;
+    border-bottom: 3px solid #f00;
+}
+
+form .inputs .inputIconError{
+    border-top: 3px solid #f00;
+    border-left: 3px solid #f00;
+    border-bottom: 3px solid #f00;
+}
+
+form .inputs .inputIconErrorPassword{
+    border-top: 3px solid #f00;
+    border-right: 3px solid #f00;
+    border-bottom: 3px solid #f00;
+}
+
+
+
+form .inputs .error{
+    font-size: 1em;
 }
 
 form .inputs button{
@@ -95,7 +130,7 @@ form .inputs input:focus {
     box-shadow: none;
 }
 
-form .btnLogin{
+form .btnAction{
     padding: 2%;
     border-radius: 14px;
     border: none;
@@ -107,7 +142,7 @@ form .btnLogin{
     margin-top: 2%;
 }
 
-form .btnLogin:hover{
+form .btnAction:hover{
     transition: 0.5s;
     background-color: #3299b3;
 }
@@ -148,7 +183,7 @@ form .btnLogin:hover{
 /* RESPONSIBILITY */
 
 @media screen and (max-width: 1000px) {
-    .loginBack h1,
+    .background h1,
     .modal h1{
         font-size: 1.5em;
     }
@@ -163,7 +198,7 @@ form .btnLogin:hover{
 }
 
 @media screen and (max-width: 830px) {
-    .loginBack h1,
+    .background h1,
     .modal h1{
         font-size: 1.3em;
     }
@@ -177,7 +212,7 @@ form .btnLogin:hover{
         font-size: 0.9em;
     }
 
-    form .btnLogin,
+    form .btnAction,
     .modal .btnModal{
         font-size: 1em;
     }
@@ -188,7 +223,7 @@ form .btnLogin:hover{
 }
 
 @media screen and (max-width: 767px) {
-    .loginBack h1,
+    .background h1,
     .modal h1{
         font-size: 1.5em;
     }
@@ -202,13 +237,13 @@ form .btnLogin:hover{
         font-size: 1em;
     }
 
-    form .btnLogin,
+    form .btnAction,
     .modal .btnModal{
         width: 100%;
         font-size: 1.1em;
     }
 
-    .loginBack{
+    .background{
         padding: 5% 4%;
     }
 }
@@ -219,13 +254,13 @@ form .btnLogin:hover{
         background-position: left top;
     }
 
-    .loginBack{
+    .background{
         width: 70%;
     }
 }
 
 @media screen and (max-width: 604px) {
-    .loginBack h1,
+    .background h1,
     .modal h1{
         font-size: 1.3em;
     }
@@ -239,7 +274,7 @@ form .btnLogin:hover{
         font-size: 0.9em;
     }
 
-    form .btnLogin,
+    form .btnAction,
     .modal .btnModal{
         font-size: 1em;
     }
@@ -250,7 +285,7 @@ form .btnLogin:hover{
 }
 
 @media screen and (max-width: 510px) {
-    .loginBack h1,
+    .background h1,
     .modal h1{
         font-size: 1.1em;
     }
@@ -260,14 +295,14 @@ form .btnLogin:hover{
         font-size: 0.8em;
     }
 
-    form .btnLogin,
+    form .btnAction,
     .modal .btnModal{
         font-size: 0.9em;
     }
 }
 
 @media screen and (max-width: 410px) {
-    .loginBack h1,
+    .background h1,
     .modal h1{
         font-size: 1em;
     }
@@ -281,20 +316,20 @@ form .btnLogin:hover{
         font-size: 1em;
     }
 
-    form .btnLogin,
+    form .btnAction,
     .modal .btnModal{
         font-size: 0.8em;
     }
 }
 
 @media screen and (max-width: 370px) {
-    .loginBack{
+    .background{
         width: 85%
     }
 }
 
 @media screen and (max-width: 280px) {
-    .loginBack h1,
+    .background h1,
     .modal h1{
         font-size: 0.9em;
     }
@@ -308,7 +343,7 @@ form .btnLogin:hover{
         font-size: 0.9em;
     }
 
-    form .btnLogin,
+    form .btnAction,
     .modal .btnModal{
         font-size: 0.7em;
     }

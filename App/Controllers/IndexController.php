@@ -13,15 +13,47 @@
             $this->render('contact');
         }
 
+        public function signUp()
+        {
+            $this->view->inputs = [
+                'name' => [
+                    'input' => 'name',
+                    'icon' => 'person',
+                    'type' => 'text',
+                    'placeholder' => 'Nome Completo'
+                ],
+                'cpf' => [
+                    'input' => 'cpf',
+                    'icon' => 'badge',
+                    'type' => 'text',
+                    'placeholder' => 'CPF'
+                ],
+                'email' => [
+                    'input' => 'email',
+                    'icon' => 'email',
+                    'type' => 'text',
+                    'placeholder' => 'E-mail'
+                ],
+                'phone' => [
+                    'input' => 'phone',
+                    'icon' => 'phone_android',
+                    'type' => 'text',
+                    'placeholder' => 'Número de Celular'
+                ]                
+            ];
+
+            $this->render('signUp', 'layoutAuth');
+        }
+
         public function access(){
 
-            $this->render('access', null);
+            $this->render('access', 'layoutAuth');
         }
 
         public function modal(){
 
             if(isset($_GET['js'])){
-                $this->render('modals', null);
+                $this->render('components/modals', null);
             }else{
                 header("Location: /");
             }           
