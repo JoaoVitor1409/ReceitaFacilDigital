@@ -14,7 +14,6 @@ $(document).ready(() => {
     $(".btnAction").click(() => {
 
         error("email", "Escreve algo");
-        error("password", "Escreve algo2")
 
         return false;
     });

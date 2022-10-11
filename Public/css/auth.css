@@ -18,13 +18,13 @@ body{
 
 .shadow{
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     background-color: rgba(0, 0, 0, .3);
 }
 
 .background{    
     background-color: rgba(255, 255, 255, .3);
-    padding: 5% 0;
+    padding: 2% 0;
     border-radius: 14px;
     width: 55%;
     text-align: center;
@@ -98,8 +98,9 @@ form .inputs .inputIconErrorPassword{
 
 
 form .inputs .error{
-    font-size: 1em;
+    font-size: 0.9em;
 }
+
 
 form .inputs button{
     font-weight: 500;
@@ -212,6 +213,10 @@ form .btnAction:hover{
         font-size: 0.9em;
     }
 
+    form .inputs .error{
+        font-size: 0.7em;
+    }
+
     form .btnAction,
     .modal .btnModal{
         font-size: 1em;
@@ -312,6 +317,10 @@ form .btnAction:hover{
         font-size: 0.7em;
     }
 
+    form .inputs .error{
+        font-size: 0.6em;
+    }
+
     form .inputs span{
         font-size: 1em;
     }
@@ -337,6 +346,10 @@ form .btnAction:hover{
     form .inputs input,
     form .inputs button{
         font-size: 0.6em;
+    }
+
+    form .inputs .error{
+        font-size: 0.5em;
     }
 
     form .inputs span{

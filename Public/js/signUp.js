@@ -8,11 +8,7 @@ $(document).ready(() => {
     // Send form
     $(".btnAction").click(() => {
         
-        error("name", "nome");
-        error("cpf", "cpf");
-        error("email", "email");
-        error("phone", "phone");
-        error("password", "password");
+        error("name", "Insira seu nome completo");
 
         return false;
     });
