@@ -15,7 +15,7 @@
 
 <body>
     <div class="container-fluid shadow d-flex justify-content-center align-items-center">
-        <section class="background d-flex justify-content-center align-items-center flex-column">
+        <section class="background <?= $this->view->page == "signUp" ? "backgroundSignUp" : "" ?> d-flex justify-content-center align-items-center flex-column">
             <?= $this->content(); ?>
         </section>
     </div>

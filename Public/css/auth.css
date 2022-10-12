@@ -22,12 +22,16 @@ body{
     background-color: rgba(0, 0, 0, .3);
 }
 
-.background{    
+.background, .backgroundSignUp{    
     background-color: rgba(255, 255, 255, .3);
-    padding: 2% 0;
+    padding: 5% 0;
     border-radius: 14px;
     width: 55%;
     text-align: center;
+}
+
+.backgroundSignUp{
+    padding: 1% 0;
 }
 
 .background h1{
@@ -40,6 +44,15 @@ form .inputs {
     margin: 2% 0;
 }
 
+form .inputs .birthDateInput{
+    color: #8E9398;
+}
+
+form .inputs .birthDateInput::-webkit-inner-spin-button,
+form .inputs .birthDateInput::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
 
 form .inputs .inputIcon {
     background-color: #fff;

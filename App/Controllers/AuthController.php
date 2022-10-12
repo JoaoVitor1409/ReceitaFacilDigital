@@ -7,7 +7,7 @@
 
     class AuthController extends Action{
         public function login(){
-
+            header("Location: /plataforma");
         }
 
         public function register(){

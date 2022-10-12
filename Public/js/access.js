@@ -15,7 +15,7 @@ $(document).ready(() => {
 
         error("email", "Escreve algo");
 
-        return false;
+        // return false;
     });
 
 

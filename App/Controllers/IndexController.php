@@ -22,6 +22,12 @@
                     'type' => 'text',
                     'placeholder' => 'Nome Completo'
                 ],
+                'birthDate' => [
+                    'input' => 'birthDate',
+                    'icon' => 'calendar_month',
+                    'type' => 'text',
+                    'placeholder' => 'Data de Nascimento'
+                ],
                 'cpf' => [
                     'input' => 'cpf',
                     'icon' => 'badge',
