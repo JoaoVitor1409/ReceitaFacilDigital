@@ -8,21 +8,20 @@ body *,
     color: #000;
 }
 
-body{
-    background-image: url("../img/backLogin.jpg");
+body {
+    background-image: url("../img/backLogin.svg");
     background-repeat: no-repeat;
     background-position: center top;
     background-size: cover;
     backdrop-filter: blur(2px);
 }
 
-.shadow{
+.backgroundDiv {
     height: 100vh;
-    width: 100%;
-    background-color: rgba(0, 0, 0, .3);
 }
 
-.background, .backgroundSignUp{    
+.background,
+.backgroundSignUp {
     background-color: rgba(255, 255, 255, .3);
     padding: 5% 0;
     border-radius: 14px;
@@ -30,28 +29,61 @@ body{
     text-align: center;
 }
 
-.backgroundSignUp{
+.backgroundSignUp {
     padding: 1% 0;
 }
 
-.background h1{
+.background h1 {
     font-size: 1.8em;
-    margin-bottom: 8%;
+    margin-bottom: 5%;
+}
+
+.btnChoice {
+    width: 100%;
+    border: none;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 2%;
+    color: #212121;
+    transition: 0.3s;
+    font-size: 1.1em;
+
+    /* Not selected text */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.actived {
+    background-color: #3299b3;
+    color: #fff;
+    transition: 0.3s;
+
+}
+
+.hide {
+    display: none;
 }
 
 
 form .inputs {
-    margin: 2% 0;
+    margin: 3% 0;
 }
 
-form .inputs .birthDateInput{
+form .inputPass{
+    margin: 0;
+}
+
+form .inputs .birthDateInput {
     color: #8E9398;
 }
 
 form .inputs .birthDateInput::-webkit-inner-spin-button,
 form .inputs .birthDateInput::-webkit-calendar-picker-indicator {
     display: none;
-    -webkit-appearance: none;
 }
 
 form .inputs .inputIcon {
@@ -61,7 +93,7 @@ form .inputs .inputIcon {
     padding: 2%;
 }
 
-form .inputs .viewPassDiv{
+form .inputs .viewPassDiv {
     background-color: #fff;
     border-radius: 0% 30% 30% 0%;
     border: none;
@@ -69,7 +101,7 @@ form .inputs .viewPassDiv{
     cursor: pointer;
 }
 
-form .inputs .viewPass{
+form .inputs .viewPass {
     background-color: #fff;
     border: none;
 }
@@ -81,28 +113,28 @@ form .inputs span {
     border: none;
 }
 
-form .inputs .viewPass span{
+form .inputs .viewPass span {
     cursor: pointer;
 }
 
-form .inputs .inputError{
+form .inputs .inputError {
     border-top: 3px solid #f00;
     border-right: 3px solid #f00;
     border-bottom: 3px solid #f00;
 }
 
-form .inputs .inputErrorPassword{
+form .inputs .inputErrorPassword {
     border-top: 3px solid #f00;
     border-bottom: 3px solid #f00;
 }
 
-form .inputs .inputIconError{
+form .inputs .inputIconError {
     border-top: 3px solid #f00;
     border-left: 3px solid #f00;
     border-bottom: 3px solid #f00;
 }
 
-form .inputs .inputIconErrorPassword{
+form .inputs .inputIconErrorPassword {
     border-top: 3px solid #f00;
     border-right: 3px solid #f00;
     border-bottom: 3px solid #f00;
@@ -110,24 +142,24 @@ form .inputs .inputIconErrorPassword{
 
 
 
-form .inputs .error{
+form .inputs .error {
     font-size: 0.9em;
 }
 
 
-form .inputs button{
+form .inputs button {
     font-weight: 500;
     background-color: transparent;
     border: none;
 }
 
-form .inputs button:hover{
+form .inputs button:hover {
     text-decoration: underline;
     transition: 0.2s;
     color: #000;
 }
 
-form .inputs input{
+form .inputs input {
     padding: 2% 0 2% 0;
     border: none;
     box-shadow: none;
@@ -144,7 +176,7 @@ form .inputs input:focus {
     box-shadow: none;
 }
 
-form .btnAction{
+form .btnAction {
     padding: 2%;
     border-radius: 14px;
     border: none;
@@ -156,27 +188,27 @@ form .btnAction{
     margin-top: 2%;
 }
 
-form .btnAction:hover{
+form .btnAction:hover {
     transition: 0.5s;
     background-color: #3299b3;
 }
 
 /* MODAL */
 
-.modal h1{
+.modal h1 {
     font-size: 1.8em;
 }
 
-.modal .inputModal{
+.modal .inputModal {
     border: 2px solid #8E9398;
     border-radius: 10px;
     width: 80%;
 }
 
-.modal .btnModal{
+.modal .btnModal {
     border: none;
     background-color: #2b869a;
-    width: 100%;    
+    width: 100%;
     padding: 2%;
     font-size: 1.1em;
     color: #fff;
@@ -185,7 +217,7 @@ form .btnAction:hover{
     transition: 0.3s;
 }
 
-.modal .btnModal:hover{
+.modal .btnModal:hover {
     transition: 0.5s;
     background-color: #3299b3;
 }
@@ -197,180 +229,215 @@ form .btnAction:hover{
 /* RESPONSIBILITY */
 
 @media screen and (max-width: 1000px) {
+
     .background h1,
-    .modal h1{
+    .modal h1 {
         font-size: 1.5em;
     }
 
-    form .inputs span{
+    .btnChoice{
+        font-size: 0.9em;
+    }
+
+    form .inputs span {
         font-size: 1.3em;
     }
 
-    .modal-dialog{
+    .modal-dialog {
         width: 80%;
     }
 }
 
 @media screen and (max-width: 830px) {
+
     .background h1,
-    .modal h1{
+    .modal h1 {
         font-size: 1.3em;
     }
 
-    form .inputs span{
+    form .inputs span {
         font-size: 1.2em;
     }
-    
+
+    .btnChoice{
+        font-size: 0.85em;
+    }
+
     form .inputs input,
-    form .inputs button{
+    form .inputs button {
         font-size: 0.9em;
     }
 
-    form .inputs .error{
+    form .inputs .error {
         font-size: 0.7em;
     }
 
     form .btnAction,
-    .modal .btnModal{
+    .modal .btnModal {
         font-size: 1em;
     }
 
-    .modal-dialog{
+    .modal-dialog {
         width: 50%;
     }
 }
 
 @media screen and (max-width: 767px) {
+
     .background h1,
-    .modal h1{
+    .modal h1 {
         font-size: 1.5em;
     }
 
-    form .inputs span{
+    .btnChoice{
+        font-size: 1.1em;
+    }
+
+    form .inputs span {
         font-size: 1.3em;
     }
-    
+
     form .inputs input,
-    form .inputs button{
+    form .inputs button {
         font-size: 1em;
     }
 
     form .btnAction,
-    .modal .btnModal{
+    .modal .btnModal {
         width: 100%;
         font-size: 1.1em;
     }
 
-    .background{
+    .background {
         padding: 5% 4%;
     }
 }
 
-@media screen and (max-width: 725px){
-    body{
-        background-image: url("../img/backLoginPhone.jpg");
+@media screen and (max-width: 725px) {
+    body {
+        background-image: url("../img/backLoginPhone.svg");
         background-position: left top;
     }
 
-    .background{
+    .background {
         width: 70%;
     }
 }
 
 @media screen and (max-width: 604px) {
+
     .background h1,
-    .modal h1{
+    .modal h1 {
         font-size: 1.3em;
     }
 
-    form .inputs span{
+    .btnChoice{
+        font-size: 1em;
+    }
+
+    form .inputs span {
         font-size: 1.2em;
     }
-    
+
     form .inputs input,
-    form .inputs button{
+    form .inputs button {
         font-size: 0.9em;
     }
 
     form .btnAction,
-    .modal .btnModal{
+    .modal .btnModal {
         font-size: 1em;
     }
 
-    .modal-dialog{
+    .modal-dialog {
         width: 100%;
     }
 }
 
 @media screen and (max-width: 510px) {
+
     .background h1,
-    .modal h1{
+    .modal h1 {
         font-size: 1.1em;
     }
-    
+
+    .btnChoice{
+        font-size: 0.9em;
+    }
+
     form .inputs input,
-    form .inputs button{
+    form .inputs button {
         font-size: 0.8em;
     }
 
     form .btnAction,
-    .modal .btnModal{
+    .modal .btnModal {
         font-size: 0.9em;
     }
 }
 
 @media screen and (max-width: 410px) {
+
     .background h1,
-    .modal h1{
+    .modal h1 {
         font-size: 1em;
     }
-    
+
+    .btnChoice{
+        font-size: 0.8em;
+    }
+
     form .inputs input,
-    form .inputs button{
+    form .inputs button {
         font-size: 0.7em;
     }
 
-    form .inputs .error{
+    form .inputs .error {
         font-size: 0.6em;
     }
 
-    form .inputs span{
+    form .inputs span {
         font-size: 1em;
     }
 
     form .btnAction,
-    .modal .btnModal{
+    .modal .btnModal {
         font-size: 0.8em;
     }
 }
 
 @media screen and (max-width: 370px) {
-    .background{
+    .background {
         width: 85%
     }
 }
 
 @media screen and (max-width: 280px) {
+
     .background h1,
-    .modal h1{
+    .modal h1 {
         font-size: 0.9em;
     }
-    
-    form .inputs input,
-    form .inputs button{
+
+    .btnChoice{
         font-size: 0.6em;
     }
 
-    form .inputs .error{
+    form .inputs input,
+    form .inputs button {
+        font-size: 0.6em;
+    }
+
+    form .inputs .error {
         font-size: 0.5em;
     }
 
-    form .inputs span{
+    form .inputs span {
         font-size: 0.9em;
     }
 
     form .btnAction,
-    .modal .btnModal{
+    .modal .btnModal {
         font-size: 0.7em;
     }
 }

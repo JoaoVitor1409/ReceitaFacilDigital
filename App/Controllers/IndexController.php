@@ -15,39 +15,28 @@
 
         public function signUp()
         {
-            $this->view->inputs = [
-                'name' => [
-                    'input' => 'name',
-                    'icon' => 'person',
-                    'type' => 'text',
-                    'placeholder' => 'Nome Completo'
+            $this->view->options =[
+                'pacient' => [
+                    'option' => 'pacient',
+                    'checked' => true,
+                    'value' => 'Paciente',
+                    'valueFormated' => 'Paciente'
                 ],
-                'birthDate' => [
-                    'input' => 'birthDate',
-                    'icon' => 'calendar_month',
-                    'type' => 'text',
-                    'placeholder' => 'Data de Nascimento'
+                'doctor' => [
+                    'option' => 'doctor',
+                    'checked' => false,
+                    'value' => 'Medico',
+                    'valueFormated' => 'Médico'
                 ],
-                'cpf' => [
-                    'input' => 'cpf',
-                    'icon' => 'badge',
-                    'type' => 'text',
-                    'placeholder' => 'CPF'
-                ],
-                'email' => [
-                    'input' => 'email',
-                    'icon' => 'email',
-                    'type' => 'text',
-                    'placeholder' => 'E-mail'
-                ],
-                'phone' => [
-                    'input' => 'phone',
-                    'icon' => 'phone_android',
-                    'type' => 'text',
-                    'placeholder' => 'Número de Celular'
-                ]                
+                'pharmacy' => [
+                    'option' => 'pharmacy',
+                    'checked' => false,
+                    'value' => 'Farmacia',
+                    'valueFormated' => 'Farmácia'
+                ]
             ];
 
+           
             $this->render('signUp', 'layoutAuth');
         }
 
