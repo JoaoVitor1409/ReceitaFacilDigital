@@ -38,6 +38,20 @@ body {
     margin-bottom: 5%;
 }
 
+.backSignUp{
+    cursor: pointer;
+    margin-left: 2%;
+}
+
+.backSignUp span{
+    font-size: 1.1em;
+    color: #212121;
+}
+
+.backSignUp p{
+    color: #212121;
+}
+
 .btnChoice {
     width: 100%;
     border: none;
@@ -170,11 +184,23 @@ form .inputs input::placeholder {
     color: #8E9398;
 }
 
-form .inputs input:focus {
+form .inputs input:focus,
+form .inputs select:focus {
     margin: none;
     outline: none;
     box-shadow: none;
 }
+
+form .inputs select{
+    border: none;
+    color: #8E9398;
+    border-radius: 0 10px 10px 0;
+}
+
+form .inputs .birthDateInput{
+    color: #000;
+}
+
 
 form .btnAction {
     padding: 2%;
@@ -263,8 +289,17 @@ form .btnAction:hover {
         font-size: 0.85em;
     }
 
+    .backSignUp span{
+        font-size: 1em;
+    }
+    
+    .backSignUp p{
+        font-size: 0.9em;
+    }
+
     form .inputs input,
-    form .inputs button {
+    form .inputs button,
+    form .inputs select {
         font-size: 0.9em;
     }
 
@@ -298,7 +333,8 @@ form .btnAction:hover {
     }
 
     form .inputs input,
-    form .inputs button {
+    form .inputs button,
+    form .inputs select {
         font-size: 1em;
     }
 
@@ -322,6 +358,14 @@ form .btnAction:hover {
     .background {
         width: 70%;
     }
+
+    .backSignUp span{
+        font-size: 1.1em;
+    }
+    
+    .backSignUp p{
+        font-size: 1em;
+    }
 }
 
 @media screen and (max-width: 604px) {
@@ -340,7 +384,8 @@ form .btnAction:hover {
     }
 
     form .inputs input,
-    form .inputs button {
+    form .inputs button,
+    form .inputs select {
         font-size: 0.9em;
     }
 
@@ -366,7 +411,8 @@ form .btnAction:hover {
     }
 
     form .inputs input,
-    form .inputs button {
+    form .inputs button,
+    form .inputs select {
         font-size: 0.8em;
     }
 
@@ -387,8 +433,17 @@ form .btnAction:hover {
         font-size: 0.8em;
     }
 
+    .backSignUp span{
+        font-size: 1em;
+    }
+    
+    .backSignUp p{
+        font-size: 0.9em;
+    }
+
     form .inputs input,
-    form .inputs button {
+    form .inputs button,
+    form .inputs select {
         font-size: 0.7em;
     }
 
@@ -423,8 +478,17 @@ form .btnAction:hover {
         font-size: 0.6em;
     }
 
+    .backSignUp span{
+        font-size: 0.8em;
+    }
+    
+    .backSignUp p{
+        font-size: 0.7em;
+    }
+
     form .inputs input,
-    form .inputs button {
+    form .inputs button,
+    form .inputs select {
         font-size: 0.6em;
     }
 

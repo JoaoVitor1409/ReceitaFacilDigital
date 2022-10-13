@@ -1,10 +1,16 @@
+<div class="row">
+    <div class="col-1 d-flex justify-content-around align-items-center backSignUp d-none">
+        <span class="material-icons-outlined">arrow_back_ios</span>
+        <p>Voltar</p>
+    </div>
+</div>
 <header class="row">
     <div class="col-md-12">
         <h1>Crie sua conta aqui!</h1>
     </div>
 </header>
-<form action="/registrar" method="POST" class="row">
-    <div class="row justify-content-center">
+<form action="/registrar" method="POST" class="row formSignUp">
+    <div class="row justify-content-center options">
         <div class="col-md-6 row justify-content-between">
             <?php foreach ($this->view->options as $option) { ?>
                 <div class="col-3">
@@ -44,7 +50,7 @@
 
     <div class="col-md-12 row">
         <div class="col-md-12 d-flex justify-content-center align-items-center">
-            <button type="submit" class="btnAction">Criar sua conta</button>
+            <button type="submit" class="btnAction">Continuar</button>
         </div>
     </div>
 </form>
