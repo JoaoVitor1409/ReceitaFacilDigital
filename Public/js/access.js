@@ -9,11 +9,32 @@ $(document).ready(() => {
         $(".codeInput").mask("000000");
     });
 
+    
+    // remove Error
+    $(document).on("focusout", ".emailInput", () => removeError("email"));
+    $(document).on("focusout", ".passwordInput", () => removeError("password"));
+
 
     // Send form
     $(".btnAction").click(() => {
 
-        error("email", "Escreve algo");
+        removeError("email");
+        removeError("password");
+
+        if ($(".emailInput").val() == "") {
+            error("email", "Email não pode ser vazio");
+            $(".emailInput").focus();
+
+            return false;
+        }
+
+        if ($(".passwordInput").val() == "") {
+            error("password", "Senha não pode ser vazia");
+            $(".passwordInput").focus();
+
+            return false;
+        }
+
 
         // return false;
     });
@@ -24,7 +45,7 @@ $(document).ready(() => {
     $(".modals").load("/components/modals?js=true");
 
     $("#btnforgotPassword").on("click", () => {
-        
+
         $("#changePasswordModal").modal("show");
     });
 
