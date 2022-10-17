@@ -73,6 +73,9 @@
                 'action' => 'changePassword'
             );
 
+
+            // userAreaController
+
             $routes['userArea'] = array(
                 'route' => '/plataforma',
                 'controller' => 'userAreaController',

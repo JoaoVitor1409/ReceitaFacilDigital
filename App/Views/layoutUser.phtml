@@ -13,68 +13,58 @@
     <link rel="stylesheet" href="css/<?= $this->view->page ?>.css">
 </head>
 
-<body>
-    <div class="container-fluid p-4">
-        <div class="row">
-            <nav class="navbar navbar-expand-lg navbar-light col-md-3 d-flex justify-content-between align-items-start">
-
-                <button class="navbar-toggler iconToggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse navbarHeader" id="navbarTogglerDemo02">
-                    <ul class="navbar-nav d-flex flex-column justify-content-between">
-                        <div class="headerMenu d-flex justify-content-between flex-column">
-                            <li class="nav-item">
-                                <a href="/plataforma/perfil" id="account" class="d-flex align-items-center">
-                                    <span class="material-icons">account_circle</span>
-                                    <span class="navbarCollapse">João Vitor Martins de Siqueira</span>
-                                </a>
-                            </li>
-                            <div class="headerMenuOptions d-flex justify-content-between flex-column">
-                                <li class="nav-item navItemSm">
-                                    <a href="/plataforma" id="home" class="selected headerMenuOption d-flex align-items-center">
-                                        <span class="material-icons">home</span>
-                                        <span class="navbarCollapse">Principal</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/plataforma/acao" id="action" class="headerMenuOption d-flex align-items-center">
-                                        <span class="material-icons">note_add</span>
-                                        <span class="navbarCollapse">Fazer uma requisição</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/plataforma/historico" id="history" class="headerMenuOption d-flex align-items-center">
-                                        <span class="material-icons">history</span>
-                                        <span class="navbarCollapse">Histórico de receitas</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item navItemMd">
-                                    <a href="/plataforma/configuracoes" id="settings" class="headerMenuOption d-flex align-items-center">
-                                        <span class="material-icons">settings</span>
-                                        <span class="navbarCollapse">Configurações</span>
-                                    </a>
-                                </li>
-                            </div>
-                        </div>
-                        <li class="nav-item nav-itemLogin">
-                            <a href="/plataforma/sair" class="login d-flex align-items-center">
-                                <span class="material-icons">logout</span>
-                                <span class="navbarCollapse">Sair</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-            <div class="col-md-9">
-                <?= $this->content(); ?>
-            </div>
+<body id="body-pd">
+    <header class="header" id="header">
+        <div class="header_toggle">
+            <span class="nav_name material-icons" id="header-toggle">menu</span>
         </div>
+        <div class="header_img">
+            <span class="material-icons">account_circle</span>
+        </div>
+    </header>
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div>
+                <a href="/plataforma/principal" id="logo" class="nav_logo">
+                    <span class="nav_logo-icon material-icons-outlined">insert_emoticon</span>
+                    <span class="nav_logo-name">Receita Fácil Digital</span>
+                </a>
+
+                <div class="nav_list">
+                    <a href="/plataforma/principal" id="home" class="nav_link active">
+                        <span class="nav_name material-icons">home</span>
+                        <span class="nav_name">Principal</span>
+                    </a>
+                    <a href="/plataforma/receita" id="action" class="nav_link">
+                        <span class="nav_name material-icons">note_add</span>
+                        <span class="nav_name">Fazer uma requisição</span>
+                    </a>
+                    <a href="/plataforma/historico" id="history" class="nav_link">
+                        <span class="nav_name material-icons">history</span>
+                        <span class="nav_name">Histórico de receitas</span>
+                    </a>
+                    <a href="/plataforma/configuracao" id="settings" class="nav_link">
+                        <span class="nav_name material-icons">settings</span>
+                        <span class="nav_name">Configurações</span>
+                    </a>
+                </div>
+            </div>
+            <a href="/plataforma/sair" class="nav_link">
+                <span class="material-icons-outlined">logout</span>
+                <span class="nav_name">Sair</span>
+            </a>
+        </nav>
     </div>
+    <!--Container Main start-->
+    <div>
+        <?= $this->content(); ?>
+    </div>
+
+
+    <!--Container Main end-->
 
     <script src="js/libraries/jquery.js"></script>
     <script src="js/libraries/bootstrap.js"></script>
-    <script src="js/layoutUser.js"></script>
+    <script src="js/menuUser.js"></script>
+    <script src="js/userLayout.js"></script>
 </body>

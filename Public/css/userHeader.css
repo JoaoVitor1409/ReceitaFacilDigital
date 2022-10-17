@@ -1,98 +1,184 @@
-body *,
-.row *,
-.row,
-.container-fluid {
-    font-size: 1em;
-    margin: 0;
-    padding: 0;
-    color: #000;
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+
+:root {
+    --header-height: 3rem;
+    --nav-width: 75px;
+    --first-color: #4723D9;
+    --first-color-light: #AFA5D9;
+    --white-color: #F7F6FB;
+    --body-font: 'Nunito', sans-serif;
+    --normal-font-size: 1rem;
+    --z-fixed: 100
+}
+
+*,
+::before,
+::after {
+    box-sizing: border-box
+}
+
+body {
+    position: relative;
+    margin: var(--header-height) 0 0 0;
+    padding: 0 1rem;
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+    transition: .5s
 }
 
 a {
-    text-decoration: none;
-    color: #000;
+    text-decoration: none
 }
 
-a:hover {
-    color: #53585c;
-    transition: 0.2s;
-}
-
-li {
-    list-style: none;
-}
-
-
-/* HEADER */
-
-.navbar-nav{
-    height: 90vh;
-}
-
-.navbar .navbarHeader{
+.header {
     width: 100%;
+    height: var(--header-height);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+    background-color: var(--white-color);
+    z-index: var(--z-fixed);
+    transition: .5s
 }
 
-.navbar-nav .headerMenu{
-    height: 50vh;
+.header_toggle {
+    color: var(--first-color);
+    font-size: 1.5rem;
+    cursor: pointer
 }
 
-.navbar-nav .headerMenuOptions{
-    height: 30vh;
+.header_img {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden
 }
 
-.navbar-nav .headerMenuOptions .nav-item{
-    width: 80%;
-    margin-bottom: 20px;
+.header_img span {
+    font-size: 2em;
+    color: #212121;
 }
 
-.navbar-nav .headerMenuOptions .navItemMd{
-    width: 60%;
+.l-navbar {
+    position: fixed;
+    top: 0;
+    left: -30%;
+    width: var(--nav-width);
+    height: 100vh;
+    background-color: var(--first-color);
+    padding: .5rem 1rem 0 0;
+    transition: .5s;
+    z-index: var(--z-fixed)
 }
 
-.navbar-nav .headerMenuOptions .navItemSm{
-    width: 40%;
+.nav {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
 }
 
-.navbar-nav .divisorMenu{
-    width: 80%;
-    height: 1.5px;
+.nav_logo,
+.nav_link {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    column-gap: 1rem;
+    padding: .5rem 0 .5rem 1.5rem;
+
 }
 
-.navbar-nav .headerMenuOptions .nav-item .selected{
-    background-color: #b3e5fd;
-    border-radius: 14px;
-    padding: 7px;
-    width: 100%;
-    transition: 0.3s;
+.nav_logo {
+    margin-bottom: 2rem
 }
 
-/* HEADER END */
+.nav_logo-icon {
+    font-size: 1.25rem;
+    color: var(--white-color)
+}
 
+.nav_logo-name {
+    color: var(--white-color);
+    font-weight: 700
+}
 
-/* RESPONSIBILITY */
+.nav_link {
+    position: relative;
+    color: var(--first-color-light);
+    margin-bottom: 1.5rem;
+    transition: .3s
+}
 
-@media screen and (max-width: 991px) {
-    .navbar-nav .navbarCollapse{
-        display: none;
+.nav_link:hover {
+    color: var(--white-color)
+}
+
+.nav_icon {
+    font-size: 1.25rem
+}
+
+.show {
+    left: 0
+}
+
+.body-pd {
+    padding-left: calc(var(--nav-width) + 1rem)
+}
+
+.active {
+    color: var(--white-color)
+}
+
+.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 2px;
+    height: 32px;
+    background-color: var(--white-color)
+}
+
+.height-100 {
+    height: 100vh
+}
+
+@media screen and (min-width: 768px) {
+    body {
+        margin: calc(var(--header-height) + 1rem) 0 0 0;
+        padding-left: calc(var(--nav-width) + 2rem)
     }
 
-    .navbar-nav .nav-item span{
-        font-size: 1.75em;
+    .header {
+        height: calc(var(--header-height) + 1rem);
+        padding: 0 2rem 0 calc(var(--nav-width) + 2rem)
     }
 
-    .navbar-nav .headerMenuOptions .nav-item .selected{
-        padding: 10px;
-        width: 50px;
+    .header_img {
+        width: 40px;
+        height: 40px
     }
 
-    .container-fluid > .row >.col-md-3{
-        width: 10%;
+    .header_img span {
+        width: 1em
     }
 
-    .container-fluid > .row >.col-md-9{
-        width: 89%;
+    .l-navbar {
+        left: 0;
+        padding: 1rem 1rem 0 0
+    }
+
+    .show {
+        width: calc(var(--nav-width) + 156px)
+    }
+
+    .body-pd {
+        padding-left: calc(var(--nav-width) + 188px)
     }
 }
-
-/* RESPONSIBILITY END */
