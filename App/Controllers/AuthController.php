@@ -25,4 +25,8 @@
         public function changePassword(){
 
         }
+
+        public function logout(){
+            header("Location: /");
+        }
     }

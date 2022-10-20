@@ -3,9 +3,9 @@
 :root {
     --header-height: 3rem;
     --nav-width: 75px;
-    --first-color: #4723D9;
-    --first-color-light: #AFA5D9;
-    --white-color: #F7F6FB;
+    --first-color: #222743;
+    --first-color-light: #c0c0c0;
+    --white-color: #e3e3e3;
     --body-font: 'Nunito', sans-serif;
     --normal-font-size: 1rem;
     --z-fixed: 100
@@ -15,6 +15,15 @@
 ::before,
 ::after {
     box-sizing: border-box
+}
+
+body *,
+.row *,
+.row,
+.container-fluid {
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -113,7 +122,8 @@ a {
     position: relative;
     color: var(--first-color-light);
     margin-bottom: 1.5rem;
-    transition: .3s
+    transition: .3s;
+    cursor: pointer;
 }
 
 .nav_link:hover {
@@ -124,7 +134,7 @@ a {
     font-size: 1.25rem
 }
 
-.show {
+.showMenu {
     left: 0
 }
 
@@ -152,7 +162,7 @@ a {
 @media screen and (min-width: 768px) {
     body {
         margin: calc(var(--header-height) + 1rem) 0 0 0;
-        padding-left: calc(var(--nav-width) + 2rem)
+        padding-left: calc(var(--nav-width) + 1rem)
     }
 
     .header {
@@ -174,7 +184,7 @@ a {
         padding: 1rem 1rem 0 0
     }
 
-    .show {
+    .showMenu {
         width: calc(var(--nav-width) + 156px)
     }
 

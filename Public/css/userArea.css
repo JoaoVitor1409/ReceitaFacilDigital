@@ -1,30 +1,39 @@
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #000;
+}
+
 /* CONTENT */
 
-.content{
+.content {
     background-color: #f0f0f0;
     height: 90vh;
     padding: 4%;
-    border-radius: 0 14px 14px 0;
+    border-radius: 0 0 14px 14px;
 }
 
 /* CONTENT END */
 
 /* PRINCIPAL */
 
-.principal .welcome{
+.welcome {
     font-size: 1.6em;
 }
 
-.principal .title{
+.title {
     font-size: 1.4em;
     font-weight: 600;
 }
 
-.principal .cards{
+.cards {
     height: 65%;
 }
 
-.principal .cardOption{
+.cardOption {
     background-color: #fff;
     border-radius: 14px;
     padding: 10px;
@@ -32,27 +41,36 @@
     border-right: 0.5px solid #000;
     border-bottom: 2px solid #000;
     border-left: 2px solid #000;
-    height: 120px;
-    width: 90%;
+    height: 150px;
+    width: 80%;
     cursor: pointer;
     transition: 0.2s;
 }
 
-.principal .cardOption:hover{
-    opacity: 0.7;
+.cardOption:hover {
+    background-color: rgba(34, 39, 67, 0.85);
+    color: #f0f0f0;
+
     transition: 0.2s;
 }
 
-.principal .cardOption span{
+.cardOption span span {
     font-size: 1.5em;
 }
 
-.principal .cardOption h1{
-    font-weight: 500;
+.cardOption span h1 {
+    font-weight: 600;
     font-size: 1.1em;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-.principal .cardOption hr{
+.cardOption hr {
     height: .5px;
     width: 100%;
     opacity: 1;
@@ -60,63 +78,401 @@
 
 /* PRINCIPAL END */
 
+
+/* HISTORY */
+
+
+.formSearchPrescription .inputIcon {
+    background-color: #fff;
+    border-radius: 30% 0 0 30%;
+    border: none;
+    padding: 2%;
+}
+
+.formSearchPrescription .inputIcon span {
+    color: #8E9398;
+    font-size: 1.5em;
+    margin-right: -1px;
+    border: none;
+}
+
+.formSearchPrescription input{
+    font-size: 0.9em;
+    margin-bottom: 2%;
+}
+
+.formSearchPrescription input[type="text"],
+.formSearchPrescription input[type="date"] {
+    padding: 2%;
+    border-radius: 10px;
+    border: none;
+    box-shadow: none;
+}
+
+.formSearchPrescription input::placeholder {
+    color: #8E9398;
+}
+
+.formSearchPrescription input:focus {
+    margin: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.formSearchPrescription .searchBtn{
+    background-color: #222743;
+    color: #f0f0f0;
+    padding: 2%;
+    width: 100%;
+    height: 36px;
+    font-size: 1.1em;
+    border-radius: 10px;
+    border: none;
+}
+
+.tableDiv{
+    max-height: 300px;
+    width: 100%;
+    overflow: auto;
+    display: inline-block;
+}
+
+.table .detailPrescription{
+    font-size: 1.2em;
+    color: #00f;
+    cursor: pointer;
+}
+
+/* HISTORY END */
+
+
+/* MODAL */
+
+
+
+/* MODAL END */
+
+
 /* RESPONSIBILITY */
 
-@media screen and (max-width: 1010px){
-    .principal .welcome{
+@media screen and (max-width: 1010px) {
+    .welcome {
         font-size: 1.4em;
     }
-    
-    .principal .title{
+
+    .title {
         font-size: 1.2em;
     }
 
-    .principal .cardOption h1{
-        font-weight: 500;
+    .cardOption span h1 {
         font-size: 1em;
     }
 
-    .principal .cardOption span{
+    .cardOption span span {
         font-size: 1.3em;
     }
-}
 
-
-@media screen and (max-width: 800px){
-    .principal .welcome{
-        font-size: 1.3em;
-    }
-    
-    .principal .title{
-        font-size: 1.1em;
+    .cardOption {
+        width: 90%;
     }
 
-    .principal .cardOption h1{
-        font-weight: 500;
+    .formSearchPrescription .inputLabel{
         font-size: 0.9em;
     }
 
-    .principal .cardOption span{
-        font-size: 1.2em;
-    }
-}
-
-@media screen and (max-width: 767px){
-    .principal .welcome{
-        font-size: 1.4em;
-    }
-    
-    .principal .title{
-        font-size: 1.2em;
+    .formSearchPrescription input{
+        font-size: 0.8em;
     }
 
-    .principal .cardOption h1{
-        font-weight: 500;
+    .formSearchPrescription .searchBtn{
         font-size: 1em;
     }
 
-    .principal .cardOption span{
-        font-size: 1.3em;
+    .table *{
+        font-size: 0.95em;
     }
 }
+
+@media screen and (max-width: 872px) {
+    .welcome {
+        font-size: 1.3em;
+    }
+
+    .title {
+        font-size: 1.1em;
+    }
+
+    .cardOption span h1 {
+        font-size: 0.9em;
+    }
+
+    .cardOption span span {
+        font-size: 1.2em;
+    }
+
+    .formSearchPrescription .inputLabel{
+        font-size: 0.8em;
+    }
+
+    .formSearchPrescription input{
+        font-size: 0.7em;
+    }
+
+    .formSearchPrescription .searchBtn{
+        font-size: 0.9em;
+    }
+
+    .table *{
+        font-size: 0.9em;
+    }
+}
+
+@media screen and (max-width: 826px) {
+    .welcome {
+        font-size: 1.2em;
+    }
+
+    .title {
+        font-size: 1em;
+    }
+
+    .cardOption span h1 {
+        font-size: 0.8em;
+    }
+
+    .cardOption span span {
+        font-size: 1.1em;
+    }
+
+    .formSearchPrescription .inputLabel{
+        font-size: 0.7em;
+    }
+
+    .formSearchPrescription input{
+        font-size: 0.6em;
+    }
+
+    .formSearchPrescription .searchBtn{
+        font-size: 0.7em;
+        height: 30px;
+    }
+}
+
+@media screen and (max-width: 774px) {
+    .cardOption span h1 {
+        font-size: 0.7em;
+    }
+
+    .table *{
+        font-size: 0.85em;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .cardOption span h1 {
+        font-size: 0.8em;
+    }
+
+    .formSearchPrescription .inputLabel{
+        font-size: 0.8em;
+    }
+
+    .formSearchPrescription input{
+        font-size: 0.8em;
+    }
+
+    .formSearchPrescription .searchBtn{
+        font-size: 1em;
+    }
+
+    .table *{
+        font-size: 0.9em;
+    }
+}
+
+@media screen and (max-width: 602px) {
+    .welcome {
+        font-size: 1.1em;
+    }
+
+    .title {
+        font-size: 1em;
+    }
+
+    .cardOption span h1 {
+        font-size: 0.7em;
+    }
+
+    .cardOption span span {
+        font-size: 1.1em;
+    }
+
+    .formSearchPrescription .inputLabel{
+        font-size: 0.7em;
+    }
+
+    .formSearchPrescription input{
+        font-size: 0.7em;
+    }
+
+    .formSearchPrescription .searchBtn{
+        font-size: 0.9em;
+    }
+
+    .table *{
+        font-size: 0.85em;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .welcome {
+        font-size: 1.2em;
+    }
+
+    .title {
+        font-size: 1em;
+    }
+
+    .cardOption span h1 {
+        font-size: 0.8em;
+    }
+
+    .cardOption span span {
+        font-size: 1.1em;
+    }
+
+    .cardOption {
+        border-radius: 14px;
+        height: 100px;
+        width: 50%;
+    }
+
+    .formSearchPrescription .inputLabel{
+        font-size: 0.8em;
+    }
+
+    .formSearchPrescription input{
+        font-size: 0.8em;
+    }
+
+    .formSearchPrescription .searchBtn{
+        font-size: 0.9em;
+    }
+
+    .tableDiv{
+        max-height: 150px;
+    }
+}
+
+@media screen and (max-width: 510px) {
+    .welcome {
+        font-size: 1.1em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .welcome {
+        font-size: 0.9em;
+    }
+
+    .title {
+        font-size: 0.8em;
+    }
+
+    .cardOption span h1 {
+        font-size: 0.6em;
+    }
+
+    .cardOption span span {
+        font-size: 1em;
+    }
+
+    .formSearchPrescription .inputLabel{
+        font-size: 0.7em;
+    }
+
+    .formSearchPrescription input{
+        font-size: 0.7em;
+    }
+
+    .formSearchPrescription .searchBtn{
+        font-size: 0.8em;
+    }
+}
+
+@media screen and (max-width: 435px) {
+    .cardOption span h1 {
+        font-size: 0.8em;
+    }
+
+    .cardOption span span {
+        font-size: 1.1em;
+    }
+
+    .cardOption {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 370px) {
+    .welcome {
+        font-size: 0.8em;
+    }
+
+    .cardOption span h1 {
+        font-size: 0.7em;
+    }
+
+    .cardOption span span {
+        font-size: 1em;
+    }
+
+    .formSearchPrescription .inputLabel{
+        font-size: 0.6em;
+    }
+
+    .formSearchPrescription input{
+        font-size: 0.6em;
+    }
+
+    .formSearchPrescription .searchBtn{
+        font-size: 0.7em;
+    }
+
+}
+
+@media screen and (max-width: 280px) {
+    .welcome {
+        font-size: 0.7em;
+    }
+
+    .title {
+        font-size: 0.7em;
+    }
+
+    .cardOption span h1 {
+        font-size: 0.6em;
+    }
+
+    .cardOption span span {
+        font-size: 0.9em;
+    }
+
+    .formSearchPrescription .inputLabel{
+        font-size: 0.5em;
+    }
+
+    .formSearchPrescription input{
+        font-size: 0.5em;
+    }
+
+    .formSearchPrescription .searchBtn{
+        font-size: 0.6em;
+    }
+
+    .table *{
+        font-size: 0.8em;
+    }
+}
+
 /* RESPONSIBILITY END */

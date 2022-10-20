@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="css/libraries/icons.css">
     <link rel="stylesheet" href="css/libraries/bootstrap.css">
-    <link rel="stylesheet" href="css/userHeader.css">
+    <link rel="stylesheet" href="css/layouts/userHeader.css">
     <link rel="stylesheet" href="css/<?= $this->view->page ?>.css">
 </head>
 
@@ -25,28 +25,32 @@
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
             <div>
-                <a href="/plataforma/principal" id="logo" class="nav_logo">
+                <div class="nav_logo">
                     <span class="nav_logo-icon material-icons-outlined">insert_emoticon</span>
                     <span class="nav_logo-name">Receita Fácil Digital</span>
-                </a>
+                </div>
 
                 <div class="nav_list">
-                    <a href="/plataforma/principal" id="home" class="nav_link active">
+                    <div class="nav_link active home">
                         <span class="nav_name material-icons">home</span>
                         <span class="nav_name">Principal</span>
-                    </a>
-                    <a href="/plataforma/receita" id="action" class="nav_link">
+                    </div>
+                    <div class="nav_link prescription">
                         <span class="nav_name material-icons">note_add</span>
                         <span class="nav_name">Fazer uma requisição</span>
-                    </a>
-                    <a href="/plataforma/historico" id="history" class="nav_link">
+                    </div>
+                    <div class="nav_link history">
                         <span class="nav_name material-icons">history</span>
                         <span class="nav_name">Histórico de receitas</span>
-                    </a>
-                    <a href="/plataforma/configuracao" id="settings" class="nav_link">
+                    </div>
+                    <div class="nav_link templates">
+                        <span class="nav_name material-icons">content_paste</span>
+                        <span class="nav_name">Modelos</span>
+                    </div>
+                    <div class="nav_link settings">
                         <span class="nav_name material-icons">settings</span>
                         <span class="nav_name">Configurações</span>
-                    </a>
+                    </div>
                 </div>
             </div>
             <a href="/plataforma/sair" class="nav_link">
@@ -59,6 +63,8 @@
     <div>
         <?= $this->content(); ?>
     </div>
+
+    
 
 
     <!--Container Main end-->

@@ -73,6 +73,12 @@
                 'action' => 'changePassword'
             );
 
+            $routes['logout'] = array(
+                'route' => '/plataforma/sair',
+                'controller' => 'authController',
+                'action' => 'logout'
+            );
+
 
             // userAreaController
 
@@ -81,6 +87,19 @@
                 'controller' => 'userAreaController',
                 'action' => 'userArea'
             );
+
+            $routes['userAreaScreen'] = array(
+                'route' => '/plataforma/loadScreen',
+                'controller' => 'userAreaController',
+                'action' => 'userAreaScreen'
+            );
+
+            $routes['modalPrescription'] = array(
+                'route' => '/plataforma/components/modalReceita',
+                'controller' => 'userAreaController',
+                'action' => 'modalPrescription'
+            );
+
 
             $this->setRoutes($routes);  
         }        
