@@ -29,18 +29,22 @@ class userAreaController extends Action
 
         $prescriptions = [
             [
-                "code" => "P02",
-                "issueDate" => "01/01/2002"
+                "pacientName" => "João Vitor",
+                "prescriptionCode" => "P14",
+                "issueDate" => "2002-09-14",
             ],
             [
-                "code" => "P09",
-                "issueDate" => "01/09/2002"
+                "pacientName" => "Seu Jorge",
+                "prescriptionCode" => "P01",
+                "issueDate" => "2000-01-01",
             ],
             [
-                "code" => "P14",
-                "issueDate" => "14/09/2022"
+                "pacientName" => "Dona Maria",
+                "prescriptionCode" => "P02",
+                "issueDate" => "2000-01-02",
             ],
         ];
+
 
         $page = "";
 
@@ -258,16 +262,16 @@ class userAreaController extends Action
                 $page .= '<tr>';
                 if ($options["name"]) {
                     $page .= '
-                    <td class="text-start">' . $user["name"] . '</td>
-                    <td>' . $prescription["code"] . '</td>
+                    <td class="text-start">' . $prescription["pacientName"] . '</td>
+                    <td>' . $prescription["prescriptionCode"] . '</td>
                 ';
                 } else {
-                    $page .= '<td class="text-start">' . $prescription["code"] . '</td>';
+                    $page .= '<td class="text-start">' . $prescription["prescriptionCode"] . '</td>';
                 }
 
                 $page .= '
                 <td>' . $prescription["issueDate"] . '</td>
-                <td><span id="' . $prescription["code"] . '" class="detailPrescription material-icons-outlined">info</span></td>
+                <td><span id="' . $prescription["prescriptionCode"] . '" class="detailPrescription material-icons-outlined">info</span></td>
             ';
 
                 $page .= '</tr>';
@@ -289,7 +293,170 @@ class userAreaController extends Action
         if(isset($_GET['js'])){
             $this->render('/components/modalPrescription', null);
         }else{
-            header("Location: /");
+            header("Location: /plataforma");
+        }
+    }
+
+    public function tableHistory() {
+
+        if(isset($_POST["js"])){
+            $user = [
+                "name" => "João Vitor Martins de Siqueira",
+                "type" => "doctor"
+            ];
+            $pacientName = null;
+            if(isset($_POST["pacientName"])){
+                $pacientName = $_POST["pacientName"];
+            }
+            $prescriptionCode = $_POST["prescriptionCode"];
+            $issueDate = $_POST["issueDate"];
+            $data = [];
+
+            $prescriptions = [
+                [
+                    "pacientName" => "João Vitor",
+                    "prescriptionCode" => "P14",
+                    "issueDate" => "2002-09-14",
+                ],
+                [
+                    "pacientName" => "Seu Jorge",
+                    "prescriptionCode" => "P01",
+                    "issueDate" => "2000-01-01",
+                ],
+                [
+                    "pacientName" => "Dona Maria",
+                    "prescriptionCode" => "P02",
+                    "issueDate" => "2000-01-02",
+                ],
+            ];
+
+            if(!$pacientName && !$prescriptionCode && !$issueDate){
+                $data = $prescriptions;
+            }else{
+                foreach ($prescriptions as $prescription) {
+                    if($pacientName == $prescription["pacientName"] || $prescriptionCode == $prescription["prescriptionCode"] || $issueDate == $prescription["issueDate"]){
+                        $data[] = $prescription;
+                    }
+                }
+            }
+
+            $page = "";
+            
+            if($data){
+                foreach ($data as $prescription) {
+                    $page .= '<tr>';
+                    if ($user["type"] != "pacient") {
+                        $page .= '
+                        <td class="text-start">' . $prescription["pacientName"] . '</td>
+                        <td>' . $prescription["prescriptionCode"] . '</td>
+                    ';
+                    } else {
+                        $page .= '<td class="text-start">' . $prescription["prescriptionCode"] . '</td>';
+                    }
+
+                    $page .= '
+                    <td>' . $prescription["issueDate"] . '</td>
+                    <td><span id="' . $prescription["prescriptionCode"] . '" class="detailPrescription material-icons-outlined">info</span></td>
+                ';
+
+                    $page .= '</tr>';
+                }
+            }
+            echo $page;
+        }else{
+            header("Location: /plataforma");
+        }
+    }
+
+    public function medicines(){
+        if(isset($_POST['js'])){
+            $prescriptionCode = $_POST["prescriptionCode"]; 
+            $medicines = [];
+    
+            $prescriptions = [
+                [
+                    "pacientName" => "João Vitor",
+                    "pacientCPF" => "450.344.568-50",
+                    "prescriptionCode" => "P14",
+                    "issueDate" => "2002-09-14",
+                    "doctorName" => "Dr. Luciano Alves",
+                    "medicines" => [
+                        [
+                            "medicineName" => "Dipirona",
+                            "medicineSize" => "250mg",
+                            "medicineTime" => "1cp a cada 8h"
+                        ],
+                        [
+                            "medicineName" => "Engov",
+                            "medicineSize" => "10ml",
+                            "medicineTime" => "1 a cada 12h"
+                        ]
+                    ]
+                ],
+                [
+                    "pacientName" => "Seu Jorge",
+                    "pacientCPF" => "123.456.789-01",
+                    "prescriptionCode" => "P01",
+                    "issueDate" => "2000-01-01",
+                    "doctorName" => "Dra. Luciane Alves",
+                    "medicines" => [
+                        [
+                            "medicineName" => "Dipirona",
+                            "medicineSize" => "250mg",
+                            "medicineTime" => "1cp a cada 8h"
+                        ],
+                        [
+                            "medicineName" => "Doralgina ",
+                            "medicineSize" => "500mg",
+                            "medicineTime" => "1cp por dia"
+                        ],
+                        [
+                            "medicineName" => "Doril ",
+                            "medicineSize" => "1g",
+                            "medicineTime" => "1cp por dia"
+                        ],
+                        [
+                            "medicineName" => "Tylenol ",
+                            "medicineSize" => "10ml",
+                            "medicineTime" => "1 a cada 12h"
+                        ],
+                    ]
+                ],
+                [
+                    "pacientName" => "Dona Maria",
+                    "pacientCPF" => "123.456.789-02",
+                    "prescriptionCode" => "P02",
+                    "issueDate" => "2000-01-02",
+                    "doctorName" => "Dr. Paulo Silvestre",
+                    "medicines" => [
+                        [
+                            "medicineName" => "Dipirona",
+                            "medicineSize" => "250mg",
+                            "medicineTime" => "1cp a cada 8h"
+                        ],
+                        [
+                            "medicineName" => "Novalgina ",
+                            "medicineSize" => "250mg",
+                            "medicineTime" => "1cp a cada 6h"
+                        ],
+                        [
+                            "medicineName" => "Sonrisal",
+                            "medicineSize" => "5ml",
+                            "medicineTime" => "1 a cada 12h"
+                        ],
+                    ]
+                ],
+            ];
+
+            foreach ($prescriptions as $prescription) {
+                if($prescriptionCode == $prescription["prescriptionCode"]){
+                    $medicines = $prescription;
+                }
+            }
+
+            echo json_encode($medicines);
+        }else{
+            header("Location: /plataforma");
         }
     }
 }

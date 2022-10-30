@@ -148,7 +148,9 @@ a:hover {
 
 /* MODAL */
 
-
+.modal .medicinesList{
+    resize: none;
+}
 
 /* MODAL END */
 

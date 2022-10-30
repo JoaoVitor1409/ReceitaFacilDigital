@@ -100,6 +100,18 @@
                 'action' => 'modalPrescription'
             );
 
+            $routes['medicines'] = array(
+                'route' => '/plataforma/medicamentos',
+                'controller' => 'userAreaController',
+                'action' => 'medicines'
+            );
+
+            $routes['tableHistory'] = array(
+                'route' => '/plataforma/tabelaHistorico',
+                'controller' => 'userAreaController',
+                'action' => 'tableHistory'
+            );
+
 
             $this->setRoutes($routes);  
         }        
