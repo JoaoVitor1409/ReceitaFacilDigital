@@ -143,6 +143,11 @@ a:hover {
     cursor: pointer;
 }
 
+.pagination .page-link{
+    padding: .375rem .75rem;
+    cursor: pointer;
+}
+
 /* HISTORY END */
 
 

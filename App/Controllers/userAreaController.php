@@ -9,42 +9,25 @@ use PDO;
 class userAreaController extends Action
 {
 
-    public function userArea() {
+    private $totalPrescriptions = 5;
+
+    public function userArea()
+    {
 
         $this->render("userArea", "layoutUser");
     }
 
-    public function userAreaScreen() {
+    public function userAreaScreen()
+    {
 
         if (!isset($_POST["screen"])) {
             header("Location: /");
         }
+        session_start();
 
         $screen = $_POST["screen"];
 
-        $user = [
-            "name" => "João Vitor Martins de Siqueira",
-            "type" => "doctor"
-        ];
-
-        $prescriptions = [
-            [
-                "pacientName" => "João Vitor",
-                "prescriptionCode" => "P14",
-                "issueDate" => "2002-09-14",
-            ],
-            [
-                "pacientName" => "Seu Jorge",
-                "prescriptionCode" => "P01",
-                "issueDate" => "2000-01-01",
-            ],
-            [
-                "pacientName" => "Dona Maria",
-                "prescriptionCode" => "P02",
-                "issueDate" => "2000-01-02",
-            ],
-        ];
-
+        $user = $_SESSION['rfd']['user'];
 
         $page = "";
 
@@ -170,6 +153,57 @@ class userAreaController extends Action
             $page = '<h1>Tela da Prescrição</h1>';
         } elseif ($screen == 'history') {
 
+            $_SESSION['rfd']['prescriptions'] = [
+                [
+                    "pacientName" => "João Vitor",
+                    "prescriptionCode" => "P01",
+                    "issueDate" => "2002-09-14",
+                ],
+                [
+                    "pacientName" => "João Vitor",
+                    "prescriptionCode" => "P02",
+                    "issueDate" => "2022-09-14",
+                ],
+                [
+                    "pacientName" => "João Vitor",
+                    "prescriptionCode" => "P03",
+                    "issueDate" => "2021-09-14",
+                ],
+                [
+                    "pacientName" => "João Vitor",
+                    "prescriptionCode" => "P04",
+                    "issueDate" => "2021-09-14",
+                ],
+                [
+                    "pacientName" => "João Vitor",
+                    "prescriptionCode" => "P05",
+                    "issueDate" => "2021-09-14",
+                ],
+                [
+                    "pacientName" => "Seu Jorge",
+                    "prescriptionCode" => "P06",
+                    "issueDate" => "2000-01-01",
+                ],
+                [
+                    "pacientName" => "Seu Jorge",
+                    "prescriptionCode" => "P07",
+                    "issueDate" => "2000-01-03",
+                ],
+                [
+                    "pacientName" => "Seu Jorge",
+                    "prescriptionCode" => "P08",
+                    "issueDate" => "2000-01-03",
+                ],
+                [
+                    "pacientName" => "Dona Maria",
+                    "prescriptionCode" => "P09",
+                    "issueDate" => "2000-01-02",
+                ],
+            ];
+
+            $prescriptions = $_SESSION['rfd']['prescriptions'];
+
+
             if ($user["type"] == "pacient") {
                 $options = [
                     "name" => false
@@ -230,149 +264,197 @@ class userAreaController extends Action
                 </div>
             ';
 
-            $page .= '</div>'; // row1
+
 
             $page .= '</form>'; // form
+            $page .= '</div>'; // row1
 
-
-            $page .= '
-                <div class="row mt-4 tableDiv">
-                    <table class="table text-center">
-                        <thead>
-            ';
-
-            if ($options["name"]) {
-                $page .= '
-                    <th class="text-start" scope="col">Paciente</th>
-                    <th scope="col">Código receita</th>
-                ';
-            } else {
-                $page .= '<th class="text-start" scope="col">Código receita</th>';
-            }
-
-            $page .= '
-                    <th scope="col">Data emissão</th>
-                    <th scope="col">Detalhar</th>
-                </thead>
-            ';
-
-            $page .= '<tbody>';
-
-            foreach ($prescriptions as $prescription) {
-                $page .= '<tr>';
-                if ($options["name"]) {
-                    $page .= '
-                    <td class="text-start">' . $prescription["pacientName"] . '</td>
-                    <td>' . $prescription["prescriptionCode"] . '</td>
-                ';
-                } else {
-                    $page .= '<td class="text-start">' . $prescription["prescriptionCode"] . '</td>';
-                }
-
-                $page .= '
-                <td>' . $prescription["issueDate"] . '</td>
-                <td><span id="' . $prescription["prescriptionCode"] . '" class="detailPrescription material-icons-outlined">info</span></td>
-            ';
-
-                $page .= '</tr>';
-            }
-
-
-            $page .= '
-                        </tbody>
-                    </table>
-                </div>
-            ';
+            $page .= '<div class="row mt-4 tableDiv">';
+            $page .= $this->tableHistory(true);
+            $page .= '</div>';
         }
 
         echo $page;
     }
 
-    public function modalPrescription() {
+    public function modalPrescription()
+    {
 
-        if(isset($_GET['js'])){
-            $this->render('/components/modalPrescription', null);
-        }else{
+        if (!isset($_GET['js'])) {
             header("Location: /plataforma");
         }
+
+        $this->render('/components/modalPrescription', null);
     }
 
-    public function tableHistory() {
+    public function tableHistory($local = false)
+    {
 
-        if(isset($_POST["js"])){
-            $user = [
-                "name" => "João Vitor Martins de Siqueira",
-                "type" => "doctor"
-            ];
-            $pacientName = null;
-            if(isset($_POST["pacientName"])){
-                $pacientName = $_POST["pacientName"];
-            }
+        if (!isset($_POST["js"]) && !$local) {
+            header("Location: /plataforma");
+        }
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+        $user = $_SESSION['rfd']['user'];
+
+        $pacientName = null;
+        $prescriptionCode = null;
+        $issueDate = null;
+        $pageNumber = 1;
+
+
+        if (isset($_POST["pacientName"])) {
+            $pacientName = $_POST["pacientName"];
+        }
+
+        if (isset($_POST["prescriptionCode"])) {
             $prescriptionCode = $_POST["prescriptionCode"];
+        }
+
+        if (isset($_POST["issueDate"])) {
             $issueDate = $_POST["issueDate"];
-            $data = [];
+        }
 
-            $prescriptions = [
-                [
-                    "pacientName" => "João Vitor",
-                    "prescriptionCode" => "P14",
-                    "issueDate" => "2002-09-14",
-                ],
-                [
-                    "pacientName" => "Seu Jorge",
-                    "prescriptionCode" => "P01",
-                    "issueDate" => "2000-01-01",
-                ],
-                [
-                    "pacientName" => "Dona Maria",
-                    "prescriptionCode" => "P02",
-                    "issueDate" => "2000-01-02",
-                ],
-            ];
+        if (isset($_POST["page"])) {
+            $pageNumber = $_POST["page"];
+        }
 
-            if(!$pacientName && !$prescriptionCode && !$issueDate){
-                $data = $prescriptions;
-            }else{
-                foreach ($prescriptions as $prescription) {
-                    if($pacientName == $prescription["pacientName"] || $prescriptionCode == $prescription["prescriptionCode"] || $issueDate == $prescription["issueDate"]){
-                        $data[] = $prescription;
-                    }
+
+
+
+        $data = [];
+
+        $prescriptions = $_SESSION['rfd']['prescriptions'];
+
+        if (!$pacientName && !$prescriptionCode && !$issueDate) {
+            $data = $prescriptions;
+        } else {
+            foreach ($prescriptions as $prescription) {
+                if ($pacientName == $prescription["pacientName"] || $prescriptionCode == $prescription["prescriptionCode"] || $issueDate == $prescription["issueDate"]) {
+                    $data[] = $prescription;
                 }
             }
+        }
 
-            $page = "";
-            
-            if($data){
-                foreach ($data as $prescription) {
+        $page = "";
+
+        if ($data) {
+            $page .= '                    
+                    <table class="table text-center">
+                        <thead>
+                ';
+
+            if ($user["type"] != "pacient") {
+                $page .= '
+                        <th class="text-start" scope="col">Paciente</th>
+                        <th scope="col">Código receita</th>
+                    ';
+            } else {
+                $page .= '<th class="text-start" scope="col">Código receita</th>';
+            }
+
+            $page .= '
+                        <th scope="col">Data emissão</th>
+                        <th scope="col">Detalhar</th>
+                    </thead>
+            ';
+
+            $page .= '<tbody>';
+
+            $limit = $this->totalPrescriptions * $pageNumber;
+            for ($i = $limit - $this->totalPrescriptions; $i < $limit; $i++) {
+                if (isset($data[$i])) {
                     $page .= '<tr>';
                     if ($user["type"] != "pacient") {
                         $page .= '
-                        <td class="text-start">' . $prescription["pacientName"] . '</td>
-                        <td>' . $prescription["prescriptionCode"] . '</td>
-                    ';
+                            <td class="text-start">' . $data[$i]["pacientName"] . '</td>
+                            <td>' . $data[$i]["prescriptionCode"] . '</td>
+                        ';
                     } else {
-                        $page .= '<td class="text-start">' . $prescription["prescriptionCode"] . '</td>';
+                        $page .= '<td class="text-start">' . $data[$i]["prescriptionCode"] . '</td>';
                     }
 
                     $page .= '
-                    <td>' . $prescription["issueDate"] . '</td>
-                    <td><span id="' . $prescription["prescriptionCode"] . '" class="detailPrescription material-icons-outlined">info</span></td>
-                ';
+                        <td>' . $data[$i]["issueDate"] . '</td>
+                        <td><span id="' . $data[$i]["prescriptionCode"] . '" class="detailPrescription material-icons-outlined">info</span></td>
+                    ';
 
                     $page .= '</tr>';
                 }
             }
-            echo $page;
-        }else{
-            header("Location: /plataforma");
+
+            foreach ($data as $prescription) {
+            }
+
+
+
+            $page .= '</tbody></table>';
+            $page .= $this->paginationStyle($pageNumber, $data);
         }
+
+        if (isset($_POST['js'])) {
+            echo $page;
+        }
+        return $page;
     }
 
-    public function medicines(){
-        if(isset($_POST['js'])){
-            $prescriptionCode = $_POST["prescriptionCode"]; 
+
+    public function paginationStyle($pageNumber, $prescriptions)
+    {
+        $page = '
+            <div class="row paginationMenu">
+                <div class="col-12 d-flex justify-content-center">
+                    <nav>
+                        <ul class="pagination">
+        ';
+
+        if (ceil(count($prescriptions) / $this->totalPrescriptions) == 1) {
+            $page .= '
+                <li class="page-item pageNumber 1 active">
+                    <span class="page-link">1</span>
+                </li>
+            ';
+        } else {
+            $page .= '
+                <li class="page-item pagePrevious disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+            ';
+
+            for ($i = 1; $i <= ceil(count($prescriptions) / $this->totalPrescriptions); $i++) {
+                $active = $i == $pageNumber ? 'active' : null;
+                $page .= '
+                    <li class="page-item ' . $active . ' pageNumber ' . $i . '">
+                        <span class="page-link">' . $i . '</span>
+                    </li>
+                ';
+            }
+
+
+            $page .= '
+                <li class="page-item pageNext">
+                    <span class="page-link">Next</span>
+                </li>
+            ';
+        }
+
+        $page .= '
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        ';
+
+        return $page;
+    }
+
+    public function medicines()
+    {
+        if (isset($_POST['js'])) {
+            $prescriptionCode = $_POST["prescriptionCode"];
             $medicines = [];
-    
+
             $prescriptions = [
                 [
                     "pacientName" => "João Vitor",
@@ -449,13 +531,13 @@ class userAreaController extends Action
             ];
 
             foreach ($prescriptions as $prescription) {
-                if($prescriptionCode == $prescription["prescriptionCode"]){
+                if ($prescriptionCode == $prescription["prescriptionCode"]) {
                     $medicines = $prescription;
                 }
             }
 
             echo json_encode($medicines);
-        }else{
+        } else {
             header("Location: /plataforma");
         }
     }

@@ -7,6 +7,13 @@
 
     class AuthController extends Action{
         public function login(){
+            session_start();
+            $_SESSION['rfd'] = [
+                'user' => [
+                    "name" => "João Vitor Martins de Siqueira",
+                    "type" => "doctor"
+                ]
+            ];
             header("Location: /plataforma");
         }
 

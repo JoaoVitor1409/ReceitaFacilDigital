@@ -18,13 +18,43 @@ $(document).ready(() => {
     // Search prescriptions
 
     $(document).on("click", ".searchBtn", () => {
-        let data = $(".formSearchPrescription").serialize();
-
-        loadHistoryTable(data);
+        loadHistoryTable();
 
         return false;
     });
 
+
+    // Pagination
+    $(document).on("click", ".pageNumber", function () {
+        $(".pageNumber").removeClass("active");
+        $(this).addClass("active");
+
+        paginationStyle();
+    })
+
+    $(document).on("click", ".pagePrevious", () => {
+        if (!$(".pagePrevious").hasClass("disabled")) {
+            let curPage = $(".pagination .active");
+            let previousPageNumber = parseInt(curPage.text(), 10) - 1;
+
+            $('.' + previousPageNumber).addClass("active");
+            curPage.removeClass("active")
+
+            paginationStyle();
+        }
+    });
+
+    $(document).on("click", ".pageNext", () => {
+        if (!$(".pageNext").hasClass("disabled")) {
+            let curPage = $(".pagination .active");
+            let nextPageNumber = parseInt(curPage.text(), 10) + 1;
+
+            $('.' + nextPageNumber).addClass("active");
+            curPage.removeClass("active")
+
+            paginationStyle();
+        }
+    });
 
 
     // Load screens
@@ -85,28 +115,17 @@ $(document).ready(() => {
             type: "POST",
             url: "/plataforma/medicamentos",
             data: "js=true&prescriptionCode=" + prescriptionCode,
-            dataType:"JSON",
+            dataType: "JSON",
             success: function (result) {
                 $(".modal-title").html("Receita número " + prescriptionCode);
-
-                /*
-                        <input type="text" class="pacientName" disabled>
-
-                        <input type="text" class="pacientCPF" disabled>
-
-                        <input type="text" class="issueDate" disabled>
-
-                        <input type="text" class="doctorName" disabled>
-
-                */
 
                 $(".pacientName").val(result["pacientName"]);
                 $(".pacientCPF").val(result["pacientCPF"]);
                 $(".issueDate").val(result["issueDate"]);
                 $(".doctorName").val(result["doctorName"]);
-                
+
                 $(".medicinesList").html("");
-                Object.values(result["medicines"]).forEach((medicine, index)=> {
+                Object.values(result["medicines"]).forEach((medicine, index) => {
                     let length = index + 1 + '. ' + medicine["medicineName"] + ' ' + medicine["medicineSize"] + ' ' + medicine["medicineTime"];
                     length = 35 - length.length;
                     let list = index + 1 + '. ' + medicine["medicineName"] + ' ' + medicine["medicineSize"] + ' ';
@@ -114,7 +133,7 @@ $(document).ready(() => {
                         list += '_';
                     }
                     list += ' ' + medicine["medicineTime"];
-                    if(index != result["medicines"].length - 1){
+                    if (index != result["medicines"].length - 1) {
                         list += '\n';
                     }
                     $(".medicinesList").append(list);
@@ -129,17 +148,41 @@ $(document).ready(() => {
         });
     }
 
-    function loadHistoryTable(data) {
+    function loadHistoryTable(page = 1) {
+        let data = $(".formSearchPrescription").serialize();
         $.ajax({
             type: "POST",
             url: "/plataforma/tabelaHistorico",
-            data: "js=true&" + data,
+            data: "js=true&page=" + page + '&paginationStyle=' + paginationStyle + '&' + data,
             success: function (result) {
-                $("tbody").html(result);
+                $(".tableDiv").html(result);
+                if (page != 1) {
+                    $(".pagePrevious").removeClass("disabled");
+                } else {
+                    $(".pagePrevious").addClass("disabled");
+                }
+        
+                if (page != $(".pageNumber").length) {
+                    $(".pageNext").removeClass("disabled");
+                } else {
+                    $(".pageNext").addClass("disabled");
+                }
+
+                if(!result){
+                    $(".paginationMenu").remove();
+                }
+                
             },
             error: function (error) {
                 console.log(error);
             }
         });
+    }
+
+    function paginationStyle() {
+        let curPage = parseInt($(".pagination .active").text(), 10);
+
+
+        loadHistoryTable(curPage);
     }
 });
