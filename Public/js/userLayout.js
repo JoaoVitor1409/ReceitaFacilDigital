@@ -1,24 +1,73 @@
 $(document).ready(() => {
 
+    // Masks
+    $(document).on("focus", ".cpfInput", () => {
+        $(".cpfInput").mask("000.000.000-00");
+    });
+
     // prescription detail popup
 
     $(".modals").load("/plataforma/components/modalReceita?js=true");
+
+    $(document).on('click', '.cardSrcOption', function () {
+
+        let srcMethod = $(this).attr("id");
+        if (srcMethod == "CPF") {
+            $(".modalBody").removeClass("hidden");
+            $(".notFound").addClass("hidden");
+            $(".cpfInput").val("");
+            $(".pacientName").val("");
+            $(".pacientCPF").val("");
+            $(".issueDate").val("");
+            $(".doctorName").val("");
+
+            $(".medicinesList").html("");
+
+            $(".formSearchPrescription").removeClass("hidden")
+            $(".modalTitle").addClass("hidden")
+            $("#detailPrescription").modal("show");
+        } else if (srcMethod == "qrCode") {
+            alert(srcMethod);
+            let code = "P14"
+            $(".modalTitle").html("Receita número " + code)
+
+            $(".formSearchPrescription").addClass("hidden")
+            $(".modalTitle").removeClass("hidden")
+            $("#detailPrescription").modal("show");
+            getPrescription(code);
+        }
+        return false;
+    });
+
+
+    // Search prescription popup
+
+    // $(".modals").load("/plataforma/components/modalReceita?js=true");
 
     $(document).on('click', '.detailPrescription', function () {
 
         let prescriptionCode = $(this).attr("id");
 
-        $(".modal-title").html("Receita número " + prescriptionCode);
+        $(".modalTitle").html("Receita número " + prescriptionCode);
         loadMedicines(prescriptionCode);
         $("#detailPrescription").modal("show");
         return false;
     });
 
-
     // Search prescriptions
 
     $(document).on("click", ".searchBtn", () => {
         loadHistoryTable();
+
+        return false;
+    });
+
+
+    //Search prescription
+
+    $(document).on("click", ".searchBtnCPF", () => {
+        let cpf = $(".cpfInput").val();
+        getPrescription(cpf);
 
         return false;
     });
@@ -59,8 +108,8 @@ $(document).ready(() => {
 
     // Load screens
 
-    // loadScreen("home");
-    loadScreen("history");
+    loadScreen("home");
+    // loadScreen("prescription");
 
     $(document).on("click", ".home", () => {
         loadScreen("home");
@@ -161,17 +210,17 @@ $(document).ready(() => {
                 } else {
                     $(".pagePrevious").addClass("disabled");
                 }
-        
+
                 if (page != $(".pageNumber").length) {
                     $(".pageNext").removeClass("disabled");
                 } else {
                     $(".pageNext").addClass("disabled");
                 }
 
-                if(!result){
+                if (!result) {
                     $(".paginationMenu").remove();
                 }
-                
+
             },
             error: function (error) {
                 console.log(error);
@@ -182,7 +231,55 @@ $(document).ready(() => {
     function paginationStyle() {
         let curPage = parseInt($(".pagination .active").text(), 10);
 
-
         loadHistoryTable(curPage);
+    }
+
+    function getPrescription(code) {
+        let key = "";
+
+        if (code.length == 14) {
+            key = "cpf=" + code;
+        }else{
+            key = "code=" + code;
+        }
+        $(".modalBody").removeClass("hidden");
+        $(".notFound").addClass("hidden");
+
+        $.ajax({
+            type: "POST",
+            url: "/plataforma/pesquisaReceita",
+            data: key,
+            dataType: "JSON",
+            success: function (result) {
+                if (result["pacientName"]) {
+                    $(".pacientName").val(result["pacientName"]);
+                    $(".pacientCPF").val(result["pacientCPF"]);
+                    $(".issueDate").val(result["issueDate"]);
+                    $(".doctorName").val(result["doctorName"]);
+
+                    $(".medicinesList").html("");
+                    Object.values(result["medicines"]).forEach((medicine, index) => {
+                        let length = index + 1 + '. ' + medicine["medicineName"] + ' ' + medicine["medicineSize"] + ' ' + medicine["medicineTime"];
+                        length = 35 - length.length;
+                        let list = index + 1 + '. ' + medicine["medicineName"] + ' ' + medicine["medicineSize"] + ' ';
+                        for (let i = 0; i <= length; i++) {
+                            list += '_';
+                        }
+                        list += ' ' + medicine["medicineTime"];
+                        if (index != result["medicines"].length - 1) {
+                            list += '\n';
+                        }
+                        $(".medicinesList").append(list);
+                    });
+                    $(".medicinesList").attr("rows", result["medicines"].length);
+                } else {
+                    $(".modalBody").addClass("hidden");
+                    $(".notFound").removeClass("hidden");
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
     }
 });

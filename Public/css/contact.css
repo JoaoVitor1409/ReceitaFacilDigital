@@ -42,6 +42,14 @@
     border-radius: 0 10px 10px 0;
 }
 
+.contact form .inputs .inputEmail label {
+    padding: 1%;
+}
+
+.contact form .inputs .inputEmail input {
+    padding: 1%;
+}
+
 .contact form .inputs input::placeholder {
     color: #8E9398;
 }
@@ -83,7 +91,7 @@
     transition: 0.3s;
 }
 
-.contact form .btnSend:hover{
+.contact form .btnSend:hover {
     transition: 0.5s;
     background-color: #81d5fc;
 }
@@ -145,12 +153,12 @@
         font-size: 1.25em;
         width: 100%;
     }
-    
-    .contact form .inputArea{
+
+    .contact form .inputArea {
         margin-bottom: 3%;
     }
 
-    .contact form .inputs{
+    .contact form .inputs {
         margin: 0;
     }
 }
@@ -173,7 +181,7 @@
 }
 
 @media screen and (max-width: 510px) {
-    .contact p{
+    .contact p {
         font-size: 0.9em;
     }
 
@@ -187,7 +195,7 @@
         font-size: 0.9em;
     }
 
-    .contact form .inputs .form-check .form-check-label{
+    .contact form .inputs .form-check .form-check-label {
         font-size: 0.9em;
     }
 
@@ -198,7 +206,7 @@
 
 
 @media screen and (max-width: 410px) {
-    .contact p{
+    .contact p {
         font-size: 0.8em;
     }
 
@@ -211,18 +219,18 @@
     .contact form textarea {
         font-size: 0.8em;
     }
-    
-    .contact form .inputs .form-check .form-check-label{
+
+    .contact form .inputs .form-check .form-check-label {
         font-size: 0.8em;
     }
-    
+
     .contact form .btnSend {
         font-size: 0.9em;
     }
 }
 
 @media screen and (max-width: 300px) {
-    .contact p{
+    .contact p {
         font-size: 0.7em;
     }
 
@@ -236,7 +244,7 @@
         font-size: 0.7em;
     }
 
-    .contact form .inputs .inputIcon{
+    .contact form .inputs .inputIcon {
         font-size: 0.8em;
     }
 }

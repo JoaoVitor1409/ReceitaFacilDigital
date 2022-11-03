@@ -45,7 +45,7 @@ class userAreaController extends Action
                     "history" => true,
                     "templates" => true
                 ];
-            } else {
+            } elseif ($user['type'] == "farmacy") {
                 $options = [
                     "prescription" => "Buscar receitas",
                     "history" => true,
@@ -149,9 +149,38 @@ class userAreaController extends Action
             $page .= ' </div>'; // row 2
 
             $page .= ' </div>'; // cards
-        } elseif ($screen == 'prescription') {
-            $page = '<h1>Tela da Prescrição</h1>';
-        } elseif ($screen == 'history') {
+        } elseif ($screen == "prescription") {
+            if ($user['type'] == 'doctor') {
+                $page = '<h1>Tela de criar a Prescrição</h1>';
+            } elseif ($user['type'] == 'farmacy') {
+                $page = '
+                    <div class="row">
+                        <div class="col-md-12 text-center titleSrc">
+                            Qual método gostaria de buscar a receita?
+                        </div>
+                    </div>
+                
+                    <div class="row justify-content-around mt-5">
+                        <div class="col-5 d-flex align-items-center justify-content-between flex-column cardSrcOption" id="qrCode">
+                            <div class="col-10 d-flex align-items-center justify-content-center">
+                                <span class="material-icons imgSrcOption qrCodeSrc">qr_code_2</span>
+                            </div>
+                            <div class="col-9 btnSrcOption d-flex align-items-center justify-content-center text-center">
+                                <h1>Ler Qr code da receita</h1>
+                            </div>
+                        </div>
+                        <div class="col-5 off-set-2 d-flex align-items-center justify-content-between flex-column cardSrcOption" id="CPF">
+                            <div class="col-10 d-flex align-items-center justify-content-center">
+                                <span class="material-icons-outlined imgSrcOption prescriptionSrc">medical_information</span>
+                            </div>
+                            <div class="col-9 btnSrcOption d-flex align-items-center justify-content-center text-center">
+                                <h1>Ler pelo CPF do paciente</h1>
+                            </div>
+                        </div>
+                    </div>
+                ';
+            }
+        } elseif ($screen == "history") {
 
             $_SESSION['rfd']['prescriptions'] = [
                 [
@@ -272,6 +301,8 @@ class userAreaController extends Action
             $page .= '<div class="row mt-4 tableDiv">';
             $page .= $this->tableHistory(true);
             $page .= '</div>';
+        } elseif($screen ==  "templates"){
+            $page = '<h1>Tela dos modelos</h1>';
         }
 
         echo $page;
@@ -540,5 +571,92 @@ class userAreaController extends Action
         } else {
             header("Location: /plataforma");
         }
+    }
+
+    public function getPrescription()
+    {
+        $cpf = false;
+        if(isset($_POST["cpf"])){
+            $code = $_POST["cpf"];
+            $cpf = true;
+        }else{
+            $code = $_POST['code'];
+        }
+        $prescription = [];
+
+        $prescriptions = [
+            [
+                "pacientName" => "João Vitor",
+                "pacientCPF" => "450.344.568-50",
+                "prescriptionCode" => "P14",
+                "issueDate" => "2002-09-14",
+                "doctorName" => "Dr. Luciano Alves",
+                "medicines" => [
+                    [
+                        "medicineName" => "Dipirona",
+                        "medicineSize" => "250mg",
+                        "medicineTime" => "1cp a cada 8h"
+                    ],
+                    [
+                        "medicineName" => "Engov",
+                        "medicineSize" => "10ml",
+                        "medicineTime" => "1 a cada 12h"
+                    ]
+                ]
+            ],
+            [
+                "pacientName" => "Paulo Roberto",
+                "pacientCPF" => "123.456.789-00",
+                "prescriptionCode" => "P01",
+                "issueDate" => "2000-01-01",
+                "doctorName" => "Dra. Maria Alves",
+                "medicines" => [
+                    [
+                        "medicineName" => "Dipirona",
+                        "medicineSize" => "250mg",
+                        "medicineTime" => "1cp a cada 8h"
+                    ],
+                    [
+                        "medicineName" => "Engov",
+                        "medicineSize" => "10ml",
+                        "medicineTime" => "1 a cada 12h"
+                    ]
+                ]
+            ],
+            [
+                "pacientName" => "Maria Julia",
+                "pacientCPF" => "123.456.789-01",
+                "prescriptionCode" => "P02",
+                "issueDate" => "2000-02-01",
+                "doctorName" => "Dr. Rodrigo Guedes",
+                "medicines" => [
+                    [
+                        "medicineName" => "Dipirona",
+                        "medicineSize" => "250mg",
+                        "medicineTime" => "1cp a cada 8h"
+                    ],
+                    [
+                        "medicineName" => "Engov",
+                        "medicineSize" => "10ml",
+                        "medicineTime" => "1 a cada 12h"
+                    ]
+                ]
+            ],
+        ];
+
+        foreach ($prescriptions as $p) {
+            if($cpf){
+                if ($code == $p["pacientCPF"]) {
+                    $prescription = $p;
+                }
+            }else{
+                if ($code == $p["prescriptionCode"]) {
+                    $prescription = $p;
+                }
+            }
+            
+        }
+
+        echo json_encode($prescription);
     }
 }

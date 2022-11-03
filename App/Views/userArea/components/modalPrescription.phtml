@@ -1,42 +1,62 @@
 <div class="modal fade" id="detailPrescription">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title">Receita número </h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header row">
+                <div class="modal-title my-2 row">
+                    <h1 class="modalTitle"></h1>
+                    <form class="formSearchPrescription hidden row justify-content-evenly">
+                        <div class="col-md-5 col-10 inputArea">
+                            <div class="input-group d-flex align-items-center">
+                                <label for="cpf" class="input-group-text inputIcon">
+                                    <span class="material-icons-outlined">badge</span>
+                                </label>
+                                <input type="text" name="cpf" class="form-control cpfInput" id="cpf" placeholder="CPF" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-10">
+                            <button class="searchBtnCPF d-flex align-items-center justify-content-center">
+                                <span class="material-icons-outlined">search</span>
+                                Buscar
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <div class="modal-body">
-                <div class="row justify-content-between align-items-center">
-                    <div class="col-sm-5 d-flex flex-column">
-                        <label for="pacientName" class="inputLabel">Nome do Paciente</label>
-                        <input type="text" class="pacientName" disabled>
+                <h1 class="notFound hidden">Receita não encontrada!</h1>
+                <div class="modalBody">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-sm-5 d-flex flex-column">
+                            <label for="pacientName" class="inputLabel">Nome do Paciente</label>
+                            <input type="text" class="pacientName" disabled>
+                        </div>
+                        <div class="col-sm-5 d-flex flex-column">
+                            <label for="pacientCPF" class="inputLabel">CPF do Paciente</label>
+                            <input type="text" class="pacientCPF" disabled>
+                        </div>
                     </div>
-                    <div class="col-sm-5 d-flex flex-column">
-                        <label for="pacientCPF" class="inputLabel">CPF do Paciente</label>
-                        <input type="text" class="pacientCPF" disabled>
-                    </div>
-                </div>
 
-                <div class="row justify-content-between align-items-center">
-                    <div class="col-sm-5 d-flex flex-column">
-                        <label for="issueDate" class="inputLabel">Data de Emissão</label>
-                        <input type="text" class="issueDate" disabled>
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-sm-5 d-flex flex-column">
+                            <label for="issueDate" class="inputLabel">Data de Emissão</label>
+                            <input type="text" class="issueDate" disabled>
+                        </div>
+                        <div class="col-sm-5 d-flex flex-column">
+                            <label for="doctorName" class="inputLabel">Nome do Médico</label>
+                            <input type="text" class="doctorName" disabled>
+                        </div>
                     </div>
-                    <div class="col-sm-5 d-flex flex-column">
-                        <label for="doctorName" class="inputLabel">Nome do Médico</label>
-                        <input type="text" class="doctorName" disabled>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-12 d-flex flex-column">
-                        <label for="medicinesList" class="inputLabel">Medicamentos</label>
-                        <textarea class="medicinesList text-justify" disabled rows=4></textarea>
+                    <div class="row">
+                        <div class="col-12 d-flex flex-column">
+                            <label for="medicinesList" class="inputLabel">Medicamentos</label>
+                            <textarea class="medicinesList text-justify" disabled rows=4></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

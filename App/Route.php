@@ -112,6 +112,12 @@
                 'action' => 'tableHistory'
             );
 
+            $routes['getPrescription'] = array(
+                'route' => '/plataforma/pesquisaReceita',
+                'controller' => 'userAreaController',
+                'action' => 'getPrescription'
+            );
+
 
             $this->setRoutes($routes);  
         }        

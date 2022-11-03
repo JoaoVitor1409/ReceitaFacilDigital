@@ -7,6 +7,15 @@ a:hover {
     color: #000;
 }
 
+img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 /* CONTENT */
 
 .content {
@@ -96,7 +105,7 @@ a:hover {
     border: none;
 }
 
-.formSearchPrescription input{
+.formSearchPrescription input {
     font-size: 0.9em;
     margin-bottom: 2%;
 }
@@ -119,7 +128,7 @@ a:hover {
     box-shadow: none;
 }
 
-.formSearchPrescription .searchBtn{
+.formSearchPrescription .searchBtn {
     background-color: #222743;
     color: #f0f0f0;
     padding: 2%;
@@ -130,20 +139,20 @@ a:hover {
     border: none;
 }
 
-.tableDiv{
+.tableDiv {
     max-height: 300px;
     width: 100%;
     overflow: auto;
     display: inline-block;
 }
 
-.table .detailPrescription{
+.table .detailPrescription {
     font-size: 1.2em;
     color: #00f;
     cursor: pointer;
 }
 
-.pagination .page-link{
+.pagination .page-link {
     padding: .375rem .75rem;
     cursor: pointer;
 }
@@ -153,11 +162,115 @@ a:hover {
 
 /* MODAL */
 
-.modal .medicinesList{
+.modal .medicinesList {
     resize: none;
 }
 
+.modal input,
+.modal textarea {
+    border-radius: 8px;
+}
+
+.modal .formSearchPrescription .inputArea {
+    border: 1px solid #000;
+    border-radius: 7px;
+}
+
+.modal .formSearchPrescription .inputIcon {
+    background-color: #fff;
+    border-radius: 30% 0 0 30%;
+    border: 1px;
+}
+
+.modal .formSearchPrescription .inputIcon span {
+    color: #8E9398;
+    font-size: 1.5em;
+    margin-right: -1px;
+    border: none;
+}
+
+.modal .formSearchPrescription input[type="text"] {
+    font-size: 0.9em;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0 2%;
+}
+
+.modal .formSearchPrescription input::placeholder {
+    color: #8E9398;
+}
+
+.modal .formSearchPrescription input:focus {
+    margin: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.modal .formSearchPrescription .searchBtnCPF {
+    background-color: #222743;
+    color: #f0f0f0;
+    padding: 2%;
+    width: 100%;
+    height: 36px;
+    font-size: 1.1em;
+    border-radius: 10px;
+    border: none;
+}
+
+.hidden {
+    display: none;
+}
+
 /* MODAL END */
+
+
+/* SEARCH PRESCRIPTION */
+
+.titleSrc {
+    font-size: 1.6em;
+    font-weight: 600;
+}
+
+.cardSrcOption {
+    background-color: #fff;
+    border-radius: 14px;
+    padding: 10px;
+    border-top: 0.5px solid #000;
+    border-right: 0.5px solid #000;
+    border-bottom: 2px solid #000;
+    border-left: 2px solid #000;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.cardSrcOption .imgSrcOption {
+    font-size: 15em;
+}
+
+.verticalLineSrc {
+    height: 100%;
+    width: 4px;
+    background-color: #000;
+    opacity: 1;
+    border-radius: 10px;
+}
+
+.cardSrcOption .btnSrcOption {
+    background-color: #212121;
+    color: #fff;
+    height: 90px;
+    border-radius: 14px;
+    padding: 5%;
+
+    margin: 30px 0;
+}
+
+.cardSrcOption .btnSrcOption h1 {
+    font-size: 1.2em;
+}
+
+/* SEARCH PRESCRIPTION  END*/
 
 
 /* RESPONSIBILITY */
@@ -183,20 +296,33 @@ a:hover {
         width: 90%;
     }
 
-    .formSearchPrescription .inputLabel{
+    .formSearchPrescription .inputLabel {
         font-size: 0.9em;
     }
 
-    .formSearchPrescription input{
+    .formSearchPrescription input {
         font-size: 0.8em;
     }
 
-    .formSearchPrescription .searchBtn{
+    .formSearchPrescription .searchBtn,
+    .modal .formSearchPrescription .searchBtnCPF {
         font-size: 1em;
     }
 
-    .table *{
+    .table * {
         font-size: 0.95em;
+    }
+
+    .titleSrc {
+        font-size: 1.5em;
+    }
+
+    .cardSrcOption .imgSrcOption {
+        font-size: 13em;
+    }
+
+    .cardSrcOption .btnSrcOption h1 {
+        font-size: 1.1em;
     }
 }
 
@@ -217,20 +343,37 @@ a:hover {
         font-size: 1.2em;
     }
 
-    .formSearchPrescription .inputLabel{
+    .formSearchPrescription .inputLabel {
         font-size: 0.8em;
     }
 
-    .formSearchPrescription input{
+    .formSearchPrescription input {
         font-size: 0.7em;
     }
 
-    .formSearchPrescription .searchBtn{
+    .formSearchPrescription .searchBtn,
+    .modal .formSearchPrescription .searchBtnCPF {
         font-size: 0.9em;
     }
 
-    .table *{
+    .table * {
         font-size: 0.9em;
+    }
+
+    .titleSrc {
+        font-size: 1.4em;
+    }
+
+    .cardSrcOption .imgSrcOption {
+        font-size: 10em;
+    }
+
+    .cardSrcOption .btnSrcOption h1 {
+        font-size: 1em;
+    }
+
+    .modal .inputArea{
+        margin-bottom: 2%;
     }
 }
 
@@ -251,15 +394,15 @@ a:hover {
         font-size: 1.1em;
     }
 
-    .formSearchPrescription .inputLabel{
+    .formSearchPrescription .inputLabel {
         font-size: 0.7em;
     }
 
-    .formSearchPrescription input{
+    .formSearchPrescription input {
         font-size: 0.6em;
     }
 
-    .formSearchPrescription .searchBtn{
+    .formSearchPrescription .searchBtn {
         font-size: 0.7em;
         height: 30px;
     }
@@ -270,7 +413,7 @@ a:hover {
         font-size: 0.7em;
     }
 
-    .table *{
+    .table * {
         font-size: 0.85em;
     }
 }
@@ -280,20 +423,36 @@ a:hover {
         font-size: 0.8em;
     }
 
-    .formSearchPrescription .inputLabel{
+    .formSearchPrescription .inputLabel {
         font-size: 0.8em;
     }
 
-    .formSearchPrescription input{
+    .formSearchPrescription input {
         font-size: 0.8em;
     }
 
-    .formSearchPrescription .searchBtn{
+    .formSearchPrescription .searchBtn {
         font-size: 1em;
     }
 
-    .table *{
+    .table * {
         font-size: 0.9em;
+    }
+
+    .verticalLineSrc {
+        display: none;
+    }
+
+    .cardSrcOption .imgSrcOption {
+        font-size: 10em;
+    }
+
+    .cardSrcOption .btnSrcOption h1 {
+        font-size: 1em;
+    }
+
+    .cardSrcOption .btnSrcOption {
+        width: 100%;
     }
 }
 
@@ -314,20 +473,32 @@ a:hover {
         font-size: 1.1em;
     }
 
-    .formSearchPrescription .inputLabel{
+    .formSearchPrescription .inputLabel {
         font-size: 0.7em;
     }
 
-    .formSearchPrescription input{
+    .formSearchPrescription input {
         font-size: 0.7em;
     }
 
-    .formSearchPrescription .searchBtn{
+    .formSearchPrescription .searchBtn {
         font-size: 0.9em;
     }
 
-    .table *{
+    .table * {
         font-size: 0.85em;
+    }
+
+    .titleSrc {
+        font-size: 1.2em;
+    }
+
+    .cardSrcOption .imgSrcOption {
+        font-size: 8em;
+    }
+
+    .cardSrcOption .btnSrcOption h1 {
+        font-size: 0.9em;
     }
 }
 
@@ -354,19 +525,19 @@ a:hover {
         width: 50%;
     }
 
-    .formSearchPrescription .inputLabel{
+    .formSearchPrescription .inputLabel {
         font-size: 0.8em;
     }
 
-    .formSearchPrescription input{
+    .formSearchPrescription input {
         font-size: 0.8em;
     }
 
-    .formSearchPrescription .searchBtn{
+    .formSearchPrescription .searchBtn {
         font-size: 0.9em;
     }
 
-    .tableDiv{
+    .tableDiv {
         max-height: 150px;
     }
 }
@@ -394,15 +565,27 @@ a:hover {
         font-size: 1em;
     }
 
-    .formSearchPrescription .inputLabel{
+    .formSearchPrescription .inputLabel {
         font-size: 0.7em;
     }
 
-    .formSearchPrescription input{
+    .formSearchPrescription input {
         font-size: 0.7em;
     }
 
-    .formSearchPrescription .searchBtn{
+    .formSearchPrescription .searchBtn {
+        font-size: 0.8em;
+    }
+
+    .titleSrc {
+        font-size: 1.1em;
+    }
+
+    .cardSrcOption .imgSrcOption {
+        font-size: 7em;
+    }
+
+    .cardSrcOption .btnSrcOption h1 {
         font-size: 0.8em;
     }
 }
@@ -419,6 +602,22 @@ a:hover {
     .cardOption {
         width: 80%;
     }
+
+    .titleSrc {
+        font-size: 1.1em;
+    }
+
+    .cardSrcOption .imgSrcOption {
+        font-size: 7em;
+    }
+
+    .cardSrcOption .btnSrcOption h1 {
+        font-size: 0.7em;
+    }
+
+    .cardSrcOption .btnSrcOption {
+        height: 60px;
+    }
 }
 
 @media screen and (max-width: 370px) {
@@ -434,16 +633,28 @@ a:hover {
         font-size: 1em;
     }
 
-    .formSearchPrescription .inputLabel{
+    .formSearchPrescription .inputLabel {
         font-size: 0.6em;
     }
 
-    .formSearchPrescription input{
+    .formSearchPrescription input {
         font-size: 0.6em;
     }
 
-    .formSearchPrescription .searchBtn{
+    .formSearchPrescription .searchBtn {
         font-size: 0.7em;
+    }
+
+    .titleSrc {
+        font-size: 1em;
+    }
+
+    .cardSrcOption .imgSrcOption {
+        font-size: 5em;
+    }
+
+    .cardSrcOption .btnSrcOption h1 {
+        font-size: 0.6em;
     }
 
 }
@@ -465,20 +676,37 @@ a:hover {
         font-size: 0.9em;
     }
 
-    .formSearchPrescription .inputLabel{
+    .formSearchPrescription .inputLabel {
         font-size: 0.5em;
     }
 
-    .formSearchPrescription input{
+    .formSearchPrescription input {
         font-size: 0.5em;
     }
 
-    .formSearchPrescription .searchBtn{
+    .formSearchPrescription .searchBtn {
         font-size: 0.6em;
     }
 
-    .table *{
+    .table * {
         font-size: 0.8em;
+    }
+
+    .titleSrc {
+        font-size: 0.9em;
+    }
+
+    .cardSrcOption .imgSrcOption {
+        font-size: 4em;
+    }
+
+    .cardSrcOption .btnSrcOption h1 {
+        font-size: 0.5em;
+    }
+
+    .cardSrcOption .btnSrcOption {
+        height: 50px;
+        width: 100%;
     }
 }
 

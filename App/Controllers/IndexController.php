@@ -10,6 +10,10 @@
         }
 
         public function contact(){
+            $this->view->email = null;
+            if(isset($_POST['email'])){
+                $this->view->email = $_POST['email'];
+            }
             $this->render('contact');
         }
 
