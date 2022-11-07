@@ -6,7 +6,7 @@ use MF\Controller\Action;
 use MF\Model\Container;
 use PDO;
 
-class userAreaController extends Action
+class UserAreaController extends Action
 {
 
     private $totalPrescriptions = 5;
@@ -151,7 +151,7 @@ class userAreaController extends Action
             $page .= ' </div>'; // cards
         } elseif ($screen == "prescription") {
             if ($user['type'] == 'doctor') {
-                $page = '<h1>Tela de criar a Prescrição</h1>';
+                $page = header("Location: /plataforma/criarPrecricao");
             } elseif ($user['type'] == 'farmacy') {
                 $page = '
                     <div class="row">
@@ -301,11 +301,16 @@ class userAreaController extends Action
             $page .= '<div class="row mt-4 tableDiv">';
             $page .= $this->tableHistory(true);
             $page .= '</div>';
-        } elseif($screen ==  "templates"){
+        } elseif ($screen ==  "templates") {
             $page = '<h1>Tela dos modelos</h1>';
         }
 
         echo $page;
+    }
+
+    public function createPrescription()
+    {
+        $this->render("pages/createPrescription", null);
     }
 
     public function modalPrescription()
@@ -316,6 +321,24 @@ class userAreaController extends Action
         }
 
         $this->render('/components/modalPrescription', null);
+    }
+    public function modalSelectTemplate()
+    {
+
+        if (!isset($_GET['js'])) {
+            header("Location: /plataforma");
+        }
+
+        $this->render('/components/modalSelectTemplate', null);
+    }
+    public function modalSaveTemplate()
+    {
+
+        if (!isset($_GET['js'])) {
+            header("Location: /plataforma");
+        }
+
+        $this->render('/components/modalSaveTemplate', null);
     }
 
     public function tableHistory($local = false)
@@ -430,7 +453,6 @@ class userAreaController extends Action
         return $page;
     }
 
-
     public function paginationStyle($pageNumber, $prescriptions)
     {
         $page = '
@@ -480,183 +502,114 @@ class userAreaController extends Action
         return $page;
     }
 
-    public function medicines()
+    public function templatesList()
     {
-        if (isset($_POST['js'])) {
-            $prescriptionCode = $_POST["prescriptionCode"];
-            $medicines = [];
+        $templateName = $_POST["templateName"];
+        $data = [];
 
-            $prescriptions = [
-                [
-                    "pacientName" => "João Vitor",
-                    "pacientCPF" => "450.344.568-50",
-                    "prescriptionCode" => "P14",
-                    "issueDate" => "2002-09-14",
-                    "doctorName" => "Dr. Luciano Alves",
-                    "medicines" => [
-                        [
-                            "medicineName" => "Dipirona",
-                            "medicineSize" => "250mg",
-                            "medicineTime" => "1cp a cada 8h"
-                        ],
-                        [
-                            "medicineName" => "Engov",
-                            "medicineSize" => "10ml",
-                            "medicineTime" => "1 a cada 12h"
-                        ]
-                    ]
-                ],
-                [
-                    "pacientName" => "Seu Jorge",
-                    "pacientCPF" => "123.456.789-01",
-                    "prescriptionCode" => "P01",
-                    "issueDate" => "2000-01-01",
-                    "doctorName" => "Dra. Luciane Alves",
-                    "medicines" => [
-                        [
-                            "medicineName" => "Dipirona",
-                            "medicineSize" => "250mg",
-                            "medicineTime" => "1cp a cada 8h"
-                        ],
-                        [
-                            "medicineName" => "Doralgina ",
-                            "medicineSize" => "500mg",
-                            "medicineTime" => "1cp por dia"
-                        ],
-                        [
-                            "medicineName" => "Doril ",
-                            "medicineSize" => "1g",
-                            "medicineTime" => "1cp por dia"
-                        ],
-                        [
-                            "medicineName" => "Tylenol ",
-                            "medicineSize" => "10ml",
-                            "medicineTime" => "1 a cada 12h"
-                        ],
-                    ]
-                ],
-                [
-                    "pacientName" => "Dona Maria",
-                    "pacientCPF" => "123.456.789-02",
-                    "prescriptionCode" => "P02",
-                    "issueDate" => "2000-01-02",
-                    "doctorName" => "Dr. Paulo Silvestre",
-                    "medicines" => [
-                        [
-                            "medicineName" => "Dipirona",
-                            "medicineSize" => "250mg",
-                            "medicineTime" => "1cp a cada 8h"
-                        ],
-                        [
-                            "medicineName" => "Novalgina ",
-                            "medicineSize" => "250mg",
-                            "medicineTime" => "1cp a cada 6h"
-                        ],
-                        [
-                            "medicineName" => "Sonrisal",
-                            "medicineSize" => "5ml",
-                            "medicineTime" => "1 a cada 12h"
-                        ],
-                    ]
-                ],
-            ];
-
-            foreach ($prescriptions as $prescription) {
-                if ($prescriptionCode == $prescription["prescriptionCode"]) {
-                    $medicines = $prescription;
-                }
-            }
-
-            echo json_encode($medicines);
-        } else {
-            header("Location: /plataforma");
-        }
-    }
-
-    public function getPrescription()
-    {
-        $cpf = false;
-        if(isset($_POST["cpf"])){
-            $code = $_POST["cpf"];
-            $cpf = true;
-        }else{
-            $code = $_POST['code'];
-        }
-        $prescription = [];
-
-        $prescriptions = [
+        $templates = [
             [
-                "pacientName" => "João Vitor",
-                "pacientCPF" => "450.344.568-50",
-                "prescriptionCode" => "P14",
-                "issueDate" => "2002-09-14",
-                "doctorName" => "Dr. Luciano Alves",
-                "medicines" => [
+                "templateId" => 1,
+                "templateName" => "Febre",
+                "templateMedicines" => [
                     [
-                        "medicineName" => "Dipirona",
-                        "medicineSize" => "250mg",
-                        "medicineTime" => "1cp a cada 8h"
+                        "medicineName" => "Dipirona"
                     ],
                     [
-                        "medicineName" => "Engov",
-                        "medicineSize" => "10ml",
-                        "medicineTime" => "1 a cada 12h"
+                        "medicineName" => "Engov"
                     ]
                 ]
             ],
             [
-                "pacientName" => "Paulo Roberto",
-                "pacientCPF" => "123.456.789-00",
-                "prescriptionCode" => "P01",
-                "issueDate" => "2000-01-01",
-                "doctorName" => "Dra. Maria Alves",
-                "medicines" => [
+                "templateId" => 2,
+                "templateName" => "Dor de cabeça",
+                "templateMedicines" => [
                     [
-                        "medicineName" => "Dipirona",
-                        "medicineSize" => "250mg",
-                        "medicineTime" => "1cp a cada 8h"
-                    ],
-                    [
-                        "medicineName" => "Engov",
-                        "medicineSize" => "10ml",
-                        "medicineTime" => "1 a cada 12h"
+                        "medicineName" => "Dipirona Monoidratada"
                     ]
                 ]
             ],
             [
-                "pacientName" => "Maria Julia",
-                "pacientCPF" => "123.456.789-01",
-                "prescriptionCode" => "P02",
-                "issueDate" => "2000-02-01",
-                "doctorName" => "Dr. Rodrigo Guedes",
-                "medicines" => [
+                "templateId" => 3,
+                "templateName" => "Dor de garganta",
+                "templateMedicines" => [
                     [
-                        "medicineName" => "Dipirona",
-                        "medicineSize" => "250mg",
-                        "medicineTime" => "1cp a cada 8h"
+                        "medicineName" => "Xarope Ruim"
                     ],
                     [
-                        "medicineName" => "Engov",
-                        "medicineSize" => "10ml",
-                        "medicineTime" => "1 a cada 12h"
-                    ]
+                        "medicineName" => "Dipirona"
+                    ],
+                    [
+                        "medicineName" => "Anti-inflamatório"
+                    ],
                 ]
             ],
         ];
 
-        foreach ($prescriptions as $p) {
-            if($cpf){
-                if ($code == $p["pacientCPF"]) {
-                    $prescription = $p;
-                }
-            }else{
-                if ($code == $p["prescriptionCode"]) {
-                    $prescription = $p;
+        if (!$templateName) {
+            $data = $templates;
+        } else {
+            foreach ($templates as $template) {
+                if ($templateName == $template["templateName"]) {
+                    $data[] = $template;
                 }
             }
-            
         }
 
-        echo json_encode($prescription);
+        if ($data) {
+            $page = "";
+            foreach ($data as $template) {
+                $page .= '<div class="template row mb-2" id="' . $template["templateId"] . '">
+                    <div class="row">
+            ';
+                $page .= '<h1 class="title">' . $template["templateName"] . '</h1></div>';
+                $page .= '<div class="row">';
+                $page .= '<p class="medicinesDesc">';
+
+                for ($i = 0; $i < count($template["templateMedicines"]); $i++) {
+                    if ($i != count($template["templateMedicines"]) - 1) {
+                        $page .= $template["templateMedicines"][$i]["medicineName"] . "; ";
+                    }else{
+                        $page .= $template["templateMedicines"][$i]["medicineName"];
+                    }
+                }
+
+                $page .= '</p></div>';
+                $page .= '</div>';
+            }
+
+            echo json_encode(["code" => 1, "page" => $page]);
+            return;
+        }
+
+        $page = "Nenhum template encontrado";
+        echo json_encode(["code" => 0, "page" => $page]);
+    }
+
+    public function getPacient()
+    {
+        $cpf = $_POST["cpf"];
+
+        $pacients = [
+            [
+                "cpf" => "450.344.568-50",
+                "phone" => "(15)99634-1499"
+            ],
+            [
+                "cpf" => "123.456.789-00",
+                "phone" => "(14)99871-0192"
+            ],
+            [
+                "cpf" => "123.456.789-01",
+                "phone" => "(14)99112-0910"
+            ],
+        ];
+
+        foreach ($pacients as $pacient) {
+            if ($pacient["cpf"] == $cpf) {
+                echo json_encode(["phone" => $pacient["phone"]]);
+                return;
+            }
+        }
     }
 }

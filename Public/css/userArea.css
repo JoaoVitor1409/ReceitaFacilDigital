@@ -16,6 +16,13 @@ img {
     user-select: none;
 }
 
+input:focus,
+select:focus {
+    margin: none;
+    outline: none;
+    box-shadow: none;
+}
+
 /* CONTENT */
 
 .content {
@@ -91,26 +98,30 @@ img {
 /* HISTORY */
 
 
-.formSearchPrescription .inputIcon {
+.formSearchPrescription .inputIcon,
+.formSearchTemplate .inputIcon {
     background-color: #fff;
     border-radius: 30% 0 0 30%;
     border: none;
     padding: 2%;
 }
 
-.formSearchPrescription .inputIcon span {
+.formSearchPrescription .inputIcon span,
+.formSearchTemplate .inputIcon span {
     color: #8E9398;
     font-size: 1.5em;
     margin-right: -1px;
     border: none;
 }
 
-.formSearchPrescription input {
+.formSearchPrescription input,
+.formSearchTemplate input {
     font-size: 0.9em;
     margin-bottom: 2%;
 }
 
 .formSearchPrescription input[type="text"],
+.formSearchTemplate input[type="text"],
 .formSearchPrescription input[type="date"] {
     padding: 2%;
     border-radius: 10px;
@@ -118,17 +129,20 @@ img {
     box-shadow: none;
 }
 
-.formSearchPrescription input::placeholder {
+.formSearchPrescription input::placeholder,
+.formSearchTemplate input::placeholder {
     color: #8E9398;
 }
 
-.formSearchPrescription input:focus {
+.formSearchPrescription input:focus,
+.formSearchTemplate input:focus {
     margin: none;
     outline: none;
     box-shadow: none;
 }
 
-.formSearchPrescription .searchBtn {
+.formSearchPrescription .searchBtn,
+.formSearchTemplate .searchBtnTemplate {
     background-color: #222743;
     color: #f0f0f0;
     padding: 2%;
@@ -144,6 +158,10 @@ img {
     width: 100%;
     overflow: auto;
     display: inline-block;
+}
+
+.table {
+    margin: 0;
 }
 
 .table .detailPrescription {
@@ -171,25 +189,44 @@ img {
     border-radius: 8px;
 }
 
-.modal .formSearchPrescription .inputArea {
+.modal .formSearchPrescription .inputArea,
+.formSearchTemplate .inputArea {
     border: 1px solid #000;
     border-radius: 7px;
 }
 
-.modal .formSearchPrescription .inputIcon {
+.modal .formSearchPrescription .inputIcon,
+.formSearchTemplate .formSearchPrescription .inputIcon,
+.modal .formSaveTemplate .inputIcon {
     background-color: #fff;
-    border-radius: 30% 0 0 30%;
+    border-radius: 8px 0 0 8px;
     border: 1px;
 }
 
-.modal .formSearchPrescription .inputIcon span {
+.modal .formSaveTemplate .templateNameIcon {
+    border-top: 2px solid #000;
+    border-left: 2px solid #000;
+    border-bottom: 2px solid #000;
+}
+
+.modal .formSaveTemplate .templateNameInput {
+    border-top: 2px solid #000;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+}
+
+.modal .formSearchPrescription .inputIcon span,
+.formSearchTemplate .formSearchPrescription .inputIcon span,
+.modal .formSaveTemplate .inputIcon span {
     color: #8E9398;
     font-size: 1.5em;
     margin-right: -1px;
     border: none;
 }
 
-.modal .formSearchPrescription input[type="text"] {
+.modal .formSearchPrescription input[type="text"],
+.formSearchTemplate .formSearchPrescription input[type="text"],
+.formSaveTemplate input[type="text"] {
     font-size: 0.9em;
     border: none;
     box-shadow: none;
@@ -197,17 +234,22 @@ img {
     padding: 0 2%;
 }
 
-.modal .formSearchPrescription input::placeholder {
+.modal .formSearchPrescription input::placeholder,
+.formSearchTemplate .formSearchPrescription input::placeholder,
+.modal .formSaveTemplate input::placeholder {
     color: #8E9398;
 }
 
-.modal .formSearchPrescription input:focus {
+.modal .formSearchPrescription input:focus,
+.formSearchTemplate .formSearchPrescription input:focus,
+.modal .formSaveTemplate input:focus {
     margin: none;
     outline: none;
     box-shadow: none;
 }
 
-.modal .formSearchPrescription .searchBtnCPF {
+.modal .formSearchPrescription .searchBtnCPF,
+.formSearchTemplate .formSearchPrescription .searchBtnCPF {
     background-color: #222743;
     color: #f0f0f0;
     padding: 2%;
@@ -218,8 +260,46 @@ img {
     border: none;
 }
 
+.modal .formSaveTemplate .btnSaveTemplate {
+    background-color: #222743;
+    color: #f0f0f0;
+    width: 100%;
+    height: 36px;
+    font-size: 1.1em;
+    border-radius: 10px;
+    border: none;
+}
+
 .hidden {
     display: none;
+}
+
+.modal .formSaveTemplate .inputError {
+    border-top: 3px solid #f00;
+    border-right: 3px solid #f00;
+    border-bottom: 3px solid #f00;
+}
+
+.modal .formSaveTemplate .inputIconError {
+    border-top: 3px solid #f00;
+    border-left: 3px solid #f00;
+    border-bottom: 3px solid #f00;
+}
+
+.modalTemplateSelectBody {
+    max-height: 50vh;
+}
+
+.templatesList .template {
+    border: 1px solid #000;
+    cursor: pointer;
+    padding: 1%;
+    transition: 0.2s;
+}
+
+.templatesList .template:hover {
+    transition: 0.2s;
+    opacity: 0.7;
 }
 
 /* MODAL END */
@@ -270,7 +350,71 @@ img {
     font-size: 1.2em;
 }
 
-/* SEARCH PRESCRIPTION  END*/
+/* SEARCH PRESCRIPTION END*/
+
+
+/* CREATE PRESCRIPTION */
+
+.removeMedicine {
+    margin-top: -1%;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.formAddPrescription .pacientData,
+.formAddPrescription .medicinesData {
+    border: 1.5px dashed #000;
+    padding: 0 0 2% 0;
+}
+
+.formAddPrescription legend {
+    width: auto;
+    float: none;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.formAddPrescription label {
+    font-weight: 600;
+}
+
+.formAddPrescription input {
+    border: 2px solid #000;
+    border-radius: 14px;
+    padding: 5px;
+}
+
+input::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+.formAddPrescription .btns button {
+    background-color: #222743;
+    color: #f0f0f0;
+    padding: 1% 0;
+    font-size: 1.1em;
+    border-radius: 10px;
+    border: none;
+    transition: 0.2s;
+}
+
+.formAddPrescription .btns button:hover {
+    background-color: #2d375c;
+    transition: 0.2s;
+}
+
+.formAddPrescription .inputError {
+    border: 2px solid #f00;
+}
+
+
+.error {
+    font-size: 0.9em;
+}
+
+
+
+/* CREATE PRESCRIPTION END */
 
 
 /* RESPONSIBILITY */
@@ -280,8 +424,14 @@ img {
         font-size: 1.4em;
     }
 
-    .title {
+    .title,
+    .formAddPrescription legend,
+    .removeMedicine {
         font-size: 1.2em;
+    }
+
+    .removeMedicine {
+        margin-top: -2%;
     }
 
     .cardOption span h1 {
@@ -296,16 +446,26 @@ img {
         width: 90%;
     }
 
-    .formSearchPrescription .inputLabel {
+    .formSearchPrescription .inputLabel,
+    .formSearchTemplate .inputLabel,
+    .formAddPrescription label,
+    .medicinesDesc {
         font-size: 0.9em;
     }
 
-    .formSearchPrescription input {
+    .formSearchPrescription input,
+    .formSearchTemplate input,
+    .formSaveTemplate input[type="text"],
+    .formAddPrescription input {
         font-size: 0.8em;
     }
 
     .formSearchPrescription .searchBtn,
-    .modal .formSearchPrescription .searchBtnCPF {
+    .formSearchTemplate .searchBtnTemplate,
+    .modal .formSearchPrescription .searchBtnCPF,
+    .formSearchTemplate .formSearchPrescription .searchBtnCPF,
+    .modal .formSaveTemplate .btnSaveTemplate,
+    .formAddPrescription .btns button {
         font-size: 1em;
     }
 
@@ -324,6 +484,7 @@ img {
     .cardSrcOption .btnSrcOption h1 {
         font-size: 1.1em;
     }
+
 }
 
 @media screen and (max-width: 872px) {
@@ -331,7 +492,9 @@ img {
         font-size: 1.3em;
     }
 
-    .title {
+    .title,
+    .formAddPrescription legend,
+    .removeMedicine {
         font-size: 1.1em;
     }
 
@@ -343,16 +506,26 @@ img {
         font-size: 1.2em;
     }
 
-    .formSearchPrescription .inputLabel {
+    .formSearchPrescription .inputLabel,
+    .formSearchTemplate .inputLabel,
+    .formAddPrescription label,
+    .medicinesDesc {
         font-size: 0.8em;
     }
 
-    .formSearchPrescription input {
+    .formSearchPrescription input,
+    .formSearchTemplate input,
+    .formSaveTemplate input[type="text"],
+    .formAddPrescription input {
         font-size: 0.7em;
     }
 
     .formSearchPrescription .searchBtn,
-    .modal .formSearchPrescription .searchBtnCPF {
+    .formSearchTemplate .searchBtnTemplate,
+    .modal .formSearchPrescription .searchBtnCPF,
+    .formSearchTemplate .formSearchPrescription .searchBtnCPF,
+    .modal .formSaveTemplate .btnSaveTemplate,
+    .formAddPrescription .btns button {
         font-size: 0.9em;
     }
 
@@ -372,7 +545,7 @@ img {
         font-size: 1em;
     }
 
-    .modal .inputArea{
+    .modal .inputArea {
         margin-bottom: 2%;
     }
 }
@@ -382,7 +555,9 @@ img {
         font-size: 1.2em;
     }
 
-    .title {
+    .title,
+    .formAddPrescription legend,
+    .removeMedicine {
         font-size: 1em;
     }
 
@@ -394,17 +569,30 @@ img {
         font-size: 1.1em;
     }
 
-    .formSearchPrescription .inputLabel {
+    .formSearchPrescription .inputLabel,
+    .formSearchTemplate .inputLabel,
+    .formAddPrescription label,
+
+    .medicinesDesc {
         font-size: 0.7em;
     }
 
-    .formSearchPrescription input {
+    .formSearchPrescription input,
+    .formSearchTemplate input,
+    .formSaveTemplate input[type="text"],
+    .formAddPrescription input {
         font-size: 0.6em;
     }
 
-    .formSearchPrescription .searchBtn {
+    .formSearchPrescription .searchBtn,
+    .formSearchTemplate .searchBtnTemplate,
+    .formAddPrescription .btns button {
         font-size: 0.7em;
         height: 30px;
+    }
+
+    .error {
+        font-size: 0.7em;
     }
 }
 
@@ -423,15 +611,23 @@ img {
         font-size: 0.8em;
     }
 
-    .formSearchPrescription .inputLabel {
+    .formSearchPrescription .inputLabel,
+    .formSearchTemplate .inputLabel,
+    .formAddPrescription label,
+    .medicinesDesc {
         font-size: 0.8em;
     }
 
-    .formSearchPrescription input {
+    .formSearchPrescription input,
+    .formSearchTemplate input,
+    .formSaveTemplate input[type="text"],
+    .formAddPrescription input {
         font-size: 0.8em;
     }
 
-    .formSearchPrescription .searchBtn {
+    .formSearchPrescription .searchBtn,
+    .formSearchTemplate .searchBtnTemplate,
+    .formAddPrescription .btns button {
         font-size: 1em;
     }
 
@@ -461,7 +657,9 @@ img {
         font-size: 1.1em;
     }
 
-    .title {
+    .title,
+    .formAddPrescription legend,
+    .removeMedicine {
         font-size: 1em;
     }
 
@@ -473,15 +671,23 @@ img {
         font-size: 1.1em;
     }
 
-    .formSearchPrescription .inputLabel {
+    .formSearchPrescription .inputLabel,
+    .formSearchTemplate .inputLabel,
+    .formAddPrescription label,
+    .medicinesDesc {
         font-size: 0.7em;
     }
 
-    .formSearchPrescription input {
+    .formSearchPrescription input,
+    .formSearchTemplate input,
+    .formSaveTemplate input[type="text"],
+    .formAddPrescription input {
         font-size: 0.7em;
     }
 
-    .formSearchPrescription .searchBtn {
+    .formSearchPrescription .searchBtn,
+    .formSearchTemplate .searchBtnTemplate,
+    .formAddPrescription .btns button {
         font-size: 0.9em;
     }
 
@@ -507,7 +713,9 @@ img {
         font-size: 1.2em;
     }
 
-    .title {
+    .title,
+    .formAddPrescription legend,
+    .removeMedicine {
         font-size: 1em;
     }
 
@@ -525,15 +733,24 @@ img {
         width: 50%;
     }
 
-    .formSearchPrescription .inputLabel {
+    .formSearchPrescription .inputLabel,
+    .formSearchTemplate .inputLabel,
+    .formAddPrescription label,
+
+    .medicinesDesc {
         font-size: 0.8em;
     }
 
-    .formSearchPrescription input {
+    .formSearchPrescription input,
+    .formSearchTemplate input,
+    .formSaveTemplate input[type="text"],
+    .formAddPrescription input {
         font-size: 0.8em;
     }
 
-    .formSearchPrescription .searchBtn {
+    .formSearchPrescription .searchBtn,
+    .formSearchTemplate .searchBtnTemplate,
+    .formAddPrescription .btns button {
         font-size: 0.9em;
     }
 
@@ -553,7 +770,8 @@ img {
         font-size: 0.9em;
     }
 
-    .title {
+    .title,
+    .formAddPrescription legend {
         font-size: 0.8em;
     }
 
@@ -565,15 +783,22 @@ img {
         font-size: 1em;
     }
 
-    .formSearchPrescription .inputLabel {
+    .formSearchPrescription .inputLabel,
+    .formSearchTemplate .inputLabel,
+    .formAddPrescription label,
+    .medicinesDesc {
         font-size: 0.7em;
     }
 
-    .formSearchPrescription input {
+    .formSearchPrescription input,
+    .formSearchTemplate input,
+    .formAddPrescription input {
         font-size: 0.7em;
     }
 
-    .formSearchPrescription .searchBtn {
+    .formSearchPrescription .searchBtn,
+    .formSearchTemplate .searchBtnTemplate,
+    .formAddPrescription .btns button {
         font-size: 0.8em;
     }
 
@@ -618,6 +843,10 @@ img {
     .cardSrcOption .btnSrcOption {
         height: 60px;
     }
+
+    .error {
+        font-size: 0.6em;
+    }
 }
 
 @media screen and (max-width: 370px) {
@@ -633,15 +862,22 @@ img {
         font-size: 1em;
     }
 
-    .formSearchPrescription .inputLabel {
+    .formSearchPrescription .inputLabel,
+    .formSearchTemplate .inputLabel,
+    .formAddPrescription label,
+    .medicinesDesc {
         font-size: 0.6em;
     }
 
-    .formSearchPrescription input {
+    .formSearchPrescription input,
+    .formSearchTemplate input,
+    .formAddPrescription input {
         font-size: 0.6em;
     }
 
-    .formSearchPrescription .searchBtn {
+    .formSearchPrescription .searchBtn,
+    .formSearchTemplate .searchBtnTemplate,
+    .formAddPrescription .btns button {
         font-size: 0.7em;
     }
 
@@ -664,7 +900,8 @@ img {
         font-size: 0.7em;
     }
 
-    .title {
+    .title,
+    .formAddPrescription legend {
         font-size: 0.7em;
     }
 
@@ -676,15 +913,22 @@ img {
         font-size: 0.9em;
     }
 
-    .formSearchPrescription .inputLabel {
+    .formSearchPrescription .inputLabel,
+    .formSearchTemplate .inputLabel,
+    .formAddPrescription label,
+    .medicinesDesc {
         font-size: 0.5em;
     }
 
-    .formSearchPrescription input {
+    .formSearchPrescription input,
+    .formSearchTemplate input,
+    .formAddPrescription input {
         font-size: 0.5em;
     }
 
-    .formSearchPrescription .searchBtn {
+    .formSearchPrescription .searchBtn,
+    .formSearchTemplate .searchBtnTemplate,
+    .formAddPrescription .btns button {
         font-size: 0.6em;
     }
 
@@ -707,6 +951,10 @@ img {
     .cardSrcOption .btnSrcOption {
         height: 50px;
         width: 100%;
+    }
+
+    .error {
+        font-size: 0.5em;
     }
 }
 

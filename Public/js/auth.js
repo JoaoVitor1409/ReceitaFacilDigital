@@ -33,7 +33,7 @@ function error(input, msg) {
     $("." + input + "ErrorMsg").text(msg);
 }
 
-function removeError(input) { 
+function removeError(input) {
     let password = input == "password" || input == "passwordModal" ? "Password" : "";
 
     $("." + input + "Input").removeClass("inputError" + password);
@@ -42,4 +42,4 @@ function removeError(input) {
     $("." + input + "IconView").removeClass("inputIconError" + password);
 
     $("." + input + "Error").addClass("d-none");
- }
+}

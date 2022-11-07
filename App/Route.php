@@ -93,6 +93,12 @@
                 'controller' => 'userAreaController',
                 'action' => 'userAreaScreen'
             );
+            
+            $routes['createPrescription'] = array(
+                'route' => '/plataforma/criarPrecricao',
+                'controller' => 'userAreaController',
+                'action' => 'createPrescription'
+            );
 
             $routes['modalPrescription'] = array(
                 'route' => '/plataforma/components/modalReceita',
@@ -100,10 +106,16 @@
                 'action' => 'modalPrescription'
             );
 
-            $routes['medicines'] = array(
-                'route' => '/plataforma/medicamentos',
+            $routes['modalSelectTemplate'] = array(
+                'route' => '/plataforma/components/modalSelecionarModelo',
                 'controller' => 'userAreaController',
-                'action' => 'medicines'
+                'action' => 'modalSelectTemplate'
+            );
+
+            $routes['modalSaveTemplate'] = array(
+                'route' => '/plataforma/components/modalSalvarModelo',
+                'controller' => 'userAreaController',
+                'action' => 'modalSaveTemplate'
             );
 
             $routes['tableHistory'] = array(
@@ -112,14 +124,53 @@
                 'action' => 'tableHistory'
             );
 
+            $routes['templatesList'] = array(
+                'route' => '/plataforma/listaModelos',
+                'controller' => 'userAreaController',
+                'action' => 'templatesList'
+            );
+
+            $routes['getPacient'] = array(
+                'route' => '/plataforma/procuraPaciente',
+                'controller' => 'userAreaController',
+                'action' => 'getPacient'
+            );
+
+            // prescriptionController
+
+            $routes['medicines'] = array(
+                'route' => '/plataforma/medicamentos',
+                'controller' => 'prescriptionController',
+                'action' => 'medicines'
+            );           
+
             $routes['getPrescription'] = array(
                 'route' => '/plataforma/pesquisaReceita',
-                'controller' => 'userAreaController',
+                'controller' => 'prescriptionController',
                 'action' => 'getPrescription'
+            );
+
+            $routes['emitPrescription'] = array(
+                'route' => '/plataforma/emiteReceita',
+                'controller' => 'prescriptionController',
+                'action' => 'emitPrescription'
+            );
+
+            // templateController
+
+            $routes['saveTemplate'] = array(
+                'route' => '/plataforma/salvarModelo',
+                'controller' => 'templateController',
+                'action' => 'saveTemplate'
+            );
+
+            $routes['getTemplate'] = array(
+                'route' => '/plataforma/pesquisaTemplate',
+                'controller' => 'templateController',
+                'action' => 'getTemplate'
             );
 
 
             $this->setRoutes($routes);  
         }        
     }
-?>

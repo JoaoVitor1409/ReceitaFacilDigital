@@ -1,8 +1,8 @@
 <?php
-    session_start();
-    if (!isset($_SESSION['rfd']['user'])) {
-        header("Location: /");
-    }
+session_start();
+if (!isset($_SESSION['rfd']['user'])) {
+    header("Location: /");
+}
 ?>
 
 <!DOCTYPE html>
@@ -16,6 +16,7 @@
 
     <link rel="stylesheet" href="css/libraries/icons.css">
     <link rel="stylesheet" href="css/libraries/bootstrap.css">
+    <link rel="stylesheet" href="css/libraries/jquery-ui.css">
     <link rel="stylesheet" href="css/layouts/userHeader.css">
     <link rel="stylesheet" href="css/<?= $this->view->page ?>.css">
 </head>
@@ -42,21 +43,27 @@
                         <span class="nav_name material-icons">home</span>
                         <span class="nav_name">Principal</span>
                     </div>
-                    <?php if($_SESSION['rfd']['user']['type'] != "pacient"){ ?>
-                    <div class="nav_link prescription">
-                        <span class="nav_name material-icons">note_add</span>
-                        <span class="nav_name">Fazer uma requisição</span>
-                    </div>
+                    <?php if ($_SESSION['rfd']['user']['type'] == "doctor") { ?>
+                        <div class="nav_link prescription">
+                            <span class="nav_name material-icons">note_add</span>
+                            <span class="nav_name">Criar receita</span>
+                        </div>
+                    <?php } ?>
+                    <?php if ($_SESSION['rfd']['user']['type'] == "farmacy") { ?>
+                        <div class="nav_link prescription">
+                            <span class="nav_name material-icons">note_add</span>
+                            <span class="nav_name">Buscar receita</span>
+                        </div>
                     <?php } ?>
                     <div class="nav_link history">
                         <span class="nav_name material-icons">history</span>
                         <span class="nav_name">Histórico de receitas</span>
                     </div>
-                    <?php if($_SESSION['rfd']['user']['type'] == "doctor"){ ?>
-                    <div class="nav_link templates">
-                        <span class="nav_name material-icons">content_paste</span>
-                        <span class="nav_name">Modelos</span>
-                    </div>
+                    <?php if ($_SESSION['rfd']['user']['type'] == "doctor") { ?>
+                        <div class="nav_link templates">
+                            <span class="nav_name material-icons">content_paste</span>
+                            <span class="nav_name">Modelos</span>
+                        </div>
                     <?php } ?>
                     <div class="nav_link settings">
                         <span class="nav_name material-icons">settings</span>
@@ -83,6 +90,7 @@
     <script src="js/libraries/jquery.js"></script>
     <script src="js/libraries/bootstrap.js"></script>
     <script src="js/libraries/jqueryMask.js"></script>
+    <script src="js/libraries/jquery-ui.js"></script>
     <script src="js/menuUser.js"></script>
     <script src="js/userLayout.js"></script>
 </body>
