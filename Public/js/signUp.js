@@ -60,7 +60,7 @@ $(document).ready(() => {
         removeError("street");
         removeError("number");
 
-        if ($(".nameInput").val().replaceAll(" ", "") == "" || $(".nameInput").val().split(" ").length <= 1) {
+        if ($(".nameInput").val().replaceAll(" ", "") == "" || ($(".nameInput").val().split(" ").length <= 1 && !pharmacyActive)) {
             error("name", "Digite seu nome completo!");
             $(".nameInput").focus();
 
@@ -86,7 +86,7 @@ $(document).ready(() => {
         }
 
         if (pharmacyActive) {
-            if ($(".cnpjInput").val().length != 20) {
+            if ($(".cnpjInput").val().length != 20 || !cnpjIsValid) {
                 error("cnpj", "Informe um CNPJ válido!");
                 $(".cnpjInput").focus();
 
@@ -136,12 +136,8 @@ $(document).ready(() => {
         }
 
         if (continueForm) {
-            if ($(".inputsAdress").hasClass("d-none")) {
-                showInputsAdress();
-
-                return false;
-            }
-            loadAdreesInputs();
+            showInputsAdress();
+            $(".cepInput").focus();
 
             return false;
         }
@@ -176,19 +172,20 @@ $(document).ready(() => {
                     return false;
                 }
             }
-
             if (doctorActive) {
-                if (!doctorValidation()) {
+                if (!crmIsValid) {
+                    error("crm", "Insira um CRM válido");
+                    showInputs();
+                    $(".crmInput").focus();
+
                     return false;
                 }
             }
 
-            alert("Deu bom");
-
             console.log($(".formSignUp").serialize());
         }
 
-
+        alert("Deu bom");
         return false;
     });
 
@@ -202,40 +199,30 @@ $(document).ready(() => {
 
     // fill CEP
     var cepNotFound = true;
+    var crmIsValid = false;
     $(document).on("keyup", ".cepInput", () => {
         if ($(".cepInput").val().length == 9) {
-            let cep = $(".cepInput").val().replace("-", "");
-            let url = "https://viacep.com.br/ws/" + cep + "/json/";
-            let request = new XMLHttpRequest();
-
-            request.open('GET', url);
-            request.onerror = (e) => {
-                error("cep", "Insira um CEP válido");
-                $(".cepInput").focus();
-            };
-
-            request.onload = () => {
-                let response = JSON.parse(request.responseText);
-
-
-
-                if (response.erro) {
-                    error("cep", "Insira um CEP válido");
-                    $(".cepInput").focus();
-                    cepNotFound = true;
-                } else {
-                    $(".option" + response.uf + "").attr("selected", "selected");
-                    $(".cityInput").val(response.localidade);
-                    $(".stateInput").css("color", "#000");
-                    $(".districtInput").val(response.bairro);
-                    $(".streetInput").val(response.logradouro);
-                    cepNotFound = false;
-                }
-            };
-
-            request.send();
+            searchCEP($(".cepInput").val());
         }
+    });
 
+    // verifyCNPJ
+    var cnpjIsValid = false;
+    $(document).on("focusout", ".cnpjInput", () => {
+        if ($(".cnpjInput").val().length == 20) {
+            let result = cnpjValidation($(".cnpjInput").val())
+            result.then(isValid => {
+                if (!isValid) {
+                    error("cnpj", "Informe um CNPJ válido!");
+                    showInputs();
+                    $(".cnpjInput").focus();
+                }
+                cnpjIsValid = isValid;
+            });
+        } else {
+            error("cnpj", "Informe um CNPJ válido!");
+            $(".cnpjInput").focus();
+        }
     });
 
 
@@ -257,35 +244,18 @@ $(document).ready(() => {
 
     $(document).on("focusout", ".birthDateInput", () => {
         removeError("birthDate");
-        let birthDateInput = $(".birthDateInput");
-        if (birthDateInput.val() != "") {
-            let birthDateFormated = birthDateInput.val();
-            let year = birthDateFormated.split("-")[0];
-            let curYear = new Date().getFullYear();
-            if (year.length != 4 || year < 1900 || year >= curYear) {
-                error("birthDate", "Insira uma data válida");
-                $(".birthDateInput").focus();
-                return;
-            }
-
-            birthDateInput.attr("type", "text");
-            if (birthDateFormated != "") {
-                birthDateFormated = birthDateFormated.replace(/(\d*)-(\d*)-(\d*).*/, '$3/$2/$1');
-            }
-            birthDateInput.val(birthDateFormated);
-        } else {
-            birthDateInput.attr("type", "text");
-        }
+        formatBirthDate($(".birthDateInput"));
     });
 
 
 
 
     // Change options buttons
-    let pacientActive = true;
-    let doctorActive = false;
-    let pharmacyActive = false;
+    var pacientActive = true;
+    var doctorActive = false;
+    var pharmacyActive = false;
     loadInputs();
+
     $(".pacientBtn").click(() => {
         if (!pacientActive) {
             if (doctorActive) {
@@ -302,6 +272,7 @@ $(document).ready(() => {
             loadInputs();
         }
     });
+
     $(".doctorBtn").click(() => {
         if (!doctorActive) {
             if (pacientActive) {
@@ -318,6 +289,7 @@ $(document).ready(() => {
             loadInputs();
         }
     });
+
     $(".pharmacyBtn").click(() => {
         if (!pharmacyActive) {
             if (pacientActive) {
@@ -436,12 +408,10 @@ $(document).ready(() => {
         });
 
         continueForm = true;
+        loadAdreesInputs();
     }
 
     function loadAdreesInputs() {
-        $(".options").addClass("d-none");
-        $(".inputs").addClass("d-none");
-
         let inputs = [
             [
                 'cep',
@@ -565,10 +535,7 @@ $(document).ready(() => {
                 }
             }
         });
-
-        $(".backSignUp").removeClass("d-none");
-        $(".btnAction").text("Criar conta");
-        continueForm = false;
+        $(".inputsAdress").addClass("d-none");
     }
 
     function emailValidation() {
@@ -592,45 +559,135 @@ $(document).ready(() => {
         }
     }
 
-    function doctorValidation() {
-        let crmNotFound = true;
+    function formatBirthDate(birthDateInput) {
+        if (birthDateInput.val() != "") {
+            let birthDateFormated = birthDateInput.val();
+            let year = birthDateFormated.split("-")[0];
+            let curYear = new Date().getFullYear();
+            if (year.length != 4 || year < 1900 || year >= curYear) {
+                error("birthDate", "Insira uma data válida");
+                $(".birthDateInput").focus();
+                return;
+            }
+
+            birthDateInput.attr("type", "text");
+            if (birthDateFormated != "") {
+                birthDateFormated = birthDateFormated.replace(/(\d*)-(\d*)-(\d*).*/, '$3/$2/$1');
+            }
+            birthDateInput.val(birthDateFormated);
+        } else {
+            birthDateInput.attr("type", "text");
+        }
+    }
+
+    async function doctorValidation() {
+        crmIsValid = false;
         let crm = $(".crmInput").val().replace("-", "");
         let state = $(".stateInput").val().replace("-", "");
         let key = "6976964646";
         let url = "https://www.consultacrm.com.br/api/index.php?tipo=crm&uf=" + state + "&q=" + crm + "&chave=" + key + "&destino=json";
 
-        let request = new XMLHttpRequest();
+        let userName = $(".nameInput").val().toUpperCase().split(" ");
+        let userFirstName = userName[0];
+        let userLastName = userName[userName.length - 1];
 
-        request.open('GET', url);
-        request.onerror = (e) => {
-            error("crm", "Insira um CRM válido");
-            $(".crmInput").focus();
-            crmNotFound = true;
-            showInputs();
-        };
-
-        request.onload = () => {
-            let response = JSON.parse(request.responseText);
-
-            if (response.item.length == 0) {
-                error("crm", "Insira um CRM válido");
-                $(".crmInput").focus();
-                crmNotFound = true;
-                showInputs();
-            } else {
-                if (response.item[0].situacao == "Ativo") {
-                    crmNotFound = false;
-                } else {
-                    error("crm", "Insira um CRM válido");
-                    $(".crmInput").focus();
-                    crmNotFound = true;
-                    showInputs();
+        await $.getJSON(url, (data) => {
+            if (data.item.length > 0) {
+                if (data.item[0].situacao == "Ativo") {
+                    let name = data.item[0].nome.toUpperCase().split(" ");
+                    let firstName = name[0];
+                    let lastName = name[name.length - 1];
+                    if (userFirstName == firstName && userLastName == lastName) {
+                        crmIsValid = true;
+                    }
                 }
             }
-        };
+        });
+    }
 
-        request.send();
+    function searchCEP(cep) {
+        cep = cep.replace("-", "");
+        let url = "https://viacep.com.br/ws/" + cep + "/json/";
 
-        return crmNotFound;
+        $.getJSON(url, (data) => {
+            if (data.erro) {
+                error("cep", "Insira um CEP válido");
+                $(".cepInput").focus();
+                cepNotFound = true;
+            } else {
+                $(".option" + data.uf + "").attr("selected", "selected");
+                $(".cityInput").val(data.localidade);
+                $(".stateInput").css("color", "#000");
+                $(".districtInput").val(data.bairro);
+                $(".streetInput").val(data.logradouro);
+                cepNotFound = false;
+                if (doctorActive) {
+                    doctorValidation();
+                }
+            }
+        });
+    }
+
+    async function cnpjValidation(cnpj) {
+
+        var cnpjPhamacy = false;
+        cnpj = cnpj.replaceAll(".", "");
+        cnpj = cnpj.replaceAll("/", "");
+        cnpj = cnpj.replaceAll("-", "");
+        cnpj = cnpj.replaceAll(" ", "");
+        let url = "https://publica.cnpj.ws/cnpj/" + cnpj;
+
+        await $.getJSON(url, ({ estabelecimento }) => {
+            let cnaes = ["4771-7/01", "4771-7/02", "4771-7/03"];
+            let cnaeCPNJ = estabelecimento.atividade_principal.subclasse;
+            if (Object.values(cnaes).includes(cnaeCPNJ)) {
+                // principal
+                let name = estabelecimento.nome_fantasia;
+                let email = estabelecimento.email;
+                let ddd = estabelecimento.ddd1;
+                let tel = estabelecimento.telefone1;
+                tel = "(" + ddd + ")" + tel;
+
+                // adress
+                let cep = estabelecimento.cep;
+                let district = estabelecimento.bairro;
+                let streetType = estabelecimento.tipo_logradouro;
+                let street = estabelecimento.logradouro;
+                street = streetType + " " + street;
+                let number = estabelecimento.numero
+                let complement = estabelecimento.complemento
+
+                if ($(".nameInput").val().replaceAll(" ", "") == "") {
+                    $(".nameInput").val(name)
+                }
+                $(".emailInput").val(email);
+                $(".telInput").val(tel);
+                $(".telInput").focus();
+
+                $(".cepInput").val(cep);
+                searchCEP(cep);
+
+                if ($(".districtInput").val() == "") {
+                    $(".districtInput").val(district);
+                }
+
+                if ($(".streetInput").val() == "") {
+                    $(".streetInput").val(street);
+                }
+
+                $(".numberInput").val(number);
+
+                $(".complementInput").val(complement);
+
+                $(".passwordInput").focus();
+                cnpjPhamacy = true;
+            }
+        }).fail((e) => {
+            console.log(e);
+        });
+
+        return cnpjPhamacy;
+
+
     }
 });
