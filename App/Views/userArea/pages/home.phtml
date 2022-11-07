@@ -1,0 +1,72 @@
+<div class="row mb-4">
+    <div class="col-md-12 text-center">
+        <h1 class="welcome">Seja bem vindo <?= $_SESSION['rfd']['user']["name"] ?></h1>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-md-12 text-center">
+        <p class="title">O que gostaria de fazer?</p>
+    </div>
+</div>
+<div class="row cards">
+    <div class="row align-items-center justify-content-center">
+
+        <?php
+        if ($_SESSION['rfd']['user']["type"] != "pacient") { ?>
+            <div class="col-sm-<?= $this->view->col ?> d-flex align-items-center justify-content-center">
+                <article class="cardOption d-flex align-items-center justify-content-center flex-column prescription">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <span class="d-flex text-center align-items-center">
+                            <span class="material-icons">note_add</span>
+                            <h1><?= $this->view->titlePrescription ?></h1>
+                        </span>
+                    </div>
+                    <hr>
+                </article>
+            </div>
+        <?php } ?>
+
+
+        <div class="col-sm-<?= $this->view->col ?> d-flex align-items-center justify-content-center">
+            <article class="cardOption d-flex align-items-center justify-content-center flex-column history">
+                <div class="d-flex align-items-center justify-content-center">
+                    <span class="d-flex text-center align-items-center">
+                        <span class="material-icons">history</span>
+                        <h1>Olhar meu histórico</h1>
+                    </span>
+                </div>
+                <hr>
+            </article>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-center">
+        <?php
+        if ($_SESSION['rfd']['user']["type"] == "doctor") { ?>
+            <div class="col-sm-<?= $this->view->col ?> d-flex align-items-center justify-content-center">
+                <article class="cardOption d-flex align-items-center justify-content-center flex-column templates">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <span class="d-flex text-center align-items-center">
+                            <span class="material-icons">content_paste</span>
+                            <h1>Olhar meus modelos</h1>
+                        </span>
+                    </div>
+                    <hr>
+                </article>
+            </div>
+        <?php } ?>
+
+        <div class="col-sm-<?= $this->view->col ?> d-flex align-items-center justify-content-center">
+            <article class="cardOption d-flex align-items-center justify-content-center flex-column settings">
+                <div class="d-flex align-items-center justify-content-center">
+                    <span class="d-flex text-center align-items-center">
+                        <span class="material-icons">settings</span>
+                        <h1>Acessar as Configurações</h1>
+                    </span>
+                </div>
+                <hr>
+            </article>
+        </div>
+    </div>
+</div>

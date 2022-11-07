@@ -364,6 +364,7 @@ $(document).ready(() => {
     });
     $(document).on("click", ".history", () => {
         loadScreen("history");
+        loadHistoryTable()
 
         return false;
     });

@@ -93,12 +93,6 @@
                 'controller' => 'userAreaController',
                 'action' => 'userAreaScreen'
             );
-            
-            $routes['createPrescription'] = array(
-                'route' => '/plataforma/criarPrecricao',
-                'controller' => 'userAreaController',
-                'action' => 'createPrescription'
-            );
 
             $routes['modalPrescription'] = array(
                 'route' => '/plataforma/components/modalReceita',

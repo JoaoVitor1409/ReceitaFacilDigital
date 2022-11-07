@@ -1,0 +1,43 @@
+<div class="row mb-5">
+    <div class="col-md-12 text-center">
+        <h1 class="welcome">Seu histórico de receitas</h1>
+    </div>
+</div>
+<div class="row">
+    <form action="#" method="POST" class="row justify-content-between formSearchPrescription">
+        <?php
+        if ($_SESSION['rfd']['user']["type"] != "pacient") { ?>
+            <div class="col-sm-4 d-flex flex-column">
+                <label for="pacientName" class="inputLabel">Paciente</label>
+                <input type="text" name="pacientName" id="pacientName" placeholder="Nome Paciente">
+            </div>
+        <?php } ?>
+
+
+        <div class="col-sm-<?= $this->view->col ?> d-flex flex-column">
+            <label for="prescriptionCode" class="inputLabel">Código da Receita</label>
+            <input type="text" name="prescriptionCode" id="prescriptionCode" placeholder="ex: P14">
+        </div>
+
+        <div class="col-sm-<?= $this->view->col ?> d-flex flex-column">
+            <label for="issueDate" class="inputLabel">Data de emissão</label>
+            <input type="date" name="issueDate" id="issueDate">
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <button class="searchBtn d-flex align-items-center justify-content-center">
+                    <span class="material-icons-outlined">search</span>
+                    Buscar
+                </button>
+            </div>
+        </div>
+
+
+
+    </form>
+</div>
+
+<div class="row mt-4 tableDiv">
+
+</div>
