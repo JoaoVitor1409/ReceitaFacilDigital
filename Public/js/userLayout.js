@@ -1,5 +1,4 @@
 $(document).ready(() => {
-
     // Masks
 
     $(document).on("focus", ".cpfInput", () => {
@@ -18,32 +17,31 @@ $(document).ready(() => {
         $(this).mask("0#");
     });
 
-
     // Datalists
 
     // Medicine Size Type
     var dataSizeType;
     $(document).on("keyup", ".medicineSizeInput", function () {
         let val = $(this).val();
-        val = val.replace(/cp|ml|gotas/, "")
-        val = val.replace(/\s/, "")
+        val = val.replace(/cp|ml|gotas/, "");
+        val = val.replace(/\s/, "");
 
         dataSizeType = [
             { value: val + "cp" },
             { value: val + "ml" },
-            { value: val + " gotas" }
+            { value: val + " gotas" },
         ];
     });
 
     $(document).on("focus click", ".medicineSizeInput", function () {
         let val = $(this).val();
-        val = val.replace(/cp|ml|gotas/, "")
-        val = val.replace(/\s/, "")
+        val = val.replace(/cp|ml|gotas/, "");
+        val = val.replace(/\s/, "");
 
         dataSizeType = [
             { value: val + "cp" },
             { value: val + "ml" },
-            { value: val + " gotas" }
+            { value: val + " gotas" },
         ];
 
         if (!$(this).data("autocomplete")) {
@@ -55,18 +53,16 @@ $(document).ready(() => {
                 select: function (_, { item }) {
                     $(this).val(item.value);
                     return false;
-                }
+                },
             });
         }
 
-
-        $(this).eq(0).select()
+        $(this).eq(0).select();
         $(this).autocomplete("search");
     });
 
-
     // Medicine Frequency Type
-    var dataFrequencyTypel
+    var dataFrequencyTypel;
     $(document).on("keyup", ".medicineFrequencyInput", function () {
         let val = $(this).val();
         val = val.replace(/hora|vez ao dia|horas|vezes ao dia/, "");
@@ -79,7 +75,7 @@ $(document).ready(() => {
         } else {
             dataFrequencyType = [
                 { value: val + " horas" },
-                { value: val + " vezes ao dia" }
+                { value: val + " vezes ao dia" },
             ];
         }
     });
@@ -97,7 +93,7 @@ $(document).ready(() => {
         } else {
             dataFrequencyType = [
                 { value: val + " horas" },
-                { value: val + " vezes ao dia" }
+                { value: val + " vezes ao dia" },
             ];
         }
 
@@ -110,14 +106,13 @@ $(document).ready(() => {
                 select: function (_, { item }) {
                     $(this).val(item.value);
                     return false;
-                }
+                },
             });
         }
 
-        $(this)[0].setSelectionRange(0, val.length)
+        $(this)[0].setSelectionRange(0, val.length);
         $(this).autocomplete("search");
     });
-
 
     // Medicine OBS Type
     var dataObsType = [
@@ -138,15 +133,74 @@ $(document).ready(() => {
                 select: function (_, { item }) {
                     $(this).val(item.value);
                     return false;
-                }
+                },
             });
         }
         $(this).autocomplete("search");
     });
 
 
-    // save Template popup
-    $(".modal2").load("/plataforma/components/modalSalvarModelo?js=true");
+    // search Template
+
+    $(document).on("click", ".searchBtnTemplates", () => {
+        loadTemplates();
+
+        return false;
+    });
+
+
+    // edit Template
+
+    $(document).on("click", ".templateCard", function () {
+        openTemplate($(this).attr("id"));
+        $("#template").modal("show");
+    });
+
+    $(document).on("click", ".btnTemplate", () => {
+        removeError("templateNameModal");
+        if ($(".templateNameModalInput").val().length == 0) {
+            error("templateNameModal", "Nome não pode ser vazio");
+            $(".templateNameModalInput").focus();
+
+            return false;
+        }
+
+        if (!validEmitPrescription(false)) {
+            $("#saveTemplate").modal("hide");
+
+            return false;
+        }
+
+        let data = $(".formTemplate").serialize();
+        saveTemplate(data);
+        loadTemplates();
+        $("#template").modal("hide");
+
+        return false;
+    });
+
+
+    // delete Template
+
+    $(document).on("click", ".btnDeleteTemplate", function () {
+        deleteTemplate($(this).attr("id"));
+        loadTemplates();
+        $("#template").modal("hide");
+
+        return false;
+    });
+    
+    
+    // create Template
+    
+    $(document).on("click", ".createTemplateBtn", function () {
+        $("#template").modal("show");
+
+        return false;
+    });
+    
+    
+    // select Template popup
 
     $(document).on("click", ".useTemplate", () => {
         loadTemplateList();
@@ -168,9 +222,8 @@ $(document).ready(() => {
         return false;
     });
 
+    // save Template popup
 
-    // select Template popup
-    $(".modal3").load("/plataforma/components/modalSelecionarModelo?js=true");
 
     $(document).on("click", ".saveTemplate", () => {
         $("#saveTemplate").modal("show");
@@ -178,11 +231,12 @@ $(document).ready(() => {
         return false;
     });
 
-
-    $(document).on("focusout", ".templateNameInput", () => removeError("templateName"));
+    $(document).on("focusout", ".templateNameInput", () =>
+        removeError("templateName")
+    );
 
     $(document).on("click", ".btnSaveTemplate", () => {
-        removeError("templateName")
+        removeError("templateName");
         if ($(".templateNameInput").val().length == 0) {
             error("templateName", "Nome não pode ser vazio");
             $(".templateNameInput").focus();
@@ -196,21 +250,19 @@ $(document).ready(() => {
             return false;
         }
 
-
-        saveTemplate();
+        let data = $(".formSaveTemplate").serialize() + "&";
+        data += $(".formAddPrescription").serialize();
+        console.log(data)
+        saveTemplate(data);
         $("#saveTemplate").modal("hide");
 
         return false;
     });
 
 
-
     // prescription detail popup
 
-    $(".modal1").load("/plataforma/components/modalReceita?js=true");
-
-    $(document).on('click', '.cardSrcOption', function () {
-
+    $(document).on("click", ".cardSrcOption", function () {
         let srcMethod = $(this).attr("id");
         if (srcMethod == "CPF") {
             $(".modalBody").removeClass("hidden");
@@ -223,29 +275,26 @@ $(document).ready(() => {
 
             $(".medicinesList").html("");
 
-            $(".formSearchPrescription").removeClass("hidden")
-            $(".modalTitle").addClass("hidden")
+            $(".formSearchPrescription").removeClass("hidden");
+            $(".modalTitle").addClass("hidden");
             $("#detailPrescription").modal("show");
         } else if (srcMethod == "qrCode") {
             alert(srcMethod);
-            let code = "P14"
-            $(".modalTitle").html("Receita número " + code)
+            let code = "P14";
+            $(".modalTitle").html("Receita número " + code);
 
-            $(".formSearchPrescription").addClass("hidden")
-            $(".modalTitle").removeClass("hidden")
+            $(".formSearchPrescription").addClass("hidden");
+            $(".modalTitle").removeClass("hidden");
             $("#detailPrescription").modal("show");
             getPrescription(code);
         }
         return false;
     });
 
-
     // Search prescription popup
 
-    // $(".modals").load("/plataforma/components/modalReceita?js=true");
 
-    $(document).on('click', '.detailPrescription', function () {
-
+    $(document).on("click", ".detailPrescription", function () {
         let prescriptionCode = $(this).attr("id");
 
         $(".modalTitle").html("Receita número " + prescriptionCode);
@@ -262,7 +311,6 @@ $(document).ready(() => {
         return false;
     });
 
-
     //Search prescription
 
     $(document).on("click", ".searchBtnCPF", () => {
@@ -272,7 +320,6 @@ $(document).ready(() => {
         return false;
     });
 
-
     // Pagination
 
     $(document).on("click", ".pageNumber", function () {
@@ -280,15 +327,15 @@ $(document).ready(() => {
         $(this).addClass("active");
 
         paginationStyle();
-    })
+    });
 
     $(document).on("click", ".pagePrevious", () => {
         if (!$(".pagePrevious").hasClass("disabled")) {
             let curPage = $(".pagination .active");
             let previousPageNumber = parseInt(curPage.text(), 10) - 1;
 
-            $('.' + previousPageNumber).addClass("active");
-            curPage.removeClass("active")
+            $("." + previousPageNumber).addClass("active");
+            curPage.removeClass("active");
 
             paginationStyle();
         }
@@ -299,15 +346,14 @@ $(document).ready(() => {
             let curPage = $(".pagination .active");
             let nextPageNumber = parseInt(curPage.text(), 10) + 1;
 
-            $('.' + nextPageNumber).addClass("active");
-            curPage.removeClass("active")
+            $("." + nextPageNumber).addClass("active");
+            curPage.removeClass("active");
 
             paginationStyle();
         }
     });
 
-
-    // Create Prescriptions btns 
+    // Create Prescriptions btns
 
     $(document).on("click", ".removeMedicine", function () {
         removeMedicineForm(this);
@@ -327,61 +373,70 @@ $(document).ready(() => {
         }
     });
 
-
     // Emit Prescription
     $(document).on("focusout", ".cpfFormInput", () => removeError("cpfForm"));
     $(document).on("focusout", ".phoneInput", () => removeError("phone"));
-    $(document).on("focusout", ".medicineNameInput", () => removeError("medicineName"));
-    $(document).on("focusout", ".medicineSizeInput", () => removeError("medicineSize"));
-    $(document).on("focusout", ".medicineFrequencyInput", () => removeError("medicineFrequency"));
+    $(document).on("focusout", ".medicineNameInput", () =>
+        removeError("medicineName")
+    );
+    $(document).on("focusout", ".medicineSizeInput", () =>
+        removeError("medicineSize")
+    );
+    $(document).on("focusout", ".medicineFrequencyInput", () =>
+        removeError("medicineFrequency")
+    );
 
     $(document).on("click", ".btnEmit", () => {
-
         if (validEmitPrescription(true)) {
             emitPrescription();
         }
 
-
         return false;
     });
-
-
 
     // Load screens
 
     loadScreen("home");
 
-
     $(document).on("click", ".home", () => {
+        removeModals();
         loadScreen("home");
 
         return false;
     });
     $(document).on("click", ".prescription", () => {
+        removeModals();
+        addModal(["modalReceita", "modalSalvarModelo", "modalSelecionarModelo"])
         loadScreen("prescription");
+
 
         return false;
     });
     $(document).on("click", ".history", () => {
+        removeModals();
         loadScreen("history");
-        loadHistoryTable()
+        loadHistoryTable();
 
         return false;
     });
+
     $(document).on("click", ".templates", () => {
+        removeModals();
+        addModal(["modalModelo"])
         loadScreen("templates");
+        loadTemplates();
 
         return false;
     });
     $(document).on("click", ".settings", () => {
+        removeModals();
         loadScreen("settings");
 
         return false;
     });
 
-
     function loadScreen(screen) {
-        let screens = ["home", "prescription", "history", "templates", "settings"]
+        let screens = ["home", "prescription", "history", "templates", "settings"];
 
         $.ajax({
             type: "POST",
@@ -392,13 +447,26 @@ $(document).ready(() => {
             },
             error: function (error) {
                 console.log(error);
-            }
+            },
         });
 
-        screens.forEach(atualScreen => {
+        screens.forEach((atualScreen) => {
             $("." + atualScreen).removeClass("active");
             $("." + screen).addClass("active");
         });
+    }
+
+    function addModal(modalArray) {
+        modalArray.forEach(modalName => {
+            modal = "/plataforma/components/" + modalName + "?js=true";
+            $(".modals").append("<div class='" + modalName + "'></div>");
+            $("." + modalName).load(modal);
+        });
+
+    }
+
+    function removeModals() {
+        $(".modals").html("");
     }
 
     function loadMedicines(prescriptionCode) {
@@ -417,15 +485,30 @@ $(document).ready(() => {
 
                 $(".medicinesList").html("");
                 Object.values(result["medicines"]).forEach((medicine, index) => {
-                    let length = index + 1 + '. ' + medicine["medicineName"] + ' ' + medicine["medicineSize"] + ' ' + medicine["medicineFrequency"];
+                    let length =
+                        index +
+                        1 +
+                        ". " +
+                        medicine["medicineName"] +
+                        " " +
+                        medicine["medicineSize"] +
+                        " " +
+                        medicine["medicineFrequency"];
                     length = 35 - length.length;
-                    let list = index + 1 + '. ' + medicine["medicineName"] + ' ' + medicine["medicineSize"] + ' ';
+                    let list =
+                        index +
+                        1 +
+                        ". " +
+                        medicine["medicineName"] +
+                        " " +
+                        medicine["medicineSize"] +
+                        " ";
                     for (let i = 0; i <= length; i++) {
-                        list += '_';
+                        list += "_";
                     }
-                    list += ' ' + medicine["medicineFrequency"];
+                    list += " " + medicine["medicineFrequency"];
                     if (index != result["medicines"].length - 1) {
-                        list += '\n';
+                        list += "\n";
                     }
                     $(".medicinesList").append(list);
                 });
@@ -435,13 +518,13 @@ $(document).ready(() => {
             },
             error: function (error) {
                 console.log(error);
-            }
+            },
         });
     }
 
     function addMedicineForm() {
         $("#medicinesData").append($(".medicineData")[0].outerHTML);
-        let removeBtn = $(".medicinesData")[0].lastChild
+        let removeBtn = $(".medicinesData")[0].lastChild;
         removeBtn = $(removeBtn)[0].firstChild.nextSibling;
         $(removeBtn).removeClass("hidden");
     }
@@ -455,7 +538,13 @@ $(document).ready(() => {
         $.ajax({
             type: "POST",
             url: "/plataforma/tabelaHistorico",
-            data: "js=true&page=" + page + '&paginationStyle=' + paginationStyle + '&' + data,
+            data:
+                "js=true&page=" +
+                page +
+                "&paginationStyle=" +
+                paginationStyle +
+                "&" +
+                data,
             success: function (result) {
                 $(".tableDiv").html(result);
                 if (page != 1) {
@@ -473,11 +562,10 @@ $(document).ready(() => {
                 if (!result) {
                     $(".paginationMenu").remove();
                 }
-
             },
             error: function (error) {
                 console.log(error);
-            }
+            },
         });
     }
 
@@ -489,17 +577,88 @@ $(document).ready(() => {
             data: templateName,
             dataType: "JSON",
             success: function (result) {
-                if (result["code"] == 0) {
+                if (result["notFound"]) {
                     $(".templatesList").html("");
-                    $(".messageTemplateSelect").html(result["page"]);
+                    $(".messageTemplateSelect").html("Nenhum template encontrado");
                 } else {
                     $(".messageTemplateSelect").html("");
-                    $(".templatesList").html(result["page"])
+                    $(".templatesList").html("");
+                    Object.values(result).forEach((template) => {
+                        let page =
+                            `
+                <div class="template row mb-2" id="` +
+                            template.templateId +
+                            `">
+                    <div class="row">
+                        <h1 class="title">` +
+                            template.templateName +
+                            `</h1></div>
+                        <div class="row">
+                        <p class="medicinesDesc">
+            `;
+
+                        for (let i = 0; i < template.templateMedicines.length; i++) {
+                            if (i != template.templateMedicines.length - 1) {
+                                page += template.templateMedicines[i].medicineName + ";";
+                            } else {
+                                page += template.templateMedicines[i].medicineName;
+                            }
+                        }
+
+                        page += "</p></div></div>";
+
+                        $(".templatesList").append(page);
+                    });
                 }
             },
             error: function (error) {
                 console.log(error);
-            }
+            },
+        });
+    }
+
+    function loadTemplates() {
+        let templateName = $(".formSearchTemplates").serialize();
+        $.ajax({
+            type: "POST",
+            url: "/plataforma/listaModelos",
+            data: templateName,
+            dataType: "JSON",
+            success: function (result) {
+                if (result["notFound"]) {
+                    $(".templatesCards").html("");
+                    $(".messageTemplateSelect").html("Nenhum template encontrado");
+                } else {
+                    $(".messageTemplateSelect").html("");
+                    $(".templatesCards").html("");
+                    Object.values(result).forEach((template) => {
+                        let page = `
+                            <div class="templateCard card col-md-3 mb-2"  id="` + template.templateId + `">
+                                <div class="row">
+                                    <h1 class="title card-header text-center">` + template.templateName + `</h1></div>
+                                    <div class="row">
+                                    <ul class="list-group list-group-flush">
+                        `;
+
+                        for (let i = 0; i < template.templateMedicines.length; i++) {
+                            page += '<li class="list-group-item listItem">';
+                            if (i != template.templateMedicines.length - 1) {
+                                page += template.templateMedicines[i].medicineName + ";";
+                            } else {
+                                page += template.templateMedicines[i].medicineName;
+                            }
+                            page += '</li>'
+                        }
+                        page += '</ul></div></div>';
+
+
+                        $(".templatesCards").append(page);
+                    });
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            },
         });
     }
 
@@ -534,15 +693,30 @@ $(document).ready(() => {
 
                     $(".medicinesList").html("");
                     Object.values(result["medicines"]).forEach((medicine, index) => {
-                        let length = index + 1 + '. ' + medicine["medicineName"] + ' ' + medicine["medicineSize"] + ' ' + medicine["medicineFrequency"];
+                        let length =
+                            index +
+                            1 +
+                            ". " +
+                            medicine["medicineName"] +
+                            " " +
+                            medicine["medicineSize"] +
+                            " " +
+                            medicine["medicineFrequency"];
                         length = 35 - length.length;
-                        let list = index + 1 + '. ' + medicine["medicineName"] + ' ' + medicine["medicineSize"] + ' ';
+                        let list =
+                            index +
+                            1 +
+                            ". " +
+                            medicine["medicineName"] +
+                            " " +
+                            medicine["medicineSize"] +
+                            " ";
                         for (let i = 0; i <= length; i++) {
-                            list += '_';
+                            list += "_";
                         }
-                        list += ' ' + medicine["medicineFrequency"];
+                        list += " " + medicine["medicineFrequency"];
                         if (index != result["medicines"].length - 1) {
-                            list += '\n';
+                            list += "\n";
                         }
                         $(".medicinesList").append(list);
                     });
@@ -554,7 +728,7 @@ $(document).ready(() => {
             },
             error: function (error) {
                 console.log(error);
-            }
+            },
         });
     }
 
@@ -567,6 +741,7 @@ $(document).ready(() => {
             dataType: "JSON",
             success: function (result) {
                 removeMedicineForm();
+                result = result.templateMedicines
                 for (let i = 0; i < Object.values(result).length; i++) {
                     let medicineName = result[i].medicineName;
                     let medicineSize = result[i].medicineSize;
@@ -585,7 +760,57 @@ $(document).ready(() => {
             },
             error: function (error) {
                 console.log(error);
-            }
+            },
+        });
+    }
+
+    function openTemplate(id) {
+        id = "templateId=" + id;
+        $.ajax({
+            type: "POST",
+            url: "/plataforma/pesquisaTemplate",
+            data: id,
+            dataType: "JSON",
+            success: function (result) {
+
+                removeMedicineForm();
+                $("#template .modal-title").html("Modelo <b>" + result.templateName + "</b>")
+                $(".templateNameModalInput").val(result.templateName)
+                result = result.templateMedicines
+                for (let i = 0; i < Object.values(result).length; i++) {
+                    let medicineName = result[i].medicineName;
+                    let medicineSize = result[i].medicineSize;
+                    let medicineFrequency = result[i].medicineFrequency;
+                    let medicineObs = result[i].medicineObs;
+
+                    $(".medicineNameInput").eq(i).val(medicineName);
+                    $(".medicineSizeInput").eq(i).val(medicineSize);
+                    $(".medicineFrequencyInput").eq(i).val(medicineFrequency);
+                    $(".medicineObsInput").eq(i).val(medicineObs);
+
+                    if (i != Object.values(result).length - 1) {
+                        addMedicineForm();
+                    }
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
+
+    function deleteTemplate(id) {
+        id = "templateId=" + id;
+        $.ajax({
+            type: "POST",
+            url: "/plataforma/excluirTemplate",
+            data: id,
+            success: function (result) {
+                alert(result)
+            },
+            error: function (error) {
+                console.log(error);
+            },
         });
     }
 
@@ -646,7 +871,6 @@ $(document).ready(() => {
 
                 return false;
             }
-
         }
 
         return true;
@@ -665,12 +889,12 @@ $(document).ready(() => {
             },
             error: function (error) {
                 console.log(error);
-            }
+            },
         });
     }
 
     function searchPacient() {
-        let cpf = "cpf=" + $(".cpfFormInput").val()
+        let cpf = "cpf=" + $(".cpfFormInput").val();
         $.ajax({
             type: "POST",
             url: "/plataforma/procuraPaciente",
@@ -679,27 +903,25 @@ $(document).ready(() => {
             success: function (result) {
                 if (result) {
                     $(".phoneInput").val(result["phone"]);
-                    $(".phoneInput").attr("disabled", "disabled")
+                    $(".phoneInput").attr("disabled", "disabled");
                     $(".medicineNameInput").focus();
                 }
             },
             error: function (error) {
                 console.log(error);
-                $(".phoneInput").val("")
-                $(".phoneInput").removeAttr("disabled")
-                $(".phoneInput").focus()
-            }
+                $(".phoneInput").val("");
+                $(".phoneInput").removeAttr("disabled");
+                $(".phoneInput").focus();
+            },
         });
     }
 
-    function saveTemplate() {
-        let templateName = $(".formSaveTemplate").serialize() + "&";
-        let data = $(".formAddPrescription").serialize();
+    function saveTemplate(data) {
 
         $.ajax({
             type: "POST",
             url: "/plataforma/salvarModelo",
-            data: templateName + data,
+            data: data,
             dataType: "JSON",
             success: function (result) {
                 console.log(result);
@@ -707,7 +929,7 @@ $(document).ready(() => {
             },
             error: function (error) {
                 console.log(error);
-            }
+            },
         });
     }
 

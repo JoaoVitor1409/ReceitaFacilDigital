@@ -35,7 +35,7 @@ class UserAreaController extends Action
             if ($user["type"] != "pacient") {
                 if ($user["type"] == "doctor") {
                     $this->view->titlePrescription = "Emitir receita";
-                } elseif ($user["type"] == "farmacy") {
+                } elseif ($user["type"] == "pharmacy") {
                     $this->view->titlePrescription = "Buscar receitas";
                 }
                 $this->view->col = 4;
@@ -47,7 +47,7 @@ class UserAreaController extends Action
         } elseif ($screen == "prescription") {
             if ($user['type'] == 'doctor') {
                 $page = $this->renderPage("createPrescription");
-            } elseif ($user['type'] == 'farmacy') {
+            } elseif ($user['type'] == 'pharmacy') {
                 $page = $this->renderPage("searchPrescription");
             }
         } elseif ($screen == "history") {
@@ -99,6 +99,15 @@ class UserAreaController extends Action
         }
 
         $this->render('/components/modalSaveTemplate', null);
+    }
+    public function modalTemplate()
+    {
+
+        if (!isset($_GET['js'])) {
+            header("Location: /plataforma");
+        }
+
+        $this->render('/components/modalTemplate', null);
     }
 
     public function tableHistory()
@@ -257,91 +266,7 @@ class UserAreaController extends Action
         ';
 
         return $page;
-    }
-
-    public function templatesList()
-    {
-        $templateName = $_POST["templateName"];
-        $data = [];
-
-        $templates = [
-            [
-                "templateId" => 1,
-                "templateName" => "Febre",
-                "templateMedicines" => [
-                    [
-                        "medicineName" => "Dipirona"
-                    ],
-                    [
-                        "medicineName" => "Engov"
-                    ]
-                ]
-            ],
-            [
-                "templateId" => 2,
-                "templateName" => "Dor de cabeça",
-                "templateMedicines" => [
-                    [
-                        "medicineName" => "Dipirona Monoidratada"
-                    ]
-                ]
-            ],
-            [
-                "templateId" => 3,
-                "templateName" => "Dor de garganta",
-                "templateMedicines" => [
-                    [
-                        "medicineName" => "Xarope Ruim"
-                    ],
-                    [
-                        "medicineName" => "Dipirona"
-                    ],
-                    [
-                        "medicineName" => "Anti-inflamatório"
-                    ],
-                ]
-            ],
-        ];
-
-        if (!$templateName) {
-            $data = $templates;
-        } else {
-            foreach ($templates as $template) {
-                if ($templateName == $template["templateName"]) {
-                    $data[] = $template;
-                }
-            }
-        }
-
-        if ($data) {
-            $page = "";
-            foreach ($data as $template) {
-                $page .= '<div class="template row mb-2" id="' . $template["templateId"] . '">
-                    <div class="row">
-            ';
-                $page .= '<h1 class="title">' . $template["templateName"] . '</h1></div>';
-                $page .= '<div class="row">';
-                $page .= '<p class="medicinesDesc">';
-
-                for ($i = 0; $i < count($template["templateMedicines"]); $i++) {
-                    if ($i != count($template["templateMedicines"]) - 1) {
-                        $page .= $template["templateMedicines"][$i]["medicineName"] . "; ";
-                    } else {
-                        $page .= $template["templateMedicines"][$i]["medicineName"];
-                    }
-                }
-
-                $page .= '</p></div>';
-                $page .= '</div>';
-            }
-
-            echo json_encode(["code" => 1, "page" => $page]);
-            return;
-        }
-
-        $page = "Nenhum template encontrado";
-        echo json_encode(["code" => 0, "page" => $page]);
-    }
+    }   
 
     public function getPacient()
     {

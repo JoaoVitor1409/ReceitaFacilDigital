@@ -112,16 +112,16 @@
                 'action' => 'modalSaveTemplate'
             );
 
+            $routes['modalTemplate'] = array(
+                'route' => '/plataforma/components/modalModelo',
+                'controller' => 'userAreaController',
+                'action' => 'modalTemplate'
+            );
+
             $routes['tableHistory'] = array(
                 'route' => '/plataforma/tabelaHistorico',
                 'controller' => 'userAreaController',
                 'action' => 'tableHistory'
-            );
-
-            $routes['templatesList'] = array(
-                'route' => '/plataforma/listaModelos',
-                'controller' => 'userAreaController',
-                'action' => 'templatesList'
             );
 
             $routes['getPacient'] = array(
@@ -158,10 +158,22 @@
                 'action' => 'saveTemplate'
             );
 
+            $routes['templatesList'] = array(
+                'route' => '/plataforma/listaModelos',
+                'controller' => 'templateController',
+                'action' => 'templatesList'
+            );
+
             $routes['getTemplate'] = array(
                 'route' => '/plataforma/pesquisaTemplate',
                 'controller' => 'templateController',
                 'action' => 'getTemplate'
+            );
+
+            $routes['deleteTemplate'] = array(
+                'route' => '/plataforma/excluirTemplate',
+                'controller' => 'templateController',
+                'action' => 'deleteTemplate'
             );
 
 
