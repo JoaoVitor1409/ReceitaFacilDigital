@@ -1,0 +1,89 @@
+CREATE TABLE PACIENTE(
+    PacienteID INT NOT NULL AUTO_INCREMENT,
+    PacienteCPF VARCHAR(11) NOT NULL,
+    PacienteNome VARCHAR(100) NOT NULL,
+    PacienteDataNasc DATE NOT NULL,    
+    PacienteUF VARCHAR(30) NOT NULL,
+    PacienteMunicipio VARCHAR(40) NOT NULL,
+    PacienteEmail VARCHAR(100) NOT NULL,
+    PacienteCelular VARCHAR(11) NOT NULL,
+    PacienteSenha VARCHAR(32) NOT NULL,
+    PacienteAtivo TINYINT(1) DEFAULT 1
+    PRIMARY KEY(PacienteID, PacienteCPF)
+);
+
+
+CREATE TABLE MEDICO(
+    MedicoID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    MedicoNome VARCHAR(100) NOT NULL,
+    MedicoCRM VARCHAR(20) NOT NULL,
+    MedicoDataNasc DATE NOT NULL,
+    MedicoEmail VARCHAR(100) NOT NULL,
+    MedicoCelular VARCHAR(11) NOT NULL,
+    MedicoSenha VARCHAR(32) NOT NULL,
+    MedicoAtivo TINYINT(1) DEFAULT 1,
+    EnderecoID INT NOT NULL,
+    FOREIGN KEY(EnderecoId) REFERENCES Endereco(EnderecoId)
+);
+
+
+CREATE TABLE FARMACIA(
+    FarmaciaID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    FarmaciaNome VARCHAR(100) NOT NULL,
+    FarmaciaCNPJ VARCHAR(11) NOT NULL,
+    FarmaciaEmail VARCHAR(100) NOT NULL,
+    FarmaciaTelefone VARCHAR(10) NOT NULL,
+    FarmaciaSenha VARCHAR(32) NOT NULL,
+    FarmaciaAtivo TINYINT(1) DEFAULT 1,    
+    EnderecoID INT NOT NULL,
+    FOREIGN KEY(EnderecoId) REFERENCES Endereco(EnderecoId)
+);
+
+CREATE TABLE ENDERECO(
+    EnderecoId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    EnderecoCEP VARCHAR(8) NOT NULL,
+    EnderecoUF VARCHAR(2) NOT NULL,
+    EnderecoCidade VARCHAR(50) NOT NULL,
+    EnderecoBairro VARCHAR(20),
+    EnderecoLogradouro VARCHAR(100),
+    EnderecoNumero VARCHAR(5),
+    EnderecoComplemento VARCHAR(30)   
+);
+
+CREATE TABLE RECEITA(
+    ReceitaId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ReceitaData DATE NOT NULL DEFAULT(CURRENT_DATE),
+    PacienteCPF INT NOT NULL,
+    PacienteCelular VARCHAR(11) NOT NULL,
+    MedicoId INT NOT NULL,
+    ReceitaAtiva TINYINT(1) DEFAULT 1,
+    FOREIGN KEY(MedicoID) REFERENCES MEDICO(MedicoID),
+);
+
+CREATE TABLE RECEITA_MEDICAMENTO(
+    MedicamentoID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    MedicamentoDesc VARCHAR(50) NOT NULL,
+    MedicamentoDosagem VARCHAR(50) NOT NULL,
+    MedicamentoFrequencia VARCHAR(50) NOT NULL,
+    MedicamentoObs VARCHAR(50) NOT NULL,
+    ReceitaId INT NOT NULL,
+    FOREIGN KEY(ReceitaId) REFERENCES RECEITA(ReceitaId)
+);
+
+CREATE TABLE MODELO(
+    ModeloID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    ModeloNome VARCHAR(50) NOT NULL,
+    MedicoId INT NOT NULL,
+    ModeloAtivo TINYINT(1) DEFAULT 1,
+    FOREIGN KEY(MedicoID) REFERENCES MEDICO(MedicoID),
+);
+
+CREATE TABLE MODELO_MEDICAMENTO(
+    MedicamentoID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    MedicamentoDesc VARCHAR(50) NOT NULL,
+    MedicamentoDosagem VARCHAR(50) NOT NULL,
+    MedicamentoFrequencia VARCHAR(50) NOT NULL,
+    MedicamentoObs VARCHAR(50) NOT NULL,
+    ModeloID INT NOT NULL,
+    FOREIGN KEY(ModeloID) REFERENCES MODELO(ModeloID)
+);
