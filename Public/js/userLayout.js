@@ -189,17 +189,17 @@ $(document).ready(() => {
 
         return false;
     });
-    
-    
+
+
     // create Template
-    
+
     $(document).on("click", ".createTemplateBtn", function () {
         $("#template").modal("show");
 
         return false;
     });
-    
-    
+
+
     // select Template popup
 
     $(document).on("click", ".useTemplate", () => {
@@ -368,9 +368,7 @@ $(document).ready(() => {
     });
 
     $(document).on("focusout", ".cpfFormInput", () => {
-        if ($(".cpfFormInput").val().length == 14) {
-            searchPacient();
-        }
+        searchPacient();
     });
 
     // Emit Prescription
@@ -414,6 +412,7 @@ $(document).ready(() => {
     });
     $(document).on("click", ".history", () => {
         removeModals();
+        addModal(["modalReceita"])
         loadScreen("history");
         loadHistoryTable();
 
@@ -903,8 +902,9 @@ $(document).ready(() => {
             success: function (result) {
                 if (result) {
                     $(".phoneInput").val(result["phone"]);
-                    $(".phoneInput").attr("disabled", "disabled");
                     $(".medicineNameInput").focus();
+                } else {
+                    $(".phoneInput").val("");
                 }
             },
             error: function (error) {

@@ -121,14 +121,14 @@ class UserAreaController extends Action
         }
         $user = $_SESSION['rfd']['user'];
 
-        $pacientName = null;
+        $pacientCPF = null;
         $prescriptionCode = null;
         $issueDate = null;
         $pageNumber = 1;
 
 
-        if (isset($_POST["pacientName"])) {
-            $pacientName = $_POST["pacientName"];
+        if (isset($_POST["pacientCPF"])) {
+            $pacientCPF = $_POST["pacientCPF"];
         }
 
         if (isset($_POST["prescriptionCode"])) {
@@ -147,11 +147,11 @@ class UserAreaController extends Action
 
         $prescriptions = $_SESSION['rfd']['prescriptions'];
 
-        if (!$pacientName && !$prescriptionCode && !$issueDate) {
+        if (!$pacientCPF && !$prescriptionCode && !$issueDate) {
             $data = $prescriptions;
         } else {
             foreach ($prescriptions as $prescription) {
-                if ($pacientName == $prescription["pacientName"] || $prescriptionCode == $prescription["prescriptionCode"] || $issueDate == $prescription["issueDate"]) {
+                if ($pacientCPF == $prescription["pacientCPF"] || $prescriptionCode == $prescription["prescriptionCode"] || $issueDate == $prescription["issueDate"]) {
                     $data[] = $prescription;
                 }
             }
@@ -188,7 +188,7 @@ class UserAreaController extends Action
                     $page .= '<tr>';
                     if ($user["type"] != "pacient") {
                         $page .= '
-                            <td class="text-start">' . $data[$i]["pacientName"] . '</td>
+                            <td class="text-start">' . $data[$i]["pacientCPF"] . '</td>
                             <td>' . $data[$i]["prescriptionCode"] . '</td>
                         ';
                     } else {

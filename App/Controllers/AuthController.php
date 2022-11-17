@@ -17,47 +17,47 @@
 
             $_SESSION['rfd']['prescriptions'] = [
                 [
-                    "pacientName" => "João Vitor",
+                    "pacientCPF" => "450.344.568-50",
                     "prescriptionCode" => "P01",
                     "issueDate" => "2002-09-14",
                 ],
                 [
-                    "pacientName" => "João Vitor",
+                    "pacientCPF" => "450.344.568-50",
                     "prescriptionCode" => "P02",
                     "issueDate" => "2022-09-14",
                 ],
                 [
-                    "pacientName" => "João Vitor",
+                    "pacientCPF" => "450.344.568-50",
                     "prescriptionCode" => "P03",
                     "issueDate" => "2021-09-14",
                 ],
                 [
-                    "pacientName" => "João Vitor",
+                    "pacientCPF" => "450.344.568-50",
                     "prescriptionCode" => "P04",
                     "issueDate" => "2021-09-14",
                 ],
                 [
-                    "pacientName" => "João Vitor",
+                    "pacientCPF" => "450.344.568-50",
                     "prescriptionCode" => "P05",
                     "issueDate" => "2021-09-14",
                 ],
                 [
-                    "pacientName" => "Seu Jorge",
+                    "pacientCPF" => "123.456.789-00",
                     "prescriptionCode" => "P06",
                     "issueDate" => "2000-01-01",
                 ],
                 [
-                    "pacientName" => "Seu Jorge",
+                    "pacientCPF" => "123.456.789-00",
                     "prescriptionCode" => "P07",
                     "issueDate" => "2000-01-03",
                 ],
                 [
-                    "pacientName" => "Seu Jorge",
+                    "pacientCPF" => "123.456.789-00",
                     "prescriptionCode" => "P08",
                     "issueDate" => "2000-01-03",
                 ],
                 [
-                    "pacientName" => "Dona Maria",
+                    "pacientCPF" => "123.456.789-01",
                     "prescriptionCode" => "P09",
                     "issueDate" => "2000-01-02",
                 ],
