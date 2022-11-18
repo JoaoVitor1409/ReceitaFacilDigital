@@ -1,0 +1,111 @@
+<style>
+    .content {
+        height: auto;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h1 class="title">Crie uma Receita</h1>
+    </div>
+</div>
+<div class="row justify-content-center mt-3">
+    <form class="formAddPrescription col-md-9 row justify-content-center" id="formAddPrescription" method="POST">
+        <fieldset class="pacientData row justify-content-center mb-4" form="formAddPrescription">
+            <legend>Dados do Paciente</legend>
+            <div class="inputs row justify-content-center">
+                <div class="input col-md-4 col-10 d-flex flex-column">
+                    <label for="cpf">CPF do Paciente:*</label>
+                    <input type="text" name="cpf" class="cpfInput cpfFormInput" id="cpf" required>
+
+                    <div class="errorDiv text-start d-none cpfFormError">
+                        <p class="ErrorMsg error text-danger cpfFormErrorMsg">AAAA</p>
+                    </div>
+                </div>
+                <div class="input offset-md-1 col-md-4 col-10 d-flex flex-column">
+                    <label for="phone">Número de Telefone:*</label>
+                    <input type="text" name="phone" class="phoneInput" id="phone" required>
+
+                    <div class="errorDiv text-start d-none phoneError">
+                        <p class="ErrorMsg error text-danger phoneErrorMsg"></p>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="medicinesData row justify-content-center mb-4" form="formAddPrescription" id="medicinesData">
+            <legend>Medicamentos</legend>
+            <fieldset class="medicinesData medicineData col-10 row justify-content-center mb-2" form="formAddPrescription">
+                <span class="material-icons-outlined removeMedicine text-end text-danger hidden">close</span>
+                <legend>Medicamento</legend>
+                <div class="medicines row justify-content-center">
+                    <div class="medicine row justify-content-center">
+                        <div class="inputs row justify-content-center">
+                            <div class="input col-md-4 col-10 d-flex flex-column mb-1">
+                                <label for="medicine">Medicamento:*</label>
+                                <input type="text" name="medicineName[]" class="medicineNameInput" id="medicineName" required>
+
+                                <div class="errorDiv text-start d-none medicineNameError">
+                                    <p class="ErrorMsg error text-danger medicineNameErrorMsg"></p>
+                                </div>
+                            </div>
+                            <div class="offset-md-1 col-md-4 col-10 mb-1">
+                                <div class="row justify-content-between">
+                                    <div class="input col-md-4 col-4 d-flex flex-column">
+                                        <label for="medicine">Dosagem:*</label>
+                                        <input type="text" name="medicineSize[]" class="medicineSizeInput" id="medicineSize" required>
+
+                                        <div class="errorDiv text-start d-none medicineSizeError">
+                                            <p class="ErrorMsg error text-danger medicineSizeErrorMsg"></p>
+                                        </div>
+                                    </div>
+                                    <div class="input col-md-6 col-6 d-flex flex-column">
+                                        <label for="medicine">Frequência:*</label>
+                                        <input type="text" name="medicineFrequency[]" class="medicineFrequencyInput" id="medicineFrequency" required>
+
+
+                                        <div class="errorDiv text-start d-none medicineFrequencyError">
+                                            <p class="ErrorMsg error text-danger medicineFrequencyErrorMsg"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="input row col-md-9 col-10 flex-column mt-2">
+                            <label for="medicine">Observação:</label>
+                            <input type="text" name="medicineObs[]" class="medicineObsInput" id="medicineObs">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </fieldset>
+
+        <div class="row btns">
+            <div class="row justify-content-center mb-3">
+                <button type="button" class="addMedicine col-md-9 col-10 d-flex align-items-center justify-content-center">
+                    <span class="material-icons-outlined">add</span>
+                    Adicionar Medicamento
+                </button>
+            </div>
+
+            <div class="row btnEmit justify-content-center mb-2">
+                <button type="submit" class="emitPrescription col-md-4 col-5 d-flex align-items-center justify-content-center">
+                    <span class="material-icons-outlined me-1">file_open</span>
+                    Emitir Receita
+                </button>
+            </div>
+
+            <div class="row btnsActions justify-content-center">
+                <button type="button" class="useTemplate col-md-4 col-5 d-flex align-items-center justify-content-center mb-2 me-1">
+                    <span class="material-icons-outlined me-1">content_paste_search</span>
+                    Selecionar Modelo
+                </button>
+                <button type="button" class="saveTemplate offset-md-1 col-md-4 col-5 d-flex align-items-center justify-content-center mb-2">
+                    <span class="material-icons-outlined me-1">content_paste_go</span>
+                    Salvar Modelo
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

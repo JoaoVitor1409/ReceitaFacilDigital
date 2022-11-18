@@ -1,0 +1,96 @@
+<?php
+session_start();
+if (!isset($_SESSION['rfd']['user'])) {
+    header("Location: /");
+}
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receita Fácil Digital</title>
+
+    <link rel="stylesheet" href="css/libraries/icons.css">
+    <link rel="stylesheet" href="css/libraries/bootstrap.css">
+    <link rel="stylesheet" href="css/libraries/jquery-ui.css">
+    <link rel="stylesheet" href="css/layouts/userHeader.css">
+    <link rel="stylesheet" href="css/<?= $this->view->page ?>.css">
+</head>
+
+<body id="body-pd">
+    <header class="header" id="header">
+        <div class="header_toggle">
+            <span class="nav_name material-icons" id="header-toggle">menu</span>
+        </div>
+        <div class="header_img">
+            <span class="material-icons">account_circle</span>
+        </div>
+    </header>
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div>
+                <div class="nav_logo">
+                    <span class="nav_logo-icon material-icons-outlined">insert_emoticon</span>
+                    <span class="nav_logo-name">Receita Fácil Digital</span>
+                </div>
+
+                <div class="nav_list">
+                    <div class="nav_link active home">
+                        <span class="nav_name material-icons">home</span>
+                        <span class="nav_name">Principal</span>
+                    </div>
+                    <?php if ($_SESSION['rfd']['user']['type'] == "doctor") { ?>
+                        <div class="nav_link prescription">
+                            <span class="nav_name material-icons">note_add</span>
+                            <span class="nav_name">Criar receita</span>
+                        </div>
+                    <?php } ?>
+                    <?php if ($_SESSION['rfd']['user']['type'] == "pharmacy") { ?>
+                        <div class="nav_link prescription">
+                            <span class="nav_name material-icons">note_add</span>
+                            <span class="nav_name">Buscar receita</span>
+                        </div>
+                    <?php } ?>
+                    <div class="nav_link history">
+                        <span class="nav_name material-icons">history</span>
+                        <span class="nav_name">Histórico de receitas</span>
+                    </div>
+                    <?php if ($_SESSION['rfd']['user']['type'] == "doctor") { ?>
+                        <div class="nav_link templates">
+                            <span class="nav_name material-icons">content_paste</span>
+                            <span class="nav_name">Modelos</span>
+                        </div>
+                    <?php } ?>
+                    <div class="nav_link settings">
+                        <span class="nav_name material-icons">settings</span>
+                        <span class="nav_name">Configurações</span>
+                    </div>
+                </div>
+            </div>
+            <a href="/plataforma/sair" class="nav_link">
+                <span class="material-icons-outlined">logout</span>
+                <span class="nav_name">Sair</span>
+            </a>
+        </nav>
+    </div>
+    <!--Container Main start-->
+    <div>
+        <?= $this->content(); ?>
+    </div>
+
+
+
+
+    <!--Container Main end-->
+
+    <script src="js/libraries/jquery.js"></script>
+    <script src="js/libraries/bootstrap.js"></script>
+    <script src="js/libraries/jqueryMask.js"></script>
+    <script src="js/libraries/jquery-ui.js"></script>
+    <script src="js/menuUser.js"></script>
+    <script src="js/userLayout.js"></script>
+</body>

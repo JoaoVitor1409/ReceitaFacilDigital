@@ -1,0 +1,53 @@
+<header class="row">
+    <div class="col-md-12">
+        <h1>Acesse a Receita Fácil Digital</h1>
+    </div>
+</header>
+<form action="/autenticar" method="POST" class="row">
+    <div class="row justify-content-center inputs">
+        <div class="col-md-8 inputArea">
+            <div class="input-group">
+                <label for="email" class="input-group-text inputIcon emailIcon">
+                    <span class="material-icons-outlined">email</span>
+                </label>
+                <input type="email" name="email" class="form-control emailInput" id="email" placeholder="E-mail" required>
+            </div>
+            <div class="errorDiv text-start d-none emailError">
+                <p class="error text-danger emailErrorMsg"></p>
+            </div>
+        </div>
+    </div>
+    <div class="row inputs">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-8 inputArea">
+                <div class="input-group">
+                    <label for="password" class="input-group-text inputIcon passwordIcon">
+                        <span class="material-icons-outlined">lock</span>
+                    </label>
+                    <input type="password" name="password" class="form-control passwordInput" id="password" placeholder="Senha" required>
+                    <div class="viewPassDiv passwordIconView">
+                        <div class="input-group-text d-flex justify-content-center align-items-center viewPass">
+                            <span class="material-icons-outlined viewPassIcon">visibility</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="errorDiv text-start d-none passwordError">
+                    <p class="passwordErrorMsg error text-danger">Invalid</p>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-8 text-start">
+                <button type="button" id="btnforgotPassword">
+                    Esqueci minha senha
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 d-flex justify-content-center align-items-center">
+            <button type="submit" class="btnAction">Acessar</button>
+        </div>
+    </div>
+</form>

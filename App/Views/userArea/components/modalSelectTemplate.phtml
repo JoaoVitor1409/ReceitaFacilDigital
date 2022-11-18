@@ -1,0 +1,32 @@
+<div class="modal fade" id="useTemplate">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header row">
+                <div class="modal-title my-2 row">
+                    <form class="formSearchTemplate row justify-content-evenly">
+                        <div class="col-md-5 col-10 inputArea">
+                            <div class="input-group d-flex align-items-center">
+                                <label for="templateName" class="input-group-text inputIcon">
+                                    <span class="material-icons-outlined">content_paste_search</span>
+                                </label>
+                                <input type="text" name="templateName" class="form-control templateNameInput" id="templateName" placeholder="Nome do modelo" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-10">
+                            <button class="searchBtnTemplate d-flex align-items-center justify-content-center">
+                                <span class="material-icons-outlined">search</span>
+                                Buscar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-body row modalTemplateSelectBody justify-content-center">
+                <h1 class="messageTemplateSelect"></h1>
+
+                <div class="templatesList row justify-content-center col-11"></div>
+            </div>
+        </div>
+    </div>
+</div>

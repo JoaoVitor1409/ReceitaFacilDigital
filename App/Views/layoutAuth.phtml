@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receita Fácil Digital</title>
+
+
+    <link rel="stylesheet" href="css/libraries/icons.css">
+    <link rel="stylesheet" href="css/libraries/bootstrap.css">
+    <link rel="stylesheet" href="css/layouts/auth.css">
+</head>
+
+<body>
+    <div class="container-fluid backgroundDiv d-flex justify-content-center align-items-center">
+        <section class="background <?= $this->view->page == "signUp" ? "backgroundSignUp" : "" ?>">
+            <?= $this->content(); ?>
+        </section>
+    </div>
+
+    <div class="modals"></div>
+
+    <script src="js/libraries/jquery.js"></script>
+    <script src="js/libraries/bootstrap.js"></script>
+    <script src="js/libraries/jqueryMask.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/<?= $this->view->page ?>.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,252 @@
+.contact {
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 2%;
+    margin: 5% 2% 0 2%;
+    border-radius: 14px;
+}
+
+.contact p {
+    font-size: 1.1em;
+}
+
+.contact h1 {
+    font-size: 1.5em;
+    margin: 4% 0 10% 0;
+}
+
+
+.contact form .inputs {
+    margin-bottom: 2%;
+}
+
+.contact form .inputs .inputIcon {
+    background-color: #fff;
+    border-radius: 30% 0 0 30%;
+    border: none;
+    padding: 2%;
+}
+
+.contact form .inputs label span {
+    color: #8E9398;
+    font-size: 1.5em;
+    margin-right: -1px;
+    border: none;
+}
+
+.contact form .inputs input[type="text"],
+.contact form .inputs input[type="email"] {
+    padding: 2% 0 2% 0;
+    border: none;
+    box-shadow: none;
+    border-radius: 0 10px 10px 0;
+}
+
+.contact form .inputs .inputEmail label {
+    padding: 1%;
+}
+
+.contact form .inputs .inputEmail input {
+    padding: 1%;
+}
+
+.contact form .inputs input::placeholder {
+    color: #8E9398;
+}
+
+.contact form .inputs input:focus {
+    margin: none;
+    outline: none;
+    box-shadow: none;
+}
+
+.contact form .inputs .form-check .form-check-input {
+    margin-left: 0.5%;
+}
+
+.contact form .inputs .form-check .form-check-label {
+    margin-left: 1.5%;
+}
+
+.contact form textarea {
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+    padding: 1%;
+}
+
+.contact form textarea:focus {
+    outline: none;
+}
+
+.contact form .btnSend {
+    background-color: #b3e5fd;
+    border: none;
+    padding: 1.2%;
+    width: 20%;
+    border-radius: 10px;
+    margin-top: 2%;
+    font-weight: 500;
+    font-size: 1.25em;
+    transition: 0.3s;
+}
+
+.contact form .btnSend:hover {
+    transition: 0.5s;
+    background-color: #81d5fc;
+}
+
+
+/* RESPONSIBILITY */
+
+@media screen and (max-width: 1000px) {
+    .contact p {
+        font-size: 1em;
+    }
+
+    .contact h1 {
+        font-size: 1.4em;
+    }
+
+    .contact form .btnSend {
+        font-size: 1.1em;
+    }
+}
+
+@media screen and (max-width: 830px) {
+    .contact h1 {
+        font-size: 1.3em;
+    }
+
+    .contact form .inputs input[type="text"],
+    .contact form .inputs input[type="email"],
+    .contact form textarea {
+        font-size: 0.9em;
+    }
+
+
+    .contact form .btnSend {
+        font-size: 1em;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .contact p {
+        font-size: 1em;
+    }
+
+    .contact h1 {
+        font-size: 1.4em;
+    }
+
+    .contact form .inputs input[type="text"],
+    .contact form .inputs input[type="email"],
+    .contact form textarea {
+        font-size: 1.1em;
+    }
+
+    .contact form .inputs label span {
+        font-size: 1.6em;
+    }
+
+    .contact form .btnSend {
+        font-size: 1.25em;
+        width: 100%;
+    }
+
+    .contact form .inputArea {
+        margin-bottom: 3%;
+    }
+
+    .contact form .inputs {
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 604px) {
+    .contact h1 {
+        font-size: 1.3em;
+    }
+
+    .contact form .inputs input[type="text"],
+    .contact form .inputs input[type="email"],
+    .contact form textarea {
+        font-size: 1em;
+    }
+
+
+    .contact form .btnSend {
+        font-size: 1.1em;
+    }
+}
+
+@media screen and (max-width: 510px) {
+    .contact p {
+        font-size: 0.9em;
+    }
+
+    .contact h1 {
+        font-size: 1.2em;
+    }
+
+    .contact form .inputs input[type="text"],
+    .contact form .inputs input[type="email"],
+    .contact form textarea {
+        font-size: 0.9em;
+    }
+
+    .contact form .inputs .form-check .form-check-label {
+        font-size: 0.9em;
+    }
+
+    .contact form .btnSend {
+        font-size: 1em;
+    }
+}
+
+
+@media screen and (max-width: 410px) {
+    .contact p {
+        font-size: 0.8em;
+    }
+
+    .contact h1 {
+        font-size: 1.1em;
+    }
+
+    .contact form .inputs input[type="text"],
+    .contact form .inputs input[type="email"],
+    .contact form textarea {
+        font-size: 0.8em;
+    }
+
+    .contact form .inputs .form-check .form-check-label {
+        font-size: 0.8em;
+    }
+
+    .contact form .btnSend {
+        font-size: 0.9em;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .contact p {
+        font-size: 0.7em;
+    }
+
+    .contact h1 {
+        font-size: 0.9em;
+    }
+
+    .contact form .inputs input[type="text"],
+    .contact form .inputs input[type="email"],
+    .contact form textarea {
+        font-size: 0.7em;
+    }
+
+    .contact form .inputs .inputIcon {
+        font-size: 0.8em;
+    }
+}
+
+/* RESPONSIBILITY END */

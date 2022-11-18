@@ -1,0 +1,509 @@
+body *,
+.row *,
+.row,
+.container-fluid {
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
+    color: #000;
+}
+
+body {
+    background-image: url("../../img/backLogin.svg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    backdrop-filter: blur(2px);
+}
+
+.backgroundDiv {
+    height: 100vh;
+}
+
+.background,
+.backgroundSignUp {
+    background-color: rgba(255, 255, 255, .3);
+    padding: 5% 0;
+    border-radius: 14px;
+    width: 55%;
+    text-align: center;
+}
+
+.backgroundSignUp {
+    padding: 1% 0;
+}
+
+.background h1 {
+    font-size: 1.8em;
+    margin-bottom: 5%;
+}
+
+.backSignUp{
+    cursor: pointer;
+    margin-left: 2%;
+}
+
+.backSignUp span{
+    font-size: 1.1em;
+    color: #212121;
+}
+
+.backSignUp p{
+    color: #212121;
+}
+
+.btnChoice {
+    width: 100%;
+    border: none;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 2%;
+    color: #212121;
+    transition: 0.3s;
+    font-size: 1.1em;
+
+    /* Not selected text */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.actived {
+    background-color: #3299b3;
+    color: #fff;
+    transition: 0.3s;
+
+}
+
+.hide {
+    display: none;
+}
+
+
+form .inputs {
+    margin: 3% 0;
+}
+
+form .inputPass{
+    margin: 0;
+}
+
+form .inputs .birthDateInput {
+    color: #8E9398;
+}
+
+form .inputs .birthDateInput::-webkit-inner-spin-button,
+form .inputs .birthDateInput::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+form .inputs .inputIcon {
+    background-color: #fff;
+    border-radius: 30% 0 0 30%;
+    border: none;
+    padding: 2%;
+}
+
+form .inputs .viewPassDiv {
+    background-color: #fff;
+    border-radius: 0% 30% 30% 0%;
+    border: none;
+    padding: 2%;
+    cursor: pointer;
+}
+
+form .inputs .viewPass {
+    background-color: #fff;
+    border: none;
+}
+
+form .inputs span {
+    color: #8E9398;
+    font-size: 1.5em;
+    margin-right: -1px;
+    border: none;
+}
+
+form .inputs .viewPass span {
+    cursor: pointer;
+}
+
+form .inputs .inputError {
+    border-top: 3px solid #f00;
+    border-right: 3px solid #f00;
+    border-bottom: 3px solid #f00;
+}
+
+form .inputs .inputErrorPassword {
+    border-top: 3px solid #f00;
+    border-bottom: 3px solid #f00;
+}
+
+form .inputs .inputIconError {
+    border-top: 3px solid #f00;
+    border-left: 3px solid #f00;
+    border-bottom: 3px solid #f00;
+}
+
+form .inputs .inputIconErrorPassword {
+    border-top: 3px solid #f00;
+    border-right: 3px solid #f00;
+    border-bottom: 3px solid #f00;
+}
+
+
+
+form .inputs .error {
+    font-size: 0.9em;
+}
+
+
+form .inputs button {
+    font-weight: 500;
+    background-color: transparent;
+    border: none;
+}
+
+form .inputs button:hover {
+    text-decoration: underline;
+    transition: 0.2s;
+    color: #000;
+}
+
+form .inputs input {
+    padding: 2% 0 2% 0;
+    border: none;
+    box-shadow: none;
+    border-radius: 0 10px 10px 0;
+}
+
+form .inputs input::placeholder {
+    color: #8E9398;
+}
+
+form .inputs input:focus,
+form .inputs select:focus {
+    margin: none;
+    outline: none;
+    box-shadow: none;
+}
+
+form .inputs select{
+    border: none;
+    color: #8E9398;
+    border-radius: 0 10px 10px 0;
+}
+
+form .inputs .birthDateInput{
+    color: #000;
+}
+
+
+form .btnAction {
+    padding: 2%;
+    border-radius: 14px;
+    border: none;
+    width: 35%;
+    font-size: 1.1em;
+    background-color: #2b869a;
+    color: #fff;
+    transition: 0.3s;
+    margin-top: 2%;
+}
+
+form .btnAction:hover {
+    transition: 0.5s;
+    background-color: #3299b3;
+}
+
+/* MODAL */
+
+.modal h1 {
+    font-size: 1.8em;
+}
+
+.modal .inputModal {
+    border: 2px solid #8E9398;
+    border-radius: 10px;
+    width: 80%;
+}
+
+.modal .btnModal {
+    border: none;
+    background-color: #2b869a;
+    width: 100%;
+    padding: 2%;
+    font-size: 1.1em;
+    color: #fff;
+    border-radius: 14px;
+
+    transition: 0.3s;
+}
+
+.modal .btnModal:hover {
+    transition: 0.5s;
+    background-color: #3299b3;
+}
+
+
+/* MODAL END */
+
+
+/* RESPONSIBILITY */
+
+@media screen and (max-width: 1000px) {
+
+    .background h1,
+    .modal h1 {
+        font-size: 1.5em;
+    }
+
+    .btnChoice{
+        font-size: 0.9em;
+    }
+
+    form .inputs span {
+        font-size: 1.3em;
+    }
+
+    .modal-dialog {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 830px) {
+
+    .background h1,
+    .modal h1 {
+        font-size: 1.3em;
+    }
+
+    form .inputs span {
+        font-size: 1.2em;
+    }
+
+    .btnChoice{
+        font-size: 0.85em;
+    }
+
+    .backSignUp span{
+        font-size: 1em;
+    }
+    
+    .backSignUp p{
+        font-size: 0.9em;
+    }
+
+    form .inputs input,
+    form .inputs button,
+    form .inputs select {
+        font-size: 0.9em;
+    }
+
+    form .inputs .error {
+        font-size: 0.7em;
+    }
+
+    form .btnAction,
+    .modal .btnModal {
+        font-size: 1em;
+    }
+
+    .modal-dialog {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 767px) {
+
+    .background h1,
+    .modal h1 {
+        font-size: 1.5em;
+    }
+
+    .btnChoice{
+        font-size: 1.1em;
+    }
+
+    form .inputs span {
+        font-size: 1.3em;
+    }
+
+    form .inputs input,
+    form .inputs button,
+    form .inputs select {
+        font-size: 1em;
+    }
+
+    form .btnAction,
+    .modal .btnModal {
+        width: 100%;
+        font-size: 1.1em;
+    }
+
+    .background {
+        padding: 5% 4%;
+    }
+}
+
+@media screen and (max-width: 725px) {
+    body {
+        background-image: url("../../img/backLoginPhone.svg");
+        background-position: left top;
+    }
+
+    .background {
+        width: 70%;
+    }
+
+    .backSignUp span{
+        font-size: 1.1em;
+    }
+    
+    .backSignUp p{
+        font-size: 1em;
+    }
+}
+
+@media screen and (max-width: 604px) {
+
+    .background h1,
+    .modal h1 {
+        font-size: 1.3em;
+    }
+
+    .btnChoice{
+        font-size: 1em;
+    }
+
+    form .inputs span {
+        font-size: 1.2em;
+    }
+
+    form .inputs input,
+    form .inputs button,
+    form .inputs select {
+        font-size: 0.9em;
+    }
+
+    form .btnAction,
+    .modal .btnModal {
+        font-size: 1em;
+    }
+
+    .modal-dialog {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 510px) {
+
+    .background h1,
+    .modal h1 {
+        font-size: 1.1em;
+    }
+
+    .btnChoice{
+        font-size: 0.9em;
+    }
+
+    form .inputs input,
+    form .inputs button,
+    form .inputs select {
+        font-size: 0.8em;
+    }
+
+    form .btnAction,
+    .modal .btnModal {
+        font-size: 0.9em;
+    }
+}
+
+@media screen and (max-width: 410px) {
+
+    .background h1,
+    .modal h1 {
+        font-size: 1em;
+    }
+
+    .btnChoice{
+        font-size: 0.8em;
+    }
+
+    .backSignUp span{
+        font-size: 1em;
+    }
+    
+    .backSignUp p{
+        font-size: 0.9em;
+    }
+
+    form .inputs input,
+    form .inputs button,
+    form .inputs select {
+        font-size: 0.7em;
+    }
+
+    form .inputs .error {
+        font-size: 0.6em;
+    }
+
+    form .inputs span {
+        font-size: 1em;
+    }
+
+    form .btnAction,
+    .modal .btnModal {
+        font-size: 0.8em;
+    }
+}
+
+@media screen and (max-width: 370px) {
+    .background {
+        width: 85%
+    }
+}
+
+@media screen and (max-width: 280px) {
+
+    .background h1,
+    .modal h1 {
+        font-size: 0.9em;
+    }
+
+    .btnChoice{
+        font-size: 0.6em;
+    }
+
+    .backSignUp span{
+        font-size: 0.8em;
+    }
+    
+    .backSignUp p{
+        font-size: 0.7em;
+    }
+
+    form .inputs input,
+    form .inputs button,
+    form .inputs select {
+        font-size: 0.6em;
+    }
+
+    form .inputs .error {
+        font-size: 0.5em;
+    }
+
+    form .inputs span {
+        font-size: 0.9em;
+    }
+
+    form .btnAction,
+    .modal .btnModal {
+        font-size: 0.7em;
+    }
+}
+
+/* RESPONSIBILITY END */

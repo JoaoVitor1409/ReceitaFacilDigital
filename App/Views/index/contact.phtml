@@ -1,0 +1,59 @@
+<section class="contact d-flex justify-content-center align-items-center flex-column">
+    <div class="row">
+        <div class="col-md-12">
+            <p>Têm alguma dúvida, sugestão ou curiosidade?</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Envie uma mensagem para a gente!</h1>
+        </div>
+    </div>
+
+
+    <form action="#" method="POST" class="row justify-content-center align-items-center">
+        <div class="row justify-content-around align-items-center inputs">
+            <div class="col-md-5 inputArea">
+                <div class="input-group">
+                    <label for="name" class="input-group-text inputIcon">
+                        <span class="material-icons-outlined">person</span>
+                    </label>
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Nome" required>
+                </div>
+            </div>
+
+            <div class="col-md-5 inputArea">
+                <div class="input-group">
+                    <label for="phone" class="input-group-text inputIcon">
+                        <span class="material-icons-outlined">phone</span>
+                    </label>
+                    <input type="text" name="phone" class="form-control phoneMask" id="phone" placeholder="Telefone/Celular" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-around align-items-start inputs">
+            <div class="col-md-11 inputArea">
+                <div class="input-group inputEmail">
+                    <label for="email" class="input-group-text inputIcon">
+                        <span class="material-icons-outlined">mail</span>
+                    </label>
+                    <input type="email" name="email" class="form-control" id="email" placeholder="E-mail" value="<?= $this->view->email ?>" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-11">
+                <textarea name="message" rows="6" placeholder="Digite sua mensagem" required></textarea>
+            </div>
+        </div>
+
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-12">
+                <button type="submit" class="btnSend">Enviar</button>
+            </div>
+        </div>
+    </form>
+</section>
