@@ -885,6 +885,11 @@ $(document).ready(() => {
             success: function (result) {
                 console.log(result);
                 alert("Receita emitida com sucesso!");
+
+                data = {id: "P01"}
+                genQrCode(data).then(value => {
+                    console.log(value);
+                })
             },
             error: function (error) {
                 console.log(error);
