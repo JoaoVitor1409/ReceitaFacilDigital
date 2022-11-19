@@ -11,7 +11,7 @@
             $_SESSION['rfd'] = [
                 'user' => [
                     "name" => "João Vitor Martins de Siqueira",
-                    "type" => "doctor"
+                    "type" => "pharmacy"
                 ]
             ];
 
