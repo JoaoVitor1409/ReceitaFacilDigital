@@ -279,14 +279,24 @@ $(document).ready(() => {
             $(".modalTitle").addClass("hidden");
             $("#detailPrescription").modal("show");
         } else if (srcMethod == "qrCode") {
-            alert(srcMethod);
-            let code = "P14";
-            $(".modalTitle").html("Receita número " + code);
+            let code = null;
+            $(".allContent").addClass("d-none")
+            $(".video").removeClass("d-none")
+            scanQrCode().then(result => {
+                if (result) {
+                    $(".allContent").removeClass("d-none")
+                    $(".video").addClass("d-none")
 
-            $(".formSearchPrescription").addClass("hidden");
-            $(".modalTitle").removeClass("hidden");
-            $("#detailPrescription").modal("show");
-            getPrescription(code);
+                    code = JSON.parse(result).id
+                    $(".modalTitle").html("Receita número " + code);
+
+                    $(".formSearchPrescription").addClass("hidden");
+                    $(".modalTitle").removeClass("hidden");
+                    $("#detailPrescription").modal("show");
+                    getPrescription(code);
+                }
+
+            })
         }
         return false;
     });
@@ -886,7 +896,7 @@ $(document).ready(() => {
                 console.log(result);
                 alert("Receita emitida com sucesso!");
 
-                data = {id: "P01"}
+                data = { id: "P01" }
                 genQrCode(data).then(value => {
                     console.log(value);
                 })

@@ -1,20 +1,3 @@
-$(document).ready(() => {
-    $(document).on("click", "#qrCode", () => {
-        let scanner = new Instascan.Scanner({ video: document.getElementById("preview") });
-        scanner.addListener('scan', function (content) {
-            alert("Escaneou o conteudo: " + content)
-            window.open(content, "_blank")
-        });
-
-        Instascan.Camera.getCameras().then(cameras => {
-            if (cameras.length > 0) {
-                scanner.start(cameras[0]);
-            } else {
-                console.error("Não existe câmera!")
-            }
-        })
-    })
-})
 function genQrCode(data) {
     data = JSON.stringify(data)
     var qr = new QRCode("qrcode", data)
@@ -25,5 +8,25 @@ function genQrCode(data) {
             src = $("#qrcode > img")[0].src
             resolve(src)
         }, 500);
+    })
+}
+
+function scanQrCode() {
+    let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+
+    Instascan.Camera.getCameras().then(cameras => {
+        if (cameras.length > 0) {
+            scanner.start(cameras[0]);
+        } else {
+            alert("Não existe câmera no dispositivo!");
+            return false;
+        }
+    });
+
+    return new Promise(resolve => {
+        scanner.addListener('scan', function (content) {
+            resolve(content)
+            scanner.stop()
+        });
     })
 }
