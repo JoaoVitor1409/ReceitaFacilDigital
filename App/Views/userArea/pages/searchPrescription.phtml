@@ -1,24 +1,30 @@
-<div class="row">
-    <div class="col-md-12 text-center titleSrc">
-        Qual método gostaria de buscar a receita?
+<div class="allContent row">
+    <div class="row">
+        <div class="col-md-12 text-center titleSrc">
+            Qual método gostaria de buscar a receita?
+        </div>
+    </div>
+
+    <div class="row justify-content-around mt-5">
+        <div class="col-5 d-flex align-items-center justify-content-between flex-column cardSrcOption" id="qrCode">
+            <div class="col-10 d-flex align-items-center justify-content-center">
+                <span class="material-icons imgSrcOption qrCodeSrc">qr_code_2</span>
+            </div>
+            <div class="col-9 btnSrcOption d-flex align-items-center justify-content-center text-center">
+                <h1>Ler Qr code da receita</h1>
+            </div>
+        </div>
+        <div class="col-5 off-set-2 d-flex align-items-center justify-content-between flex-column cardSrcOption" id="CPF">
+            <div class="col-10 d-flex align-items-center justify-content-center">
+                <span class="material-icons-outlined imgSrcOption prescriptionSrc">medical_information</span>
+            </div>
+            <div class="col-9 btnSrcOption d-flex align-items-center justify-content-center text-center">
+                <h1>Ler pelo CPF do paciente</h1>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="row justify-content-around mt-5">
-    <div class="col-5 d-flex align-items-center justify-content-between flex-column cardSrcOption" id="qrCode">
-        <div class="col-10 d-flex align-items-center justify-content-center">
-            <span class="material-icons imgSrcOption qrCodeSrc">qr_code_2</span>
-        </div>
-        <div class="col-9 btnSrcOption d-flex align-items-center justify-content-center text-center">
-            <h1>Ler Qr code da receita</h1>
-        </div>
-    </div>
-    <div class="col-5 off-set-2 d-flex align-items-center justify-content-between flex-column cardSrcOption" id="CPF">
-        <div class="col-10 d-flex align-items-center justify-content-center">
-            <span class="material-icons-outlined imgSrcOption prescriptionSrc">medical_information</span>
-        </div>
-        <div class="col-9 btnSrcOption d-flex align-items-center justify-content-center text-center">
-            <h1>Ler pelo CPF do paciente</h1>
-        </div>
-    </div>
+<div class="video d-none">
+    <video id="preview"></video>
 </div>

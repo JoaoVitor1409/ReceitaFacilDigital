@@ -1,14 +1,25 @@
+CREATE TABLE ENDERECO(
+    EnderecoId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    EnderecoCEP VARCHAR(8) NOT NULL,
+    EnderecoUF VARCHAR(2) NOT NULL,
+    EnderecoCidade VARCHAR(50) NOT NULL,
+    EnderecoBairro VARCHAR(20),
+    EnderecoLogradouro VARCHAR(100),
+    EnderecoNumero VARCHAR(5),
+    EnderecoComplemento VARCHAR(30)   
+);
+
 CREATE TABLE PACIENTE(
     PacienteID INT NOT NULL AUTO_INCREMENT,
     PacienteCPF VARCHAR(11) NOT NULL,
     PacienteNome VARCHAR(100) NOT NULL,
-    PacienteDataNasc DATE NOT NULL,    
-    PacienteUF VARCHAR(30) NOT NULL,
-    PacienteMunicipio VARCHAR(40) NOT NULL,
+    PacienteDataNasc DATE NOT NULL,
     PacienteEmail VARCHAR(100) NOT NULL,
     PacienteCelular VARCHAR(11) NOT NULL,
     PacienteSenha VARCHAR(32) NOT NULL,
-    PacienteAtivo TINYINT(1) DEFAULT 1
+    PacienteAtivo TINYINT(1) DEFAULT 1,
+    EnderecoID INT NOT NULL,
+    FOREIGN KEY(EnderecoId) REFERENCES Endereco(EnderecoId),
     PRIMARY KEY(PacienteID, PacienteCPF)
 );
 
@@ -39,25 +50,14 @@ CREATE TABLE FARMACIA(
     FOREIGN KEY(EnderecoId) REFERENCES Endereco(EnderecoId)
 );
 
-CREATE TABLE ENDERECO(
-    EnderecoId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    EnderecoCEP VARCHAR(8) NOT NULL,
-    EnderecoUF VARCHAR(2) NOT NULL,
-    EnderecoCidade VARCHAR(50) NOT NULL,
-    EnderecoBairro VARCHAR(20),
-    EnderecoLogradouro VARCHAR(100),
-    EnderecoNumero VARCHAR(5),
-    EnderecoComplemento VARCHAR(30)   
-);
-
 CREATE TABLE RECEITA(
     ReceitaId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    ReceitaData DATE NOT NULL DEFAULT(CURRENT_DATE),
+    ReceitaData DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PacienteCPF INT NOT NULL,
     PacienteCelular VARCHAR(11) NOT NULL,
     MedicoId INT NOT NULL,
     ReceitaAtiva TINYINT(1) DEFAULT 1,
-    FOREIGN KEY(MedicoID) REFERENCES MEDICO(MedicoID),
+    FOREIGN KEY(MedicoID) REFERENCES MEDICO(MedicoID)
 );
 
 CREATE TABLE RECEITA_MEDICAMENTO(
@@ -75,7 +75,7 @@ CREATE TABLE MODELO(
     ModeloNome VARCHAR(50) NOT NULL,
     MedicoId INT NOT NULL,
     ModeloAtivo TINYINT(1) DEFAULT 1,
-    FOREIGN KEY(MedicoID) REFERENCES MEDICO(MedicoID),
+    FOREIGN KEY(MedicoID) REFERENCES MEDICO(MedicoID)
 );
 
 CREATE TABLE MODELO_MEDICAMENTO(
