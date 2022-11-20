@@ -897,14 +897,39 @@ $(document).ready(() => {
                 alert("Receita emitida com sucesso!");
 
                 data = { id: "P01" }
-                genQrCode(data).then(value => {
-                    console.log(value);
-                })
+                let value = genQrCode(data);
+
+                sendSMS(value);
             },
             error: function (error) {
                 console.log(error);
             },
         });
+    }
+
+    function sendSMS(text) {
+        let tel = "15998568975";
+        let apiKey = "brbb13b31812760c430d33468b4ef0f1bd4d774b8d1b5602f0bd1adab3abf201423d50"
+        encodeQrCode(text, apiKey).then(link => {
+            let url = "https://api.mobizon.com.br/service/Message/SendSmsMessage?recipient=%2B55" + tel + "&text=" + link + "&output=json&apiKey=" + apiKey;
+
+            $.getJSON(url, (data) => {
+                alert("Receita Emitida")
+            });
+        })
+
+
+    }
+
+    function encodeQrCode(text, apiKey) {
+        text = encodeURIComponent(text)
+        url = "https://api.mobizon.com.br/service/link/create?data%5BfullLink%5D=" + text + "&output=json&api=v1&apiKey=" + apiKey;
+
+        return new Promise((resolve) => {
+            $.getJSON(url, ({ data }) => {
+                resolve(data.shortLink)
+            });
+        })
     }
 
     function searchPacient() {

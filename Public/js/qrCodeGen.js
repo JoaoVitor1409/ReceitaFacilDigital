@@ -1,14 +1,10 @@
 function genQrCode(data) {
     data = JSON.stringify(data)
-    var qr = new QRCode("qrcode", data)
-    let src = null;
+    data = encodeURIComponent(data)
+    let qrCode = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=" + data;
 
-    return new Promise(resolve => {
-        setTimeout(() => {
-            src = $("#qrcode > img")[0].src
-            resolve(src)
-        }, 500);
-    })
+
+    return qrCode
 }
 
 function scanQrCode() {
