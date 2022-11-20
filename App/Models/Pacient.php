@@ -1,0 +1,100 @@
+<?php
+
+namespace App\Models;
+
+use MF\Model\Model;
+
+class Pacient extends Model
+{
+    private $id;
+    private $cpf;
+    private $name;
+    private $birthDate;
+    private $email;
+    private $phone;
+    private $password;
+    private $active;
+    private $adressId;
+
+    public function __get($attribute)
+    {
+        return $this->$attribute;
+    }
+
+    public function __set($attribute, $value)
+    {
+        $this->$attribute = $value;
+    }
+
+    public function save()
+    {
+        $query = "INSERT INTO PACIENTE(PacienteCPF,PacienteNome,PacienteDataNasc,PacienteEmail,PacienteCelular,PacienteSenha, EnderecoID) VALUES (:Pcpf,:Pname,:PbirthDate,:Pemail,:Pphone,:Ppassword,:PadressId)";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":Pcpf", $this->__get("cpf"));
+        $stmt->bindValue(":Pname", $this->__get("name"));
+        $stmt->bindValue(":PbirthDate", $this->__get("birthDate"));
+        $stmt->bindValue(":Pemail", $this->__get("email"));
+        $stmt->bindValue(":Pphone", $this->__get("phone"));
+        $stmt->bindValue(":Ppassword", $this->__get("password"));
+        $stmt->bindValue(":PadressId", $this->__get("adressId"));
+
+        $stmt->execute();
+
+        return $this;
+    }
+
+    public function authenticate()
+    {
+        $query = "SELECT PacienteID, PacienteCPF, PacienteNome FROM PACIENTE WHERE PacienteEmail = :Pemail AND PacienteSenha = :Ppassword AND PacienteAtivo = 1";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":Pemail", $this->__get("email"));
+        $stmt->bindValue(":Ppassword", $this->__get("password"));
+
+        $stmt->execute();
+
+        $pacient = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        if ($pacient["PacienteID"] && $pacient["PacienteCPF"] && $pacient["PacienteNome"]) {
+            $this->__set("id", $pacient["PacienteID"]);
+            $this->__set("cpf", $pacient["PacienteCPF"]);
+            $this->__set("name", $pacient["PacienteNome"]);
+        }
+
+        return $this;
+    }
+
+    public function getPacientByCPF()
+    {
+        $query = "SELECT PacienteID FROM PACIENTE WHERE PacienteCPF = :Pcpf";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":Pcpf", $this->__get("cpf"));
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getPacientByEmail()
+    {
+        $query = "SELECT PacienteID FROM PACIENTE WHERE PacienteEmail = :Pemail";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":Pemail", $this->__get("email"));
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getPacientByPhone()
+    {
+        $query = "SELECT PacienteID FROM PACIENTE WHERE PacienteCelular = :Pphone";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":Pphone", $this->__get("phone"));
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+}
