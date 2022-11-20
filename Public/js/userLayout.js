@@ -287,7 +287,7 @@ $(document).ready(() => {
                     $(".allContent").removeClass("d-none")
                     $(".video").addClass("d-none")
 
-                    code = JSON.parse(result).id
+                    code = result.id
                     $(".modalTitle").html("Receita número " + code);
 
                     $(".formSearchPrescription").addClass("hidden");

@@ -21,7 +21,7 @@ function scanQrCode() {
 
     return new Promise(resolve => {
         scanner.addListener('scan', function (content) {
-            resolve(content)
+            resolve(JSON.parse(content))
             scanner.stop()
         });
     })
