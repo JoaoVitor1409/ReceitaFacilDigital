@@ -7,7 +7,7 @@
         public static function getDb(){
             try{
                 $conn = new \PDO(
-                    "mysql:host=localhost;dbname=mvc;charset=UTF8",
+                    "mysql:host=localhost;dbname=rfd;charset=UTF8",
                     "root",
                     ""
                 );
