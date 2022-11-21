@@ -28,7 +28,7 @@ class Pacient extends Model
 
     public function save()
     {
-        $query = "INSERT INTO PACIENTE(PacienteCPF,PacienteNome,PacienteDataNasc,PacienteEmail,PacienteCelular,PacienteSenha, EnderecoID) VALUES (:Pcpf,:Pname,:PbirthDate,:Pemail,:Pphone,:Ppassword,:PadressId)";
+        $query = "INSERT INTO PACIENTE(PacienteCPF,PacienteNome,PacienteDataNasc,PacienteEmail,PacienteCelular,PacienteSenha, EnderecoID) VALUES (:Pcpf,:Pname,STR_TO_DATE(:PbirthDate, '%d/%m/%Y'),:Pemail,:Pphone,:Ppassword,:PadressId)";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Pcpf", $this->__get("cpf"));
@@ -71,28 +71,6 @@ class Pacient extends Model
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Pcpf", $this->__get("cpf"));
-        $stmt->execute();
-
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    }
-
-    public function getPacientByEmail()
-    {
-        $query = "SELECT PacienteID FROM PACIENTE WHERE PacienteEmail = :Pemail";
-
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(":Pemail", $this->__get("email"));
-        $stmt->execute();
-
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    }
-
-    public function getPacientByPhone()
-    {
-        $query = "SELECT PacienteID FROM PACIENTE WHERE PacienteCelular = :Pphone";
-
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(":Pphone", $this->__get("phone"));
         $stmt->execute();
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);

@@ -27,7 +27,7 @@ class Pharmacy extends Model
 
     public function save()
     {
-        $query = "INSERT INTO FARMACIA(FarmaciaNome,FarmaciaCPNJ,FarmaciaEmail,FarmaciaTelefone,FarmaciaSenha, EnderecoID) VALUES (:Pname,:Pcnpj,:Pemail,:Ptel,:Ppassword,:PadressId)";
+        $query = "INSERT INTO FARMACIA(FarmaciaNome,FarmaciaCNPJ,FarmaciaEmail,FarmaciaTelefone,FarmaciaSenha, EnderecoID) VALUES (:Pname,:Pcnpj,:Pemail,:Ptel,:Ppassword,:PadressId)";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Pname", $this->__get("name"));
@@ -62,23 +62,12 @@ class Pharmacy extends Model
         return $this;
     }
 
-    public function getPharmacyByCRM()
+    public function getPharmacyByCNPJ()
     {
         $query = "SELECT FarmaciaID FROM FARMACIA WHERE FarmaciaCNPJ = :Pcnpj";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Pcnpj", $this->__get("cnpj"));
-        $stmt->execute();
-
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    }
-
-    public function getPharmacyByEmail()
-    {
-        $query = "SELECT FarmaciaID FROM FARMACIA WHERE FarmaciaEmail = :Pemail";
-
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(":Pemail", $this->__get("email"));
         $stmt->execute();
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);

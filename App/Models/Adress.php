@@ -39,7 +39,7 @@ class Adress extends Model
         $stmt->bindValue(":Pnumber", $this->__get("number"));
         $stmt->bindValue(":Pcomplement", $this->__get("complement"));
 
-        $stmt->execute();
+        return $stmt->execute();
 
         return $this;
     }
@@ -50,6 +50,19 @@ class Adress extends Model
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Pid", $this->__get("id"));
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getLastAdress()
+    {
+        $query = "SELECT EnderecoID FROM ENDERECO WHERE EnderecoCEP = :Pcep AND EnderecoUF = :Pstate AND EnderecoCidade = :Pcity ORDER BY EnderecoID DESC";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":Pcep", $this->__get("cep"));
+        $stmt->bindValue(":Pstate", $this->__get("state"));
+        $stmt->bindValue(":Pcity", $this->__get("city"));
         $stmt->execute();
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
