@@ -44,27 +44,6 @@ class Pacient extends Model
         return $this;
     }
 
-    public function authenticate()
-    {
-        $query = "SELECT PacienteID, PacienteCPF, PacienteNome FROM PACIENTE WHERE PacienteEmail = :Pemail AND PacienteSenha = :Ppassword AND PacienteAtivo = 1";
-
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(":Pemail", $this->__get("email"));
-        $stmt->bindValue(":Ppassword", $this->__get("password"));
-
-        $stmt->execute();
-
-        $pacient = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-        if ($pacient["PacienteID"] && $pacient["PacienteCPF"] && $pacient["PacienteNome"]) {
-            $this->__set("id", $pacient["PacienteID"]);
-            $this->__set("cpf", $pacient["PacienteCPF"]);
-            $this->__set("name", $pacient["PacienteNome"]);
-        }
-
-        return $this;
-    }
-
     public function getPacientByCPF()
     {
         $query = "SELECT PacienteID FROM PACIENTE WHERE PacienteCPF = :Pcpf";

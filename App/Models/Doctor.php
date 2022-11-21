@@ -44,26 +44,6 @@ class Doctor extends Model
         return $this;
     }
 
-    public function authenticate()
-    {
-        $query = "SELECT MedicoID, MedicoNome FROM MEDICO WHERE MedicoEmail = :Pemail AND MedicoSenha = :Ppassword AND MedicoAtivo = 1";
-
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(":Pemail", $this->__get("email"));
-        $stmt->bindValue(":Ppassword", $this->__get("password"));
-
-        $stmt->execute();
-
-        $pacient = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-        if ($pacient["MedicoID"] && $pacient["MedicoNome"]) {
-            $this->__set("id", $pacient["MedicoID"]);
-            $this->__set("name", $pacient["MedicoNome"]);
-        }
-
-        return $this;
-    }
-
     public function getDoctorByCRM()
     {
         $query = "SELECT MedicoID FROM MEDICO WHERE MedicoCRM = :Pcrm";

@@ -42,26 +42,6 @@ class Pharmacy extends Model
         return $this;
     }
 
-    public function authenticate()
-    {
-        $query = "SELECT FarmaciaID, FarmaciaNome FROM FARMACIA WHERE FarmaciaEmail = :Pemail AND FarmaciaSenha = :Ppassword AND FarmaciaAtivo = 1";
-
-        $stmt = $this->db->prepare($query);
-        $stmt->bindValue(":Pemail", $this->__get("email"));
-        $stmt->bindValue(":Ppassword", $this->__get("password"));
-
-        $stmt->execute();
-
-        $pacient = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-        if ($pacient["FarmaciaID"] && $pacient["FarmaciaNome"]) {
-            $this->__set("id", $pacient["FarmaciaID"]);
-            $this->__set("name", $pacient["FarmaciaNome"]);
-        }
-
-        return $this;
-    }
-
     public function getPharmacyByCNPJ()
     {
         $query = "SELECT FarmaciaID FROM FARMACIA WHERE FarmaciaCNPJ = :Pcnpj";

@@ -679,8 +679,10 @@ $(document).ready(() => {
                 $(".passwordInput").focus();
                 cnpjPhamacy = true;
             }
-        }).fail((e) => {
-            console.log(e);
+        }).fail(e => {
+            error("cnpj", "Informe um CNPJ válido!");
+            showInputs();
+            $(".cnpjInput").focus();
         });
 
         return cnpjPhamacy;
@@ -697,10 +699,10 @@ $(document).ready(() => {
             data: data,
             dataType: "JSON",
             success: function (result) {
-                if(result["code"] == 1){
+                if (result["code"] == 1) {
                     alert(result["message"]);
                     window.location.href = "/";
-                }else if(result["code"] == 0){
+                } else if (result["code"] == 0) {
                     error(result["input"], result["message"]);
                     showInputs();
                 }

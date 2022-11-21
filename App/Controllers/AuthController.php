@@ -9,260 +9,230 @@ class AuthController extends Action
 {
     public function login()
     {
-        session_start();
-        $_SESSION['rfd'] = [
-            'user' => [
-                "name" => "João Vitor Martins de Siqueira",
-                "type" => "doctor"
-            ]
-        ];
+        $email = $_POST['email'];
+        $password = md5($_POST['password']);
 
-        $_SESSION['rfd']['prescriptions'] = [
-            [
-                "pacientCPF" => "450.344.568-50",
-                "prescriptionCode" => "P01",
-                "issueDate" => "2002-09-14",
-            ],
-            [
-                "pacientCPF" => "450.344.568-50",
-                "prescriptionCode" => "P02",
-                "issueDate" => "2022-09-14",
-            ],
-            [
-                "pacientCPF" => "450.344.568-50",
-                "prescriptionCode" => "P03",
-                "issueDate" => "2021-09-14",
-            ],
-            [
-                "pacientCPF" => "450.344.568-50",
-                "prescriptionCode" => "P04",
-                "issueDate" => "2021-09-14",
-            ],
-            [
-                "pacientCPF" => "450.344.568-50",
-                "prescriptionCode" => "P05",
-                "issueDate" => "2021-09-14",
-            ],
-            [
-                "pacientCPF" => "123.456.789-00",
-                "prescriptionCode" => "P06",
-                "issueDate" => "2000-01-01",
-            ],
-            [
-                "pacientCPF" => "123.456.789-00",
-                "prescriptionCode" => "P07",
-                "issueDate" => "2000-01-03",
-            ],
-            [
-                "pacientCPF" => "123.456.789-00",
-                "prescriptionCode" => "P08",
-                "issueDate" => "2000-01-03",
-            ],
-            [
-                "pacientCPF" => "123.456.789-01",
-                "prescriptionCode" => "P09",
-                "issueDate" => "2000-01-02",
-            ],
-        ];
+        $user = Container::getModel('User');
 
-        header("Location: /plataforma");
+        $user->__set('email', $email);
+        $user->__set('password', $password);
+
+        $user = $user->authenticate();
+
+        $result = ["code" => 0, "message" => "email ou senha inválida", "input" => "email"];
+
+        if ($user->__get('id')) {
+            session_start();
+            $_SESSION['rfd']['user'] = [
+                'id' => $user->__get('id'),
+                'name' => $user->__get('name'),
+                'type' => $user->__get('type'),
+            ];
+            if ($user->__get('type') == 'pacient') {
+                $_SESSION['rfd']['user'] += ['cpf' => $user->__get('cpf')];
+            }
+
+            $result = ["code" => 1];
+        }
+
+        echo json_encode($result);
     }
 
     public function register()
     {
-        $name = $_POST["name"];
+        $name = $_POST['name'];
 
-        if (isset($_POST["cpf"])) {
-            $cpf = $_POST["cpf"];
+        if (isset($_POST['cpf'])) {
+            $cpf = $_POST['cpf'];
         }
 
-        if (isset($_POST["crm"])) {
-            $crm = $_POST["crm"];
+        if (isset($_POST['crm'])) {
+            $crm = $_POST['crm'];
         }
 
-        if (isset($_POST["cnpj"])) {
-            $cnpj = $_POST["cnpj"];
+        if (isset($_POST['cnpj'])) {
+            $cnpj = $_POST['cnpj'];
         }
 
-        if (isset($_POST["birthDate"])) {
-            $birthDate = $_POST["birthDate"];
+        if (isset($_POST['birthDate'])) {
+            $birthDate = $_POST['birthDate'];
         }
 
-        $email = $_POST["email"];
+        $email = $_POST['email'];
 
-        if (isset($_POST["phone"])) {
-            $phone = $_POST["phone"];
+        if (isset($_POST['phone'])) {
+            $phone = $_POST['phone'];
         }
 
-        if (isset($_POST["tel"])) {
-            $tel = $_POST["tel"];
+        if (isset($_POST['tel'])) {
+            $tel = $_POST['tel'];
         }
 
-        $password = md5($_POST["password"]);
-        $cep = $_POST["cep"];
-        $city = $_POST["city"];
-        $state = $_POST["state"];
+        $password = md5($_POST['password']);
+        $cep = $_POST['cep'];
+        $city = $_POST['city'];
+        $state = $_POST['state'];
 
-        if (isset($_POST["district"])) {
-            $district = $_POST["district"];
+        if (isset($_POST['district'])) {
+            $district = $_POST['district'];
         }
-        if (isset($_POST["street"])) {
-            $street = $_POST["street"];
+        if (isset($_POST['street'])) {
+            $street = $_POST['street'];
         }
-        if (isset($_POST["number"])) {
-            $number = $_POST["number"];
+        if (isset($_POST['number'])) {
+            $number = $_POST['number'];
         }
-        if (isset($_POST["complement"])) {
-            $complement = $_POST["complement"];
+        if (isset($_POST['complement'])) {
+            $complement = $_POST['complement'];
         }
 
-        $options = $_POST["options"];
+        $options = $_POST['options'];
 
-        $result = ["code" => 1, "message" => "Usuário cadastrado com sucesso"];
+        $result = ['code' => 1, 'message' => 'Usuário cadastrado com sucesso'];
 
-        if ($options == "Paciente") {
+        if ($options == 'Paciente') {
             if (!$this->validaCPF($cpf)) {
-                $result = ["code" => 0, "message" => "Digite um CPF válido", "input" => "cpf"];
+                $result = ['code' => 0, 'message' => 'Digite um CPF válido', 'input' => 'cpf'];
 
                 echo json_encode($result);
                 return;
             }
 
-            $pacient = Container::getModel("Pacient");
-            $adress = Container::getModel("Adress");
-            $user = Container::getModel("User");
+            $pacient = Container::getModel('Pacient');
+            $adress = Container::getModel('Adress');
+            $user = Container::getModel('User');
 
-            $adress->__set("cep", $cep);
-            $adress->__set("city", $city);
-            $adress->__set("state", $state);
+            $adress->__set('cep', $cep);
+            $adress->__set('city', $city);
+            $adress->__set('state', $state);
 
-            $pacient->__set("cpf", $cpf);
-            $pacient->__set("name", $name);
-            $pacient->__set("birthDate", $birthDate);
-            $pacient->__set("email", $email);
-            $pacient->__set("phone", $phone);
-            $pacient->__set("password", $password);
+            $pacient->__set('cpf', $cpf);
+            $pacient->__set('name', $name);
+            $pacient->__set('birthDate', $birthDate);
+            $pacient->__set('email', $email);
+            $pacient->__set('phone', $phone);
+            $pacient->__set('password', $password);
 
-            $user->__set("email", $email);
-            $user->__set("phone", $phone);
+            $user->__set('email', $email);
+            $user->__set('phone', $phone);
 
             if ($pacient->getPacientByCPF()) {
-                $result = ["code" => 0, "message" => "CPF já cadastrado", "input" => "cpf"];
+                $result = ['code' => 0, 'message' => 'CPF já cadastrado', 'input' => 'cpf'];
 
                 echo json_encode($result);
                 return;
             }
 
             if ($user->getUserByEmail()) {
-                $result = ["code" => 0, "message" => "Email já cadastrado", "input" => "email"];
+                $result = ['code' => 0, 'message' => 'Email já cadastrado', 'input' => 'email'];
 
                 echo json_encode($result);
                 return;
             }
 
             if ($user->getUserByPhone()) {
-                $result = ["code" => 0, "message" => "Telefone já cadastrado", "input" => "phone"];
+                $result = ['code' => 0, 'message' => 'Telefone já cadastrado', 'input' => 'phone'];
 
                 echo json_encode($result);
                 return;
             }
 
             $adress->save();
-            $adressId = $adress->getLastAdress()[0]["EnderecoID"];
+            $adressId = $adress->getLastAdress()[0]['EnderecoID'];
 
-            $pacient->__set("adressId", $adressId);
+            $pacient->__set('adressId', $adressId);
             $pacient->save();
-        } elseif ($options == "Medico") {
-            $doctor = Container::getModel("Doctor");
-            $adress = Container::getModel("Adress");
-            $user = Container::getModel("User");
+        } elseif ($options == 'Medico') {
+            $doctor = Container::getModel('Doctor');
+            $adress = Container::getModel('Adress');
+            $user = Container::getModel('User');
 
-            $adress->__set("cep", $cep);
-            $adress->__set("city", $city);
-            $adress->__set("state", $state);
+            $adress->__set('cep', $cep);
+            $adress->__set('city', $city);
+            $adress->__set('state', $state);
 
-            $doctor->__set("name", $name);
-            $doctor->__set("crm", $crm);
-            $doctor->__set("birthDate", $birthDate);
-            $doctor->__set("email", $email);
-            $doctor->__set("phone", $phone);
-            $doctor->__set("password", $password);
+            $doctor->__set('name', $name);
+            $doctor->__set('crm', $crm);
+            $doctor->__set('birthDate', $birthDate);
+            $doctor->__set('email', $email);
+            $doctor->__set('phone', $phone);
+            $doctor->__set('password', $password);
 
-            $user->__set("email", $email);
-            $user->__set("phone", $phone);
+            $user->__set('email', $email);
+            $user->__set('phone', $phone);
 
             if ($doctor->getDoctorByCRM()) {
-                $result = ["code" => 0, "message" => "CRM já cadastrado", "input" => "crm"];
+                $result = ['code' => 0, 'message' => 'CRM já cadastrado', 'input' => 'crm'];
 
                 echo json_encode($result);
                 return;
             }
 
             if ($user->getUserByEmail()) {
-                $result = ["code" => 0, "message" => "Email já cadastrado", "input" => "email"];
+                $result = ['code' => 0, 'message' => 'Email já cadastrado', 'input' => 'email'];
 
                 echo json_encode($result);
                 return;
             }
 
             if ($user->getUserByPhone()) {
-                $result = ["code" => 0, "message" => "Telefone já cadastrado", "input" => "phone"];
+                $result = ['code' => 0, 'message' => 'Telefone já cadastrado', 'input' => 'phone'];
 
                 echo json_encode($result);
                 return;
             }
 
             $adress->save();
-            $adressId = $adress->getLastAdress()[0]["EnderecoID"];
+            $adressId = $adress->getLastAdress()[0]['EnderecoID'];
 
-            $doctor->__set("adressId", $adressId);
+            $doctor->__set('adressId', $adressId);
             $doctor->save();
-        } elseif ($options == "Farmacia") {
-            $pharmacy = Container::getModel("Pharmacy");
-            $adress = Container::getModel("Adress");
-            $user = Container::getModel("User");
+        } elseif ($options == 'Farmacia') {
+            $pharmacy = Container::getModel('Pharmacy');
+            $adress = Container::getModel('Adress');
+            $user = Container::getModel('User');
 
-            $adress->__set("cep", $cep);
-            $adress->__set("city", $city);
-            $adress->__set("state", $state);
-            $adress->__set("district", $district);
-            $adress->__set("street", $street);
-            $adress->__set("number", $number);
-            $adress->__set("complement", $complement);
+            $adress->__set('cep', $cep);
+            $adress->__set('city', $city);
+            $adress->__set('state', $state);
+            $adress->__set('district', $district);
+            $adress->__set('street', $street);
+            $adress->__set('number', $number);
+            $adress->__set('complement', $complement);
 
-            $pharmacy->__set("name", $name);
-            $pharmacy->__set("cnpj", $cnpj);
-            $pharmacy->__set("email", $email);
-            $pharmacy->__set("tel", $tel);
-            $pharmacy->__set("password", $password);
+            $pharmacy->__set('name', $name);
+            $pharmacy->__set('cnpj', $cnpj);
+            $pharmacy->__set('email', $email);
+            $pharmacy->__set('tel', $tel);
+            $pharmacy->__set('password', $password);
 
-            $user->__set("email", $email);
+            $user->__set('email', $email);
 
             if ($pharmacy->getPharmacyByCNPJ()) {
-                $result = ["code" => 0, "message" => "CNPJ já cadastrado", "input" => "cnpj"];
+                $result = ['code' => 0, 'message' => 'CNPJ já cadastrado', 'input' => 'cnpj'];
 
                 echo json_encode($result);
                 return;
             }
 
             if ($user->getUserByEmail()) {
-                $result = ["code" => 0, "message" => "Email já cadastrado", "input" => "email"];
+                $result = ['code' => 0, 'message' => 'Email já cadastrado', 'input' => 'email'];
 
                 echo json_encode($result);
                 return;
             }
 
             if ($pharmacy->getPharmacyByTel()) {
-                $result = ["code" => 0, "message" => "Telefone já cadastrado", "input" => "tel"];
+                $result = ['code' => 0, 'message' => 'Telefone já cadastrado', 'input' => 'tel'];
 
                 echo json_encode($result);
                 return;
             }
 
             $adress->save();
-            $adressId = $adress->getLastAdress()[0]["EnderecoID"];
+            $adressId = $adress->getLastAdress()[0]['EnderecoID'];
 
-            $pharmacy->__set("adressId", $adressId);
+            $pharmacy->__set('adressId', $adressId);
             $pharmacy->save();
         }
 
@@ -310,6 +280,6 @@ class AuthController extends Action
     {
         session_start();
         session_destroy();
-        header("Location: /");
+        header('Location: /');
     }
 }

@@ -35,8 +35,9 @@ $(document).ready(() => {
             return false;
         }
 
+        login();
 
-        // return false;
+        return false;
     });
 
 
@@ -96,5 +97,26 @@ $(document).ready(() => {
         removeError(input);
         $(".inputModal").css("border-color", "#8E9398");
         return true;
+    }
+
+    function login() {
+        let data = $(".formLogin").serialize();
+
+        $.ajax({
+            type: "POST",
+            url: "/autenticar",
+            data: data,
+            dataType: "JSON",
+            success: function (result) {
+                if(result["code"] == 1){
+                    window.location.href = "/plataforma";
+                }else if(result["code"] == 0){
+                    error(result["input"], result["message"]);
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
     }
 });
