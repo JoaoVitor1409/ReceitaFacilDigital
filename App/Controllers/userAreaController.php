@@ -51,7 +51,6 @@ class UserAreaController extends Action
                 $page = $this->renderPage("searchPrescription");
             }
         } elseif ($screen == "history") {
-            $this->view->prescriptions = $_SESSION['rfd']['prescriptions'];
             if ($user["type"] != "pacient") {
                 $this->view->col = 3;
             } else {
@@ -132,11 +131,13 @@ class UserAreaController extends Action
         }
 
         if (isset($_POST["prescriptionCode"])) {
-            $prescriptionCode = $_POST["prescriptionCode"];
+            $prescriptionCode =  $_POST["prescriptionCode"];
         }
 
         if (isset($_POST["issueDate"])) {
-            $issueDate = $_POST["issueDate"];
+            if ($_POST["issueDate"]  != "dd/mm/aaaa") {
+                $issueDate = $_POST["issueDate"];
+            }
         }
 
         if (isset($_POST["page"])) {
@@ -145,16 +146,24 @@ class UserAreaController extends Action
 
         $data = [];
 
-        $prescriptions = $_SESSION['rfd']['prescriptions'];
+        $prescription = Container::getModel("Prescription");
+
+        if ($_SESSION["rfd"]["user"]["type"] == "pacient") {
+            $prescription->__set("pacientCPF", $_SESSION["rfd"]["user"]["cpf"]);
+        } else if ($_SESSION["rfd"]["user"]["type"] == "doctor") {
+            $prescription->__set("doctorId", $_SESSION["rfd"]["user"]["id"]);
+        } else if ($_SESSION["rfd"]["user"]["type"] == "pharmacy") {
+            $prescription->__set("pharmacyId", $_SESSION["rfd"]["user"]["id"]);
+        }
 
         if (!$pacientCPF && !$prescriptionCode && !$issueDate) {
-            $data = $prescriptions;
+            $data = $prescription->getAllPrescriptions();
         } else {
-            foreach ($prescriptions as $prescription) {
-                if ($pacientCPF == $prescription["pacientCPF"] || $prescriptionCode == $prescription["prescriptionCode"] || $issueDate == $prescription["issueDate"]) {
-                    $data[] = $prescription;
-                }
-            }
+            $prescription->__set("id", $prescriptionCode);
+            $prescription->__set("pacientCPF", $pacientCPF);
+            $prescription->__set("date", $issueDate);
+
+            $data = $prescription->getPrescriptionByFilter();
         }
 
         $page = "";
@@ -188,26 +197,21 @@ class UserAreaController extends Action
                     $page .= '<tr>';
                     if ($user["type"] != "pacient") {
                         $page .= '
-                            <td class="text-start">' . $data[$i]["pacientCPF"] . '</td>
-                            <td>' . $data[$i]["prescriptionCode"] . '</td>
+                            <td class="text-start">' . $data[$i]["PacienteCPF"] . '</td>
+                            <td>' . $data[$i]["ReceitaID"] . '</td>
                         ';
                     } else {
-                        $page .= '<td class="text-start">' . $data[$i]["prescriptionCode"] . '</td>';
+                        $page .= '<td class="text-start">' . $data[$i]["ReceitaID"] . '</td>';
                     }
 
                     $page .= '
-                        <td>' . $data[$i]["issueDate"] . '</td>
-                        <td><span id="' . $data[$i]["prescriptionCode"] . '" class="detailPrescription material-icons-outlined">info</span></td>
+                        <td>' . $data[$i]["ReceitaData"] . '</td>
+                        <td><span id="' . $data[$i]["ReceitaID"] . '" class="detailPrescription material-icons-outlined">info</span></td>
                     ';
 
                     $page .= '</tr>';
                 }
             }
-
-            foreach ($data as $prescription) {
-            }
-
-
 
             $page .= '</tbody></table>';
             $page .= $this->paginationStyle($pageNumber, $data);
@@ -266,32 +270,18 @@ class UserAreaController extends Action
         ';
 
         return $page;
-    }   
+    }
 
     public function getPacient()
     {
         $cpf = $_POST["cpf"];
 
-        $pacients = [
-            [
-                "cpf" => "450.344.568-50",
-                "phone" => "(15)99634-1499"
-            ],
-            [
-                "cpf" => "123.456.789-00",
-                "phone" => "(14)99871-0192"
-            ],
-            [
-                "cpf" => "123.456.789-01",
-                "phone" => "(14)99112-0910"
-            ],
-        ];
+        $pacient = Container::getModel("Pacient");
+        $pacient->__set("cpf", $cpf);
+        $pacient = $pacient->getPacientByCPF();
 
-        foreach ($pacients as $pacient) {
-            if ($pacient["cpf"] == $cpf) {
-                echo json_encode(["phone" => $pacient["phone"]]);
-                return;
-            }
+        if ($pacient) {
+            echo json_encode(["phone" => $pacient[0]["PacienteCelular"]]);
         }
     }
 }

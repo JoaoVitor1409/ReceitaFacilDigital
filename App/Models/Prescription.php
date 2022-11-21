@@ -13,6 +13,8 @@ class Prescription extends Model
     private $active;
     private $doctorId;
     private $pharmacyId;
+    private $start;
+    private $limit;
 
     public function __get($attribute)
     {
@@ -38,9 +40,52 @@ class Prescription extends Model
         return $this;
     }
 
+    public function getAllPrescriptions()
+    {
+        $query = "SELECT ReceitaID, PacienteCPF, DATE_FORMAT(ReceitaData, '%d/%m/%Y') as ReceitaData FROM RECEITA WHERE 1=1";
+
+        if ($this->__get("doctorId")) {
+            $query .= " AND MedicoID = :PdoctorId";
+        }
+        if ($this->__get("pharmacyId")) {
+            $query .= " AND FarmaciaID = :PpharmacyId";
+        }
+        if ($this->__get("pacientCPF")) {
+            $query .= " AND PacienteCPF = :PpacientCPF";
+        }
+
+        $stmt = $this->db->prepare($query);
+
+        if ($this->__get("doctorId")) {
+            $stmt->bindValue(":PdoctorId", $this->__get("doctorId"));
+        }
+        if ($this->__get("pharmacyId")) {
+            $stmt->bindValue(":PpharmacyId", $this->__get("pharmacyId"));
+        }
+        if ($this->__get("pacientCPF")) {
+            $stmt->bindValue(":PpacientCPF", $this->__get("pacientCPF"));
+        }
+        
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getLastPrescription()
+    {
+        $query = "SELECT ReceitaID FROM RECEITA WHERE PacienteCPF = :PpacientCPF AND PacienteCelular = :PpacientPhone AND MedicoID = :PdoctorId AND ReceitaAtiva = 1 ORDER BY ReceitaID DESC";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":PpacientCPF", $this->__get("pacientCPF"));
+        $stmt->bindValue(":PpacientPhone", $this->__get("pacientPhone"));
+        $stmt->bindValue(":PdoctorId", $this->__get("doctorId"));
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public function getPrescriptionById()
     {
-        $query = "SELECT ReceitaID, ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE ReceitaId = :Pid";
+        $query = "SELECT DATE_FORMAT(ReceitaData, '%d/%m/%Y') as ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE ReceitaId = :Pid AND ReceitaAtiva = 1";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Pid", $this->__get("id"));
@@ -52,7 +97,7 @@ class Prescription extends Model
 
     public function getPrescriptionByPacient()
     {
-        $query = "SELECT ReceitaID, ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE PacienteCPF = :Pcpf";
+        $query = "SELECT ReceitaID, ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE PacienteCPF = :Pcpf AND ReceitaAtiva = 1";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Pcpf", $this->__get("cpf"));
@@ -64,7 +109,7 @@ class Prescription extends Model
 
     public function getPrescriptionByDoctor()
     {
-        $query = "SELECT ReceitaID, ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE MedicoID = :PdoctorId";
+        $query = "SELECT ReceitaID, ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE MedicoID = :PdoctorId AND ReceitaAtiva = 1";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":PdoctorId", $this->__get("doctorId"));
@@ -76,7 +121,7 @@ class Prescription extends Model
 
     public function getPrescriptionByPharmacy()
     {
-        $query = "SELECT ReceitaID, ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE FarmaciaID = :PpharmacyId";
+        $query = "SELECT ReceitaID, ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE FarmaciaID = :PpharmacyId AND ReceitaAtiva = 1";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":PpharmacyId", $this->__get("pharmacyId"));
@@ -86,12 +131,31 @@ class Prescription extends Model
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function getPrescriptionByDate()
+    public function getPrescriptionByFilter()
     {
-        $query = "SELECT ReceitaID, ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE ReceitaData = :Pdate";
+        $query = "SELECT ReceitaID, DATE_FORMAT(ReceitaData, '%d/%m/%Y')as ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE ReceitaAtiva = 1";
+
+        if ($this->__get("id")) {
+            $query .= " AND ReceitaID = :Pid";
+        }
+        if ($this->__get("pacientCPF")) {
+            $query .= " AND PacienteCPF = :Pcpf";
+        }
+        if ($this->__get("date")) {
+            $query .= " AND DATE_FORMAT(ReceitaData, '%d/%m/%Y') = DATE_FORMAT(:Pdate, '%d/%m/%Y')";
+        }
 
         $stmt = $this->db->prepare($query);
-        $stmt->bindValue(":Pdate", $this->__get("date"));
+
+        if ($this->__get("id")) {
+            $stmt->bindValue(":Pid", $this->__get("id"));
+        }
+        if ($this->__get("pacientCPF")) {
+            $stmt->bindValue(":Pcpf", $this->__get("pacientCPF"));
+        }
+        if ($this->__get("date")) {
+            $stmt->bindValue(":Pdate", $this->__get("date"));
+        }
 
         $stmt->execute();
 

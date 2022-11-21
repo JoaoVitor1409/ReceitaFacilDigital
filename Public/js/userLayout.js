@@ -288,7 +288,7 @@ $(document).ready(() => {
                     $(".video").addClass("d-none")
 
                     code = result.id
-                    $(".modalTitle").html("Receita número " + code);
+                    $(".modalTitle").html("Receita número P" + code);
 
                     $(".formSearchPrescription").addClass("hidden");
                     $(".modalTitle").removeClass("hidden");
@@ -485,43 +485,33 @@ $(document).ready(() => {
             data: "js=true&prescriptionCode=" + prescriptionCode,
             dataType: "JSON",
             success: function (result) {
-                $(".modal-title").html("Receita número " + prescriptionCode);
+                $(".modal-title").html("Receita código: " + prescriptionCode);
 
-                $(".pacientName").val(result["pacientName"]);
-                $(".pacientCPF").val(result["pacientCPF"]);
-                $(".issueDate").val(result["issueDate"]);
-                $(".doctorName").val(result["doctorName"]);
+                $(".pacientName").val(result["PacienteNome"]);
+                $(".pacientCPF").val(result["PacienteCPF"]);
+                $(".issueDate").val(result["ReceitaData"]);
+                $(".doctorName").val(result["MedicoNome"]);
 
                 $(".medicinesList").html("");
+                let obs = 0;
                 Object.values(result["medicines"]).forEach((medicine, index) => {
-                    let length =
-                        index +
-                        1 +
-                        ". " +
-                        medicine["medicineName"] +
-                        " " +
-                        medicine["medicineSize"] +
-                        " " +
-                        medicine["medicineFrequency"];
+                    let length = index + 1 + ". " + medicine["MedicamentoDesc"] + " " + medicine["MedicamentoDosagem"] + " " + medicine["MedicamentoFrequencia"];
                     length = 35 - length.length;
-                    let list =
-                        index +
-                        1 +
-                        ". " +
-                        medicine["medicineName"] +
-                        " " +
-                        medicine["medicineSize"] +
-                        " ";
+                    let list = index + 1 + ". " + medicine["MedicamentoDesc"] + " " + medicine["MedicamentoDosagem"] + " ";
                     for (let i = 0; i <= length; i++) {
                         list += "_";
                     }
-                    list += " " + medicine["medicineFrequency"];
+                    list += " " + medicine["MedicamentoFrequencia"];
+                    if(medicine["MedicamentoObs"] != ""){
+                        list += "\n  Obs: " + medicine["MedicamentoObs"];
+                        obs++;
+                    }
                     if (index != result["medicines"].length - 1) {
                         list += "\n";
                     }
                     $(".medicinesList").append(list);
                 });
-                $(".medicinesList").attr("rows", result["medicines"].length);
+                $(".medicinesList").attr("rows", result["medicines"].length + obs);
 
                 $("#detailPrescription").modal("show");
             },
@@ -547,13 +537,7 @@ $(document).ready(() => {
         $.ajax({
             type: "POST",
             url: "/plataforma/tabelaHistorico",
-            data:
-                "js=true&page=" +
-                page +
-                "&paginationStyle=" +
-                paginationStyle +
-                "&" +
-                data,
+            data: "js=true&page=" + page + "&paginationStyle=" + paginationStyle + "&" + data,
             success: function (result) {
                 $(".tableDiv").html(result);
                 if (page != 1) {
@@ -570,6 +554,7 @@ $(document).ready(() => {
 
                 if (!result) {
                     $(".paginationMenu").remove();
+                    $(".tableDiv").html("Nenhuma receita encontrada!");
                 }
             },
             error: function (error) {
@@ -893,13 +878,15 @@ $(document).ready(() => {
             data: data,
             dataType: "JSON",
             success: function (result) {
-                console.log(result);
-                alert("Receita emitida com sucesso!");
+                if (result["code"] == 0) {
+                    error(result["input"], result["message"]);
+                } else if (result["code"] == 1) {
+                    data = { id: result["prescriptionId"] }
+                    let value = genQrCode(data);
+                    console.log(value);
 
-                data = { id: "P01" }
-                let value = genQrCode(data);
-
-                sendSMS(value);
+                    sendSMS(value);
+                }
             },
             error: function (error) {
                 console.log(error);
@@ -942,7 +929,7 @@ $(document).ready(() => {
             success: function (result) {
                 if (result) {
                     $(".phoneInput").val(result["phone"]);
-                    $(".medicineNameInput").focus();
+                    $(".medicineNameInput").eq(0).focus();
                 } else {
                     $(".phoneInput").val("");
                 }

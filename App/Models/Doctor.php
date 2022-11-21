@@ -44,6 +44,17 @@ class Doctor extends Model
         return $this;
     }
 
+    public function getDoctorById()
+    {
+        $query = "SELECT MedicoNome FROM MEDICO WHERE MedicoId = :Pid";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":Pid", $this->__get("id"));
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public function getDoctorByCRM()
     {
         $query = "SELECT MedicoID FROM MEDICO WHERE MedicoCRM = :Pcrm";

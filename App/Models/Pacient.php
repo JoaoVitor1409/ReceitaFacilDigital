@@ -46,7 +46,7 @@ class Pacient extends Model
 
     public function getPacientByCPF()
     {
-        $query = "SELECT PacienteID FROM PACIENTE WHERE PacienteCPF = :Pcpf";
+        $query = "SELECT PacienteID, PacienteNome, PacienteCelular FROM PACIENTE WHERE PacienteCPF = :Pcpf";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Pcpf", $this->__get("cpf"));

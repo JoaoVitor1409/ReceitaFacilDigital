@@ -91,7 +91,7 @@ class AuthController extends Action
         $result = ['code' => 1, 'message' => 'Usuário cadastrado com sucesso'];
 
         if ($options == 'Paciente') {
-            if (!$this->validaCPF($cpf)) {
+            if (!$this->CpfValidation($cpf)) {
                 $result = ['code' => 0, 'message' => 'Digite um CPF válido', 'input' => 'cpf'];
 
                 echo json_encode($result);
@@ -239,7 +239,7 @@ class AuthController extends Action
         echo json_encode($result);
     }
 
-    private function validaCPF($cpf)
+    private function CpfValidation($cpf)
     {
 
         $cpf = preg_replace('/[^0-9]/is', '', $cpf);
