@@ -54,7 +54,7 @@ class PrescriptionController extends Action
             $prescription->__set("pacientCPF", $cpf);
             $prescription = $prescription->getPrescriptionByPacient();
             if (!$prescription) {
-                echo json_encode([]);
+                echo json_encode(["message" => "Receita não encontrada"]);
                 return;
             }
             $prescription = $prescription[0];
@@ -63,7 +63,12 @@ class PrescriptionController extends Action
             $prescriptionId = $_POST['code'];
 
             $prescription->__set("id", $prescriptionId);
-            $prescription = $prescription->getPrescriptionById()[0];
+            $prescription = $prescription->getPrescriptionById();
+            if (!$prescription) {
+                echo json_encode(["message" => "Receita já foi emitida"]);
+                return;
+            }
+            $prescription = $prescription[0];
         }
 
         $pacient = Container::getModel("Pacient");

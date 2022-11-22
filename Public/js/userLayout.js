@@ -721,7 +721,9 @@ $(document).ready(() => {
                     $(".medicinesList").attr("rows", result["medicines"].length + obs);
                     $(".btnDispensePrescription").removeClass("d-none");
                 } else {
+                    console.log(result["message"]);
                     $(".modalBody").addClass("hidden");
+                    $(".notFound").text(result["message"]);
                     $(".notFound").removeClass("hidden");
                     $(".btnDispensePrescription").addClass("d-none");
                 }

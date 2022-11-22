@@ -98,7 +98,7 @@ class Prescription extends Model
 
     public function getPrescriptionById()
     {
-        $query = "SELECT DATE_FORMAT(ReceitaData, '%d/%m/%Y') as ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE ReceitaId = :Pid";
+        $query = "SELECT DATE_FORMAT(ReceitaData, '%d/%m/%Y') as ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE ReceitaId = :Pid AND ReceitaAtiva = 1";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Pid", $this->__get("id"));
