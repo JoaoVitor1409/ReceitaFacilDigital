@@ -40,6 +40,19 @@ class Prescription extends Model
         return $this;
     }
 
+    public function dispense()
+    {
+        $query = "UPDATE RECEITA SET FarmaciaId = :PpharmacyId, ReceitaAtiva = 0 WHERE ReceitaID = :Pid";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":Pid", $this->__get("id"));
+        $stmt->bindValue(":PpharmacyId", $this->__get("pharmacyId"));
+
+        $stmt->execute();
+
+        return $this;
+    }
+
     public function getAllPrescriptions()
     {
         $query = "SELECT ReceitaID, PacienteCPF, DATE_FORMAT(ReceitaData, '%d/%m/%Y') as ReceitaData FROM RECEITA WHERE 1=1";
@@ -65,7 +78,7 @@ class Prescription extends Model
         if ($this->__get("pacientCPF")) {
             $stmt->bindValue(":PpacientCPF", $this->__get("pacientCPF"));
         }
-        
+
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
@@ -85,7 +98,7 @@ class Prescription extends Model
 
     public function getPrescriptionById()
     {
-        $query = "SELECT DATE_FORMAT(ReceitaData, '%d/%m/%Y') as ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE ReceitaId = :Pid AND ReceitaAtiva = 1";
+        $query = "SELECT DATE_FORMAT(ReceitaData, '%d/%m/%Y') as ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE ReceitaId = :Pid";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Pid", $this->__get("id"));
@@ -97,10 +110,10 @@ class Prescription extends Model
 
     public function getPrescriptionByPacient()
     {
-        $query = "SELECT ReceitaID, ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE PacienteCPF = :Pcpf AND ReceitaAtiva = 1";
+        $query = "SELECT ReceitaID, DATE_FORMAT(ReceitaData, '%d/%m/%Y') as ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE PacienteCPF = :Pcpf AND ReceitaAtiva = 1 ORDER BY ReceitaID DESC";
 
         $stmt = $this->db->prepare($query);
-        $stmt->bindValue(":Pcpf", $this->__get("cpf"));
+        $stmt->bindValue(":Pcpf", $this->__get("pacientCPF"));
 
         $stmt->execute();
 
@@ -109,7 +122,7 @@ class Prescription extends Model
 
     public function getPrescriptionByDoctor()
     {
-        $query = "SELECT ReceitaID, ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE MedicoID = :PdoctorId AND ReceitaAtiva = 1";
+        $query = "SELECT ReceitaID, DATE_FORMAT(ReceitaData, '%d/%m/%Y') as ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE MedicoID = :PdoctorId AND ReceitaAtiva = 1";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":PdoctorId", $this->__get("doctorId"));
@@ -121,7 +134,7 @@ class Prescription extends Model
 
     public function getPrescriptionByPharmacy()
     {
-        $query = "SELECT ReceitaID, ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE FarmaciaID = :PpharmacyId AND ReceitaAtiva = 1";
+        $query = "SELECT ReceitaID, DATE_FORMAT(ReceitaData, '%d/%m/%Y') as ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE FarmaciaID = :PpharmacyId";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":PpharmacyId", $this->__get("pharmacyId"));

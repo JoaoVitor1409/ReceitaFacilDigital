@@ -13,7 +13,6 @@ class PrescriptionController extends Action
     {
         if (isset($_POST['js'])) {
             $prescriptionCode = $_POST["prescriptionCode"];
-            $medicines = [];
 
             $prescription = Container::getModel("Prescription");
             $prescription->__set("id", $prescriptionCode);
@@ -47,86 +46,45 @@ class PrescriptionController extends Action
 
     public function getPrescription()
     {
-        $cpf = false;
+
+        $prescription = Container::getModel("Prescription");
         if (isset($_POST["cpf"])) {
-            $code = $_POST["cpf"];
-            $cpf = true;
-        } else {
-            $code = $_POST['code'];
-        }
-        $prescription = [];
+            $cpf = $_POST["cpf"];
 
-        $prescriptions = [
-            [
-                "pacientName" => "João Vitor",
-                "pacientCPF" => "450.344.568-50",
-                "prescriptionCode" => "P14",
-                "issueDate" => "2002-09-14",
-                "doctorName" => "Dr. Luciano Alves",
-                "medicines" => [
-                    [
-                        "medicineName" => "Dipirona",
-                        "medicineSize" => "250mg",
-                        "medicineFrequency" => "1cp a cada 8h"
-                    ],
-                    [
-                        "medicineName" => "Engov",
-                        "medicineSize" => "10ml",
-                        "medicineFrequency" => "1 a cada 12h"
-                    ]
-                ]
-            ],
-            [
-                "pacientName" => "Paulo Roberto",
-                "pacientCPF" => "123.456.789-00",
-                "prescriptionCode" => "P01",
-                "issueDate" => "2000-01-01",
-                "doctorName" => "Dra. Maria Alves",
-                "medicines" => [
-                    [
-                        "medicineName" => "Dipirona",
-                        "medicineSize" => "250mg",
-                        "medicineFrequency" => "1cp a cada 8h"
-                    ],
-                    [
-                        "medicineName" => "Engov",
-                        "medicineSize" => "10ml",
-                        "medicineFrequency" => "1 a cada 12h"
-                    ]
-                ]
-            ],
-            [
-                "pacientName" => "Maria Julia",
-                "pacientCPF" => "123.456.789-01",
-                "prescriptionCode" => "P02",
-                "issueDate" => "2000-02-01",
-                "doctorName" => "Dr. Rodrigo Guedes",
-                "medicines" => [
-                    [
-                        "medicineName" => "Dipirona",
-                        "medicineSize" => "250mg",
-                        "medicineFrequency" => "1cp a cada 8h"
-                    ],
-                    [
-                        "medicineName" => "Engov",
-                        "medicineSize" => "10ml",
-                        "medicineFrequency" => "1 a cada 12h"
-                    ]
-                ]
-            ],
-        ];
-
-        foreach ($prescriptions as $p) {
-            if ($cpf) {
-                if ($code == $p["pacientCPF"]) {
-                    $prescription = $p;
-                    break;
-                }
-            } elseif ($code == $p["prescriptionCode"]) {
-                $prescription = $p;
-                break;
+            $prescription->__set("pacientCPF", $cpf);
+            $prescription = $prescription->getPrescriptionByPacient();
+            if (!$prescription) {
+                echo json_encode([]);
+                return;
             }
+            $prescription = $prescription[0];
+            $prescriptionId = $prescription["ReceitaID"];
+        } else {
+            $prescriptionId = $_POST['code'];
+
+            $prescription->__set("id", $prescriptionId);
+            $prescription = $prescription->getPrescriptionById()[0];
         }
+
+        $pacient = Container::getModel("Pacient");
+        $pacient->__set("cpf", $prescription["PacienteCPF"]);
+        $pacientName = $pacient->getPacientByCPF()[0]["PacienteNome"];
+
+        $doctor = Container::getModel("Doctor");
+        $doctor->__set("id", $prescription["MedicoID"]);
+        $doctorName = $doctor->getDoctorById()[0]["MedicoNome"];
+
+        $medicine = Container::getModel("Medicine");
+        $medicine->__set("prescriptionId", $prescriptionId);
+        $medicines = $medicine->getMedicineByPrescription();
+
+        $prescription = [
+            "PacienteNome" => $pacientName,
+            "PacienteCPF" => $prescription["PacienteCPF"],
+            "ReceitaData" => $prescription["ReceitaData"],
+            "MedicoNome" => $doctorName,
+            "medicines" => $medicines
+        ];
 
         echo json_encode($prescription);
     }
@@ -174,6 +132,22 @@ class PrescriptionController extends Action
         $result = ["code" => 1, "message" => "Receita Emitida com sucesso", "prescriptionId" => $prescriptionId];
 
         echo json_encode($result);
+    }
+
+    public function dispensePrescription()
+    {
+        $cpf = $_POST["cpf"];
+        session_start();
+
+        $prescription = Container::getModel("Prescription");
+
+        $prescription->__set("pacientCPF", $cpf);
+        $prescriptionId = $prescription->getPrescriptionByPacient()[0]["ReceitaID"];
+
+        $prescription->__set("id", $prescriptionId);
+        $prescription->__set("pharmacyId", $_SESSION["rfd"]["user"]["id"]);
+
+        $prescription->dispense();
     }
 
     private function CpfValidation($cpf)

@@ -264,6 +264,7 @@ $(document).ready(() => {
 
     $(document).on("click", ".cardSrcOption", function () {
         let srcMethod = $(this).attr("id");
+        $(".btnDispensePrescription").addClass("d-none");
         if (srcMethod == "CPF") {
             $(".modalBody").removeClass("hidden");
             $(".notFound").addClass("hidden");
@@ -288,7 +289,7 @@ $(document).ready(() => {
                     $(".video").addClass("d-none")
 
                     code = result.id
-                    $(".modalTitle").html("Receita número P" + code);
+                    $(".modalTitle").html("Receita código: " + code);
 
                     $(".formSearchPrescription").addClass("hidden");
                     $(".modalTitle").removeClass("hidden");
@@ -307,7 +308,7 @@ $(document).ready(() => {
     $(document).on("click", ".detailPrescription", function () {
         let prescriptionCode = $(this).attr("id");
 
-        $(".modalTitle").html("Receita número " + prescriptionCode);
+        $(".modalTitle").html("Receita código: " + prescriptionCode);
         loadMedicines(prescriptionCode);
         $("#detailPrescription").modal("show");
         return false;
@@ -323,11 +324,24 @@ $(document).ready(() => {
 
     //Search prescription
 
-    $(document).on("click", ".searchBtnCPF", () => {
+    $(document).on("click", ".formSearchPrescription .searchBtnCPF", () => {
         let cpf = $(".cpfInput").val();
-        getPrescription(cpf);
+        if (cpf.length == 14) {
+            getPrescription(cpf);
+        } else {
+            $(".modalBody").addClass("hidden");
+            $(".notFound").removeClass("hidden");
+        }
 
         return false;
+    });
+
+    //Dispense prescription
+
+    $(document).on("click", ".btnDispensePrescription", ()=>{
+        let cpf = $(".pacientCPF").val();
+
+        dispensePrescription(cpf);
     });
 
     // Pagination
@@ -502,7 +516,7 @@ $(document).ready(() => {
                         list += "_";
                     }
                     list += " " + medicine["MedicamentoFrequencia"];
-                    if(medicine["MedicamentoObs"] != ""){
+                    if (medicine["MedicamentoObs"] != "") {
                         list += "\n  Obs: " + medicine["MedicamentoObs"];
                         obs++;
                     }
@@ -679,45 +693,37 @@ $(document).ready(() => {
             data: key,
             dataType: "JSON",
             success: function (result) {
-                if (result["pacientName"]) {
-                    $(".pacientName").val(result["pacientName"]);
-                    $(".pacientCPF").val(result["pacientCPF"]);
-                    $(".issueDate").val(result["issueDate"]);
-                    $(".doctorName").val(result["doctorName"]);
+                if (result["PacienteNome"]) {
+                    $(".pacientName").val(result["PacienteNome"]);
+                    $(".pacientCPF").val(result["PacienteCPF"]);
+                    $(".issueDate").val(result["ReceitaData"]);
+                    $(".doctorName").val(result["MedicoNome"]);
 
                     $(".medicinesList").html("");
+                    let obs = 0;
                     Object.values(result["medicines"]).forEach((medicine, index) => {
-                        let length =
-                            index +
-                            1 +
-                            ". " +
-                            medicine["medicineName"] +
-                            " " +
-                            medicine["medicineSize"] +
-                            " " +
-                            medicine["medicineFrequency"];
+                        let length = index + 1 + ". " + medicine["MedicamentoDesc"] + " " + medicine["MedicamentoDosagem"] + " " + medicine["MedicamentoFrequencia"];
                         length = 35 - length.length;
-                        let list =
-                            index +
-                            1 +
-                            ". " +
-                            medicine["medicineName"] +
-                            " " +
-                            medicine["medicineSize"] +
-                            " ";
+                        let list = index + 1 + ". " + medicine["MedicamentoDesc"] + " " + medicine["MedicamentoDosagem"] + " ";
                         for (let i = 0; i <= length; i++) {
                             list += "_";
                         }
-                        list += " " + medicine["medicineFrequency"];
+                        list += " " + medicine["MedicamentoFrequencia"];
+                        if (medicine["MedicamentoObs"] != "") {
+                            list += "\n  Obs: " + medicine["MedicamentoObs"];
+                            obs++;
+                        }
                         if (index != result["medicines"].length - 1) {
                             list += "\n";
                         }
                         $(".medicinesList").append(list);
                     });
-                    $(".medicinesList").attr("rows", result["medicines"].length);
+                    $(".medicinesList").attr("rows", result["medicines"].length + obs);
+                    $(".btnDispensePrescription").removeClass("d-none");
                 } else {
                     $(".modalBody").addClass("hidden");
                     $(".notFound").removeClass("hidden");
+                    $(".btnDispensePrescription").addClass("d-none");
                 }
             },
             error: function (error) {
@@ -801,6 +807,23 @@ $(document).ready(() => {
             data: id,
             success: function (result) {
                 alert(result)
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
+
+    function dispensePrescription(cpf){
+        cpf = "cpf=" + cpf;
+        $.ajax({
+            type: "POST",
+            url: "/plataforma/dispensaReceita",
+            data: cpf,
+            success: function () {
+                alert("Receita Dispensada");
+
+                $("#detailPrescription").modal("hide");
             },
             error: function (error) {
                 console.log(error);
@@ -895,7 +918,11 @@ $(document).ready(() => {
     }
 
     function sendSMS(text) {
-        let tel = "15998568975";
+        let tel = $(".phoneInput").val();
+        tel = tel.replace("(", "");
+        tel = tel.replace(")", "");
+        tel = tel.replace("-", "");
+        alert(tel);
         let apiKey = "brbb13b31812760c430d33468b4ef0f1bd4d774b8d1b5602f0bd1adab3abf201423d50"
         encodeQrCode(text, apiKey).then(link => {
             let url = "https://api.mobizon.com.br/service/Message/SendSmsMessage?recipient=%2B55" + tel + "&text=" + link + "&output=json&apiKey=" + apiKey;

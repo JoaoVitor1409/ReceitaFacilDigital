@@ -1,182 +1,190 @@
 <?php
 
-    namespace App;
+namespace App;
 
-    use MF\Init\Bootstrap;
+use MF\Init\Bootstrap;
 
-    class Route extends Bootstrap{
-        
-        protected function initRoutes(){
+class Route extends Bootstrap
+{
 
-            // indexController
+    protected function initRoutes()
+    {
 
-            $routes['home'] = array(
-                'route' => '/',
-                'controller' => 'indexController',
-                'action' => 'index'
-            );
+        // indexController
 
-            $routes['contact'] = array(
-                'route' => '/contato',
-                'controller' => 'indexController',
-                'action' => 'contact'
-            );
+        $routes['home'] = array(
+            'route' => '/',
+            'controller' => 'indexController',
+            'action' => 'index'
+        );
 
-            $routes['signUp'] = array(
-                'route' => '/cadastrar',
-                'controller' => 'indexController',
-                'action' => 'signUp'
-            );
+        $routes['contact'] = array(
+            'route' => '/contato',
+            'controller' => 'indexController',
+            'action' => 'contact'
+        );
 
-            $routes['access'] = array(
-                'route' => '/acessar',
-                'controller' => 'indexController',
-                'action' => 'access'
-            );
+        $routes['signUp'] = array(
+            'route' => '/cadastrar',
+            'controller' => 'indexController',
+            'action' => 'signUp'
+        );
 
-            $routes['modal'] = array(
-                'route' => '/components/modals',
-                'controller' => 'indexController',
-                'action' => 'modal'
-            );
+        $routes['access'] = array(
+            'route' => '/acessar',
+            'controller' => 'indexController',
+            'action' => 'access'
+        );
 
-
-            // authController
-
-            $routes['register'] = array(
-                'route' => '/registrar',
-                'controller' => 'authController',
-                'action' => 'register'
-            );
-
-            $routes['login'] = array(
-                'route' => '/autenticar',
-                'controller' => 'authController',
-                'action' => 'login'
-            );
-
-            $routes['sendVerificationCode'] = array(
-                'route' => '/enviarCodigo',
-                'controller' => 'authController',
-                'action' => 'sendVerificationCode'
-            );
-
-            $routes['verifyCode'] = array(
-                'route' => '/verificarCodigo',
-                'controller' => 'authController',
-                'action' => 'verifyCode'
-            );
-
-            $routes['changePassword'] = array(
-                'route' => '/alterarSenha',
-                'controller' => 'authController',
-                'action' => 'changePassword'
-            );
-
-            $routes['logout'] = array(
-                'route' => '/plataforma/sair',
-                'controller' => 'authController',
-                'action' => 'logout'
-            );
+        $routes['modal'] = array(
+            'route' => '/components/modals',
+            'controller' => 'indexController',
+            'action' => 'modal'
+        );
 
 
-            // userAreaController
+        // authController
 
-            $routes['userArea'] = array(
-                'route' => '/plataforma',
-                'controller' => 'userAreaController',
-                'action' => 'userArea'
-            );
+        $routes['register'] = array(
+            'route' => '/registrar',
+            'controller' => 'authController',
+            'action' => 'register'
+        );
 
-            $routes['userAreaScreen'] = array(
-                'route' => '/plataforma/loadScreen',
-                'controller' => 'userAreaController',
-                'action' => 'userAreaScreen'
-            );
+        $routes['login'] = array(
+            'route' => '/autenticar',
+            'controller' => 'authController',
+            'action' => 'login'
+        );
 
-            $routes['modalPrescription'] = array(
-                'route' => '/plataforma/components/modalReceita',
-                'controller' => 'userAreaController',
-                'action' => 'modalPrescription'
-            );
+        $routes['sendVerificationCode'] = array(
+            'route' => '/enviarCodigo',
+            'controller' => 'authController',
+            'action' => 'sendVerificationCode'
+        );
 
-            $routes['modalSelectTemplate'] = array(
-                'route' => '/plataforma/components/modalSelecionarModelo',
-                'controller' => 'userAreaController',
-                'action' => 'modalSelectTemplate'
-            );
+        $routes['verifyCode'] = array(
+            'route' => '/verificarCodigo',
+            'controller' => 'authController',
+            'action' => 'verifyCode'
+        );
 
-            $routes['modalSaveTemplate'] = array(
-                'route' => '/plataforma/components/modalSalvarModelo',
-                'controller' => 'userAreaController',
-                'action' => 'modalSaveTemplate'
-            );
+        $routes['changePassword'] = array(
+            'route' => '/alterarSenha',
+            'controller' => 'authController',
+            'action' => 'changePassword'
+        );
 
-            $routes['modalTemplate'] = array(
-                'route' => '/plataforma/components/modalModelo',
-                'controller' => 'userAreaController',
-                'action' => 'modalTemplate'
-            );
-
-            $routes['tableHistory'] = array(
-                'route' => '/plataforma/tabelaHistorico',
-                'controller' => 'userAreaController',
-                'action' => 'tableHistory'
-            );
-
-            $routes['getPacient'] = array(
-                'route' => '/plataforma/procuraPaciente',
-                'controller' => 'userAreaController',
-                'action' => 'getPacient'
-            );
-
-            // prescriptionController
-
-            $routes['medicines'] = array(
-                'route' => '/plataforma/medicamentos',
-                'controller' => 'prescriptionController',
-                'action' => 'medicines'
-            );           
-
-            $routes['getPrescription'] = array(
-                'route' => '/plataforma/pesquisaReceita',
-                'controller' => 'prescriptionController',
-                'action' => 'getPrescription'
-            );
-
-            $routes['emitPrescription'] = array(
-                'route' => '/plataforma/emiteReceita',
-                'controller' => 'prescriptionController',
-                'action' => 'emitPrescription'
-            );
-
-            // templateController
-
-            $routes['saveTemplate'] = array(
-                'route' => '/plataforma/salvarModelo',
-                'controller' => 'templateController',
-                'action' => 'saveTemplate'
-            );
-
-            $routes['templatesList'] = array(
-                'route' => '/plataforma/listaModelos',
-                'controller' => 'templateController',
-                'action' => 'templatesList'
-            );
-
-            $routes['getTemplate'] = array(
-                'route' => '/plataforma/pesquisaTemplate',
-                'controller' => 'templateController',
-                'action' => 'getTemplate'
-            );
-
-            $routes['deleteTemplate'] = array(
-                'route' => '/plataforma/excluirTemplate',
-                'controller' => 'templateController',
-                'action' => 'deleteTemplate'
-            );
+        $routes['logout'] = array(
+            'route' => '/plataforma/sair',
+            'controller' => 'authController',
+            'action' => 'logout'
+        );
 
 
-            $this->setRoutes($routes);  
-        }        
+        // userAreaController
+
+        $routes['userArea'] = array(
+            'route' => '/plataforma',
+            'controller' => 'userAreaController',
+            'action' => 'userArea'
+        );
+
+        $routes['userAreaScreen'] = array(
+            'route' => '/plataforma/loadScreen',
+            'controller' => 'userAreaController',
+            'action' => 'userAreaScreen'
+        );
+
+        $routes['modalPrescription'] = array(
+            'route' => '/plataforma/components/modalReceita',
+            'controller' => 'userAreaController',
+            'action' => 'modalPrescription'
+        );
+
+        $routes['modalSelectTemplate'] = array(
+            'route' => '/plataforma/components/modalSelecionarModelo',
+            'controller' => 'userAreaController',
+            'action' => 'modalSelectTemplate'
+        );
+
+        $routes['modalSaveTemplate'] = array(
+            'route' => '/plataforma/components/modalSalvarModelo',
+            'controller' => 'userAreaController',
+            'action' => 'modalSaveTemplate'
+        );
+
+        $routes['modalTemplate'] = array(
+            'route' => '/plataforma/components/modalModelo',
+            'controller' => 'userAreaController',
+            'action' => 'modalTemplate'
+        );
+
+        $routes['tableHistory'] = array(
+            'route' => '/plataforma/tabelaHistorico',
+            'controller' => 'userAreaController',
+            'action' => 'tableHistory'
+        );
+
+        $routes['getPacient'] = array(
+            'route' => '/plataforma/procuraPaciente',
+            'controller' => 'userAreaController',
+            'action' => 'getPacient'
+        );
+
+        // prescriptionController
+
+        $routes['medicines'] = array(
+            'route' => '/plataforma/medicamentos',
+            'controller' => 'prescriptionController',
+            'action' => 'medicines'
+        );
+
+        $routes['getPrescription'] = array(
+            'route' => '/plataforma/pesquisaReceita',
+            'controller' => 'prescriptionController',
+            'action' => 'getPrescription'
+        );
+
+        $routes['emitPrescription'] = array(
+            'route' => '/plataforma/emiteReceita',
+            'controller' => 'prescriptionController',
+            'action' => 'emitPrescription'
+        );
+
+        $routes['dispensePrescription'] = array(
+            'route' => '/plataforma/dispensaReceita',
+            'controller' => 'prescriptionController',
+            'action' => 'dispensePrescription'
+        );
+
+        // templateController
+
+        $routes['saveTemplate'] = array(
+            'route' => '/plataforma/salvarModelo',
+            'controller' => 'templateController',
+            'action' => 'saveTemplate'
+        );
+
+        $routes['templatesList'] = array(
+            'route' => '/plataforma/listaModelos',
+            'controller' => 'templateController',
+            'action' => 'templatesList'
+        );
+
+        $routes['getTemplate'] = array(
+            'route' => '/plataforma/pesquisaTemplate',
+            'controller' => 'templateController',
+            'action' => 'getTemplate'
+        );
+
+        $routes['deleteTemplate'] = array(
+            'route' => '/plataforma/excluirTemplate',
+            'controller' => 'templateController',
+            'action' => 'deleteTemplate'
+        );
+
+
+        $this->setRoutes($routes);
     }
+}
