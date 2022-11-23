@@ -4,6 +4,9 @@ namespace App\Controllers;
 
 use MF\Controller\Action;
 use MF\Model\Container;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 class AuthController extends Action
 {
@@ -266,14 +269,65 @@ class AuthController extends Action
 
     public function sendVerificationCode()
     {
+        $emailTo = $_POST["email"];
+
+        $user = Container::getModel("User");
+        $user->__set("email", $emailTo);
+        $userExists = $user->getUserByEmail();
+
+        if ($userExists) {
+            session_start();
+            $code = rand(100000, 999999);
+            $_SESSION['rfd']['user'] = ['code' => $code];
+
+            $this->sendEmail($emailTo);
+
+            if (isset($userExists[0]["PacienteID"])) {
+                $_SESSION['rfd']['user'] += [
+                    "id" => $userExists[0]["PacienteID"],
+                    "type" => "pacient"
+                ];
+            } else if (isset($userExists[0]["MedicoID"])) {
+                $_SESSION['rfd']['user'] += [
+                    "id" => $userExists[0]["MedicoID"],
+                    "type" => "doctor"
+                ];
+            } else if (isset($userExists[0]["FarmaciaID"])) {
+                $_SESSION['rfd']['user'] += [
+                    "id" => $userExists[0]["FarmaciaID"],
+                    "type" => "pharmacy"
+                ];
+            }
+        }
     }
 
     public function verifyCode()
     {
+        session_start();
+        $code = $_POST["code"];
+        $result = ["code" => 1];
+
+        if (!isset($_SESSION["rfd"]["user"]["code"])) {
+            $result = ["code" => 0, "message" => "Código inválido", "input" => "code"];
+        } else {
+            if ($code != $_SESSION["rfd"]["user"]["code"]) {
+                $result = ["code" => 0, "message" => "Código inválido", "input" => "code"];
+            }
+        }
+
+        echo json_encode($result);
     }
 
     public function changePassword()
     {
+        session_start();
+        $password = md5($_POST["password"]);
+        $user = $_SESSION["rfd"]["user"]["type"];
+        $user = Container::getModel(ucfirst($user));
+
+        $user->__set("id", $_SESSION["rfd"]["user"]["id"]);
+        $user->__set("password", $password);
+        $user->updatePassword();
     }
 
     public function logout()
@@ -281,5 +335,44 @@ class AuthController extends Action
         session_start();
         session_destroy();
         header('Location: /');
+    }
+
+    public function sendEmail($emailTo)
+    {
+        $mail = new PHPMailer(true);
+        $user = "receitafacildigital@gmail.com";
+        $password = "gqmpnkyzpcttzggy";
+
+        $body = "<h1>Receita Fácil Digital</h1>";
+        $body .= "<h3>Para a alteração de senha, o código é: {$_SESSION['rfd']['user']['code']}</h3>";
+
+        $altBody = "Receita Fácil Digital";
+        $altBody .= "\n Para a alteração de senha, o código é: {$_SESSION['rfd']['user']['code']}";
+
+        try {
+
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->SMTPSecure = true;
+            $mail->Username   = $user;
+            $mail->Password   = $password;
+            $mail->Port       = 587;
+            $mail->CharSet = "UTF-8";
+
+            $mail->setFrom($user, 'Receita Facil Digital');
+            $mail->addReplyTo('no-reply@gmail.com');
+            $mail->addAddress($emailTo);
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Código para alteração de senha';
+            $mail->Body    = $body;
+            $mail->AltBody = $altBody;
+
+            $mail->send();
+        } catch (Exception $e) {
+            return $e;
+        }
     }
 }

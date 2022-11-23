@@ -10,13 +10,13 @@
                     <div class="row justify-content-center inputs">
                         <div class="col-md-8 inputArea inputModal">
                             <div class="input-group">
-                                <label for="cpf" class="input-group-text inputIcon cpfIcon">
+                                <label for="email" class="input-group-text inputIcon emailIcon emailModalIcon">
                                     <span class="material-icons-outlined">badge</span>
                                 </label>
-                                <input type="text" name="cpf" class="form-control cpfInput cpfInputModal" id="cpf" placeholder="Digite seu CPF" required>
+                                <input type="text" name="email" class="form-control emailInput emailModalInput emailInputModal" id="email" placeholder="Digite seu E-mail" required>
                             </div>
-                            <div class="errorDiv text-start d-none cpfError">
-                                <p class="error text-danger cpfErrorMsg"></p>
+                            <div class="errorDiv text-start d-none emailError emailModalError">
+                                <p class="error text-danger emailErrorMsg emailModalErrorMsg"></p>
                             </div>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
             </div>
             <form action="/verificarCodigo" method="POST">
                 <div class="modal-body">
-                    <p>Foi enviado um código para o e-mail ****1414@gmail.com</p>
+                    <p>Foi enviado um código para o e-mail informado</p>
                     <div class="row justify-content-center inputs">
                         <div class="col-md-8 inputArea inputModal">
                             <div class="input-group">
@@ -76,7 +76,7 @@
                                 <label for="newPassword" class="input-group-text inputIcon passwordModalIcon">
                                     <span class="material-icons-outlined">lock</span>
                                 </label>
-                                <input type="password" name="newPassword" class="form-control passwordModalInput passwordModalInputModal" id="newPassword" placeholder="Digite sua nova senha" required>
+                                <input type="password" name="newPassword" class="form-control passwordInput passwordModalInput passwordModalInputModal" id="newPassword" placeholder="Digite sua nova senha" required>
                                 <div class="viewPassDiv passwordModalIconView">
                                     <div class="input-group-text d-flex justify-content-center align-items-center viewPass">
                                         <span class="material-icons-outlined viewPassIcon">visibility</span>
