@@ -36,7 +36,7 @@ class Template extends Model
 
     public function update()
     {
-        $query = "UPDATE FROM MODELO SET ModeloNome = :Pname WHERE ModeloID = :Pid";
+        $query = "UPDATE MODELO SET ModeloNome = :Pname WHERE ModeloID = :Pid";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Pid", $this->__get("id"));
@@ -49,7 +49,7 @@ class Template extends Model
 
     public function delete()
     {
-        $query = "UPDATE FROM MODELO SET ModeloAtivo = 0 WHERE ModeloID = :Pid";
+        $query = "UPDATE MODELO SET ModeloAtivo = 0 WHERE ModeloID = :Pid";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Pid", $this->__get("id"));
@@ -59,9 +59,21 @@ class Template extends Model
         return $this;
     }
 
+    public function getLastTemplate()
+    {
+        $query = "SELECT ModeloID, ModeloNome FROM MODELO WHERE MedicoID = :PdoctorId AND ModeloAtivo = 1 ORDER BY ModeloID DESC";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":PdoctorId", $this->__get("doctorId"));
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public function getTemplateByDoctor()
     {
-        $query = "SELECT ModeloNome FROM MODELO WHERE MedicoID = :PdoctorId AND ModeloAtivo = 1";
+        $query = "SELECT ModeloID, ModeloNome FROM MODELO WHERE MedicoID = :PdoctorId AND ModeloAtivo = 1";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":PdoctorId", $this->__get("doctorId"));
@@ -77,6 +89,19 @@ class Template extends Model
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Pid", $this->__get("id"));
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getTemplateByName()
+    {
+        $query = "SELECT ModeloID, ModeloNome FROM MODELO WHERE ModeloNome LIKE :Pname AND MedicoID = :PdoctorId AND ModeloAtivo = 1";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":Pname", $this->__get("name") . '%');
+        $stmt->bindValue(":PdoctorId", $this->__get("doctorId"));
 
         $stmt->execute();
 

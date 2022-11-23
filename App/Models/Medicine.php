@@ -13,6 +13,7 @@ class Medicine extends Model
     private $obs;
     private $templateId;
     private $prescriptionId;
+    private $start;
 
 
     public function __get($attribute)
@@ -49,9 +50,37 @@ class Medicine extends Model
         return $this;
     }
 
+    public function update()
+    {
+        $query = "UPDATE MODELO_MEDICAMENTO SET MedicamentoDesc = :Pdesc, MedicamentoDosagem = :Psize, MedicamentoFrequencia = :Pfrequency, MedicamentoObs = :Pobs WHERE MedicamentoID = :Pid AND ModeloID = :PtemplateId";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":Pid", $this->__get("id"));
+        $stmt->bindValue(":Pdesc", $this->__get("desc"));
+        $stmt->bindValue(":Psize", $this->__get("size"));
+        $stmt->bindValue(":Pfrequency", $this->__get("frequency"));
+        $stmt->bindValue(":Pobs", $this->__get("obs"));
+        $stmt->bindValue(":PtemplateId", $this->__get("templateId"));
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function delete()
+    {
+        $query = "DELETE FROM MODELO_MEDICAMENTO WHERE MedicamentoID = :Pid AND ModeloID = :PtemplateId";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":Pid", $this->__get("id"));
+        $stmt->bindValue(":PtemplateId", $this->__get("templateId"));
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public function getMedicineByTemplate()
     {
-        $query = "SELECT MedicamentoDesc,MedicamentoDosagem,MedicamentoFrequencia,MedicamentoObs FROM MODELO_MEDICAMENTO WHERE ModeloID = :PtemplateId";
+        $query = "SELECT MedicamentoID, MedicamentoDesc,MedicamentoDosagem,MedicamentoFrequencia,MedicamentoObs FROM MODELO_MEDICAMENTO WHERE ModeloID = :PtemplateId";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":PtemplateId", $this->__get("templateId"));
@@ -62,7 +91,7 @@ class Medicine extends Model
 
     public function getMedicineByPrescription()
     {
-        $query = "SELECT MedicamentoDesc,MedicamentoDosagem,MedicamentoFrequencia,MedicamentoObs FROM RECEITA_MEDICAMENTO WHERE ReceitaID = :PprescriptionId";
+        $query = "SELECT MedicamentoID, MedicamentoDesc,MedicamentoDosagem,MedicamentoFrequencia,MedicamentoObs FROM RECEITA_MEDICAMENTO WHERE ReceitaID = :PprescriptionId";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":PprescriptionId", $this->__get("prescriptionId"));

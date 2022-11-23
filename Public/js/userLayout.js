@@ -183,7 +183,7 @@ $(document).ready(() => {
     // delete Template
 
     $(document).on("click", ".btnDeleteTemplate", function () {
-        deleteTemplate($(this).attr("id"));
+        deleteTemplate($(".templateId").val());
         loadTemplates();
         $("#template").modal("hide");
 
@@ -194,6 +194,13 @@ $(document).ready(() => {
     // create Template
 
     $(document).on("click", ".createTemplateBtn", function () {
+        $(".templateNameModalInput").val("");
+        $(".medicineNameInput").val("");
+        $(".medicineSizeInput").val("");
+        $(".medicineFrequencyInput").val("");
+        $(".medicineObsInput").val("");
+        removeMedicineForm();
+        $(".modal-title").text("");
         $("#template").modal("show");
 
         return false;
@@ -252,9 +259,7 @@ $(document).ready(() => {
 
         let data = $(".formSaveTemplate").serialize() + "&";
         data += $(".formAddPrescription").serialize();
-        console.log(data)
         saveTemplate(data);
-        $("#saveTemplate").modal("hide");
 
         return false;
     });
@@ -338,7 +343,7 @@ $(document).ready(() => {
 
     //Dispense prescription
 
-    $(document).on("click", ".btnDispensePrescription", ()=>{
+    $(document).on("click", ".btnDispensePrescription", () => {
         let cpf = $(".pacientCPF").val();
 
         dispensePrescription(cpf);
@@ -592,24 +597,19 @@ $(document).ready(() => {
                     $(".messageTemplateSelect").html("");
                     $(".templatesList").html("");
                     Object.values(result).forEach((template) => {
-                        let page =
-                            `
-                <div class="template row mb-2" id="` +
-                            template.templateId +
-                            `">
-                    <div class="row">
-                        <h1 class="title">` +
-                            template.templateName +
-                            `</h1></div>
-                        <div class="row">
-                        <p class="medicinesDesc">
-            `;
+                        let page = `
+                            <div class="template row mb-2" id="` + template["ModeloID"] + `">
+                            <div class="row">
+                                <h1 class="title">` + template["ModeloNome"] + `</h1></div>
+                            <div class="row">
+                            <p class="medicinesDesc">
+                        `;
 
-                        for (let i = 0; i < template.templateMedicines.length; i++) {
-                            if (i != template.templateMedicines.length - 1) {
-                                page += template.templateMedicines[i].medicineName + ";";
+                        for (let i = 0; i < template.medicines.length; i++) {
+                            if (i != template.medicines.length - 1) {
+                                page += template.medicines[i].MedicamentoDesc + ";";
                             } else {
-                                page += template.templateMedicines[i].medicineName;
+                                page += template.medicines[i].MedicamentoDesc;
                             }
                         }
 
@@ -641,19 +641,19 @@ $(document).ready(() => {
                     $(".templatesCards").html("");
                     Object.values(result).forEach((template) => {
                         let page = `
-                            <div class="templateCard card col-md-3 mb-2"  id="` + template.templateId + `">
+                            <div class="templateCard card col-md-3 mb-2"  id="` + template["ModeloID"] + `">
                                 <div class="row">
-                                    <h1 class="title card-header text-center">` + template.templateName + `</h1></div>
+                                    <h1 class="title card-header text-center">` + template["ModeloNome"] + `</h1></div>
                                     <div class="row">
                                     <ul class="list-group list-group-flush">
                         `;
 
-                        for (let i = 0; i < template.templateMedicines.length; i++) {
+                        for (let i = 0; i < template.medicines.length; i++) {
                             page += '<li class="list-group-item listItem">';
-                            if (i != template.templateMedicines.length - 1) {
-                                page += template.templateMedicines[i].medicineName + ";";
+                            if (i != template.medicines.length - 1) {
+                                page += template.medicines[i].MedicamentoDesc + ";";
                             } else {
-                                page += template.templateMedicines[i].medicineName;
+                                page += template.medicines[i].MedicamentoDesc;
                             }
                             page += '</li>'
                         }
@@ -743,12 +743,15 @@ $(document).ready(() => {
             dataType: "JSON",
             success: function (result) {
                 removeMedicineForm();
-                result = result.templateMedicines
+                result = result.medicines;
                 for (let i = 0; i < Object.values(result).length; i++) {
-                    let medicineName = result[i].medicineName;
-                    let medicineSize = result[i].medicineSize;
-                    let medicineFrequency = result[i].medicineFrequency;
-                    let medicineObs = result[i].medicineObs;
+                    let medicineName = result[i].MedicamentoDesc;
+                    let medicineSize = result[i].MedicamentoDosagem;
+                    let medicineFrequency = result[i].MedicamentoFrequencia;
+                    let medicineObs = null;
+                    if (result[i].MedicamentoObs) {
+                        medicineObs = result[i].MedicamentoObs;
+                    }
 
                     $(".medicineNameInput").eq(i).val(medicineName);
                     $(".medicineSizeInput").eq(i).val(medicineSize);
@@ -776,15 +779,18 @@ $(document).ready(() => {
             success: function (result) {
 
                 removeMedicineForm();
-                $("#template .modal-title").html("Modelo <b>" + result.templateName + "</b>")
-                $(".templateNameModalInput").val(result.templateName)
-                result = result.templateMedicines
+                $(".templateId").val(result.ModeloID);
+                $("#template .modal-title").html("Modelo <b>" + result.ModeloNome + "</b>")
+                $(".templateNameModalInput").val(result.ModeloNome)
+                result = result.medicines
                 for (let i = 0; i < Object.values(result).length; i++) {
-                    let medicineName = result[i].medicineName;
-                    let medicineSize = result[i].medicineSize;
-                    let medicineFrequency = result[i].medicineFrequency;
-                    let medicineObs = result[i].medicineObs;
-
+                    let medicineName = result[i].MedicamentoDesc;
+                    let medicineSize = result[i].MedicamentoDosagem;
+                    let medicineFrequency = result[i].MedicamentoFrequencia;
+                    let medicineObs = null;
+                    if (result[i].MedicamentoObs) {
+                        medicineObs = result[i].MedicamentoObs;
+                    }
                     $(".medicineNameInput").eq(i).val(medicineName);
                     $(".medicineSizeInput").eq(i).val(medicineSize);
                     $(".medicineFrequencyInput").eq(i).val(medicineFrequency);
@@ -816,7 +822,7 @@ $(document).ready(() => {
         });
     }
 
-    function dispensePrescription(cpf){
+    function dispensePrescription(cpf) {
         cpf = "cpf=" + cpf;
         $.ajax({
             type: "POST",
@@ -980,8 +986,12 @@ $(document).ready(() => {
             data: data,
             dataType: "JSON",
             success: function (result) {
-                console.log(result);
-                alert("Template salvo com sucesso!");
+                if (result["code"] == 1) {
+                    alert(result["message"])
+                    $("#saveTemplate").modal("hide");
+                } else if (result["code"] == 0) {                    
+                    error(result["input"], result["message"]);
+                }
             },
             error: function (error) {
                 console.log(error);
