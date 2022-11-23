@@ -123,13 +123,11 @@ $(document).ready(() => {
         { value: "Tomar após as refeições" },
     ];
 
-    $(document).on("focus click", ".medicineObsInput", function () {
+    $(document).on("focus click keyup", ".medicineObsInput", function () {
         if (!$(this).data("autocomplete")) {
             $(this).autocomplete({
                 minLength: 0,
-                source: function (_, response) {
-                    response(dataObsType);
-                },
+                source: dataObsType,
                 select: function (_, { item }) {
                     $(this).val(item.value);
                     return false;
