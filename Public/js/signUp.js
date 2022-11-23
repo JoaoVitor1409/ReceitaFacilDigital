@@ -142,50 +142,47 @@ $(document).ready(() => {
             return false;
         }
 
-        if (!continueForm) {
-            if ($(".cepInput").val().length != 9 || cepNotFound) {
-                error("cep", "Digite um CEP válido!");
-                $(".cepInput").focus();
+        if ($(".cepInput").val().length != 9 || cepNotFound) {
+            error("cep", "Digite um CEP válido!");
+            $(".cepInput").focus();
+
+            return false;
+        }
+
+        if (pharmacyActive) {
+            if ($(".districtInput").val().replaceAll(" ", "") == "") {
+                error("district", "Bairro não pode ser vazio!");
+                $(".districtInput").focus();
 
                 return false;
             }
 
-            if (pharmacyActive) {
-                if ($(".districtInput").val().replaceAll(" ", "") == "") {
-                    error("district", "Bairro não pode ser vazio!");
-                    $(".districtInput").focus();
+            if ($(".streetInput").val().replaceAll(" ", "") == "") {
+                error("street", "Logradouro não pode ser vazio!");
+                $(".streetInput").focus();
 
-                    return false;
-                }
-
-                if ($(".streetInput").val().replaceAll(" ", "") == "") {
-                    error("street", "Logradouro não pode ser vazio!");
-                    $(".streetInput").focus();
-
-                    return false;
-                }
-
-                if ($(".numberInput").val().replaceAll(" ", "") == "") {
-                    error("number", "Cidade não pode ser vazio!");
-                    $(".numberInput").focus();
-
-                    return false;
-                }
-            }
-            if (doctorActive) {
-                if (!crmIsValid) {
-                    error("crm", "Insira um CRM válido");
-                    showInputs();
-                    $(".crmInput").focus();
-
-                    return false;
-                }
+                return false;
             }
 
-            console.log($(".formSignUp").serialize());
+            if ($(".numberInput").val().replaceAll(" ", "") == "") {
+                error("number", "Cidade não pode ser vazio!");
+                $(".numberInput").focus();
+
+                return false;
+            }
+        }
+        if (doctorActive) {
+            if (!crmIsValid) {
+                error("crm", "Insira um CRM válido");
+                showInputs();
+                $(".crmInput").focus();
+
+                return false;
+            }
         }
 
-        alert("Deu bom");
+        signUp();
+
         return false;
     });
 
@@ -200,7 +197,7 @@ $(document).ready(() => {
     // fill CEP
     var cepNotFound = true;
     var crmIsValid = false;
-    $(document).on("keyup", ".cepInput", () => {
+    $(document).on("keyup focus", ".cepInput", () => {
         if ($(".cepInput").val().length == 9) {
             searchCEP($(".cepInput").val());
         }
@@ -498,7 +495,7 @@ $(document).ready(() => {
                                     <label for="`+ input[0] + `" class="input-group-text inputIcon ` + input[0] + `Icon">
                                         <span class="material-icons-outlined">`+ input[1] + `</span>
                                     </label>
-                                    <select class="form-select `+ input[0] + `Input" name="'` + input[0] + `'">
+                                    <select class="form-select `+ input[0] + `Input" name="` + input[0] + `">
                                         <option class="disabled" selected disabled>Selecione o Estado</option>
                                         <option class="optionAC" value="AC">AC</option>
                                         <option class="optionAL" value="AL">AL</option>
@@ -682,12 +679,37 @@ $(document).ready(() => {
                 $(".passwordInput").focus();
                 cnpjPhamacy = true;
             }
-        }).fail((e) => {
-            console.log(e);
+        }).fail(e => {
+            error("cnpj", "Informe um CNPJ válido!");
+            showInputs();
+            $(".cnpjInput").focus();
         });
 
         return cnpjPhamacy;
 
 
+    }
+
+    function signUp() {
+        let data = $(".formSignUp").serialize();
+
+        $.ajax({
+            type: "POST",
+            url: "/registrar",
+            data: data,
+            dataType: "JSON",
+            success: function (result) {
+                if (result["code"] == 1) {
+                    alert(result["message"]);
+                    window.location.href = "/";
+                } else if (result["code"] == 0) {
+                    error(result["input"], result["message"]);
+                    showInputs();
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
     }
 });

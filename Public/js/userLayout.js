@@ -123,13 +123,11 @@ $(document).ready(() => {
         { value: "Tomar após as refeições" },
     ];
 
-    $(document).on("focus click", ".medicineObsInput", function () {
+    $(document).on("focus click keyup", ".medicineObsInput", function () {
         if (!$(this).data("autocomplete")) {
             $(this).autocomplete({
                 minLength: 0,
-                source: function (_, response) {
-                    response(dataObsType);
-                },
+                source: dataObsType,
                 select: function (_, { item }) {
                     $(this).val(item.value);
                     return false;
@@ -183,7 +181,7 @@ $(document).ready(() => {
     // delete Template
 
     $(document).on("click", ".btnDeleteTemplate", function () {
-        deleteTemplate($(this).attr("id"));
+        deleteTemplate($(".templateId").val());
         loadTemplates();
         $("#template").modal("hide");
 
@@ -194,6 +192,13 @@ $(document).ready(() => {
     // create Template
 
     $(document).on("click", ".createTemplateBtn", function () {
+        $(".templateNameModalInput").val("");
+        $(".medicineNameInput").val("");
+        $(".medicineSizeInput").val("");
+        $(".medicineFrequencyInput").val("");
+        $(".medicineObsInput").val("");
+        removeMedicineForm();
+        $(".modal-title").text("");
         $("#template").modal("show");
 
         return false;
@@ -252,9 +257,7 @@ $(document).ready(() => {
 
         let data = $(".formSaveTemplate").serialize() + "&";
         data += $(".formAddPrescription").serialize();
-        console.log(data)
         saveTemplate(data);
-        $("#saveTemplate").modal("hide");
 
         return false;
     });
@@ -264,6 +267,7 @@ $(document).ready(() => {
 
     $(document).on("click", ".cardSrcOption", function () {
         let srcMethod = $(this).attr("id");
+        $(".btnDispensePrescription").addClass("d-none");
         if (srcMethod == "CPF") {
             $(".modalBody").removeClass("hidden");
             $(".notFound").addClass("hidden");
@@ -288,7 +292,7 @@ $(document).ready(() => {
                     $(".video").addClass("d-none")
 
                     code = result.id
-                    $(".modalTitle").html("Receita número " + code);
+                    $(".modalTitle").html("Receita código: " + code);
 
                     $(".formSearchPrescription").addClass("hidden");
                     $(".modalTitle").removeClass("hidden");
@@ -307,7 +311,7 @@ $(document).ready(() => {
     $(document).on("click", ".detailPrescription", function () {
         let prescriptionCode = $(this).attr("id");
 
-        $(".modalTitle").html("Receita número " + prescriptionCode);
+        $(".modalTitle").html("Receita código: " + prescriptionCode);
         loadMedicines(prescriptionCode);
         $("#detailPrescription").modal("show");
         return false;
@@ -323,11 +327,24 @@ $(document).ready(() => {
 
     //Search prescription
 
-    $(document).on("click", ".searchBtnCPF", () => {
+    $(document).on("click", ".formSearchPrescription .searchBtnCPF", () => {
         let cpf = $(".cpfInput").val();
-        getPrescription(cpf);
+        if (cpf.length == 14) {
+            getPrescription(cpf);
+        } else {
+            $(".modalBody").addClass("hidden");
+            $(".notFound").removeClass("hidden");
+        }
 
         return false;
+    });
+
+    //Dispense prescription
+
+    $(document).on("click", ".btnDispensePrescription", () => {
+        let cpf = $(".pacientCPF").val();
+
+        dispensePrescription(cpf);
     });
 
     // Pagination
@@ -485,43 +502,33 @@ $(document).ready(() => {
             data: "js=true&prescriptionCode=" + prescriptionCode,
             dataType: "JSON",
             success: function (result) {
-                $(".modal-title").html("Receita número " + prescriptionCode);
+                $(".modal-title").html("Receita código: " + prescriptionCode);
 
-                $(".pacientName").val(result["pacientName"]);
-                $(".pacientCPF").val(result["pacientCPF"]);
-                $(".issueDate").val(result["issueDate"]);
-                $(".doctorName").val(result["doctorName"]);
+                $(".pacientName").val(result["PacienteNome"]);
+                $(".pacientCPF").val(result["PacienteCPF"]);
+                $(".issueDate").val(result["ReceitaData"]);
+                $(".doctorName").val(result["MedicoNome"]);
 
                 $(".medicinesList").html("");
+                let obs = 0;
                 Object.values(result["medicines"]).forEach((medicine, index) => {
-                    let length =
-                        index +
-                        1 +
-                        ". " +
-                        medicine["medicineName"] +
-                        " " +
-                        medicine["medicineSize"] +
-                        " " +
-                        medicine["medicineFrequency"];
+                    let length = index + 1 + ". " + medicine["MedicamentoDesc"] + " " + medicine["MedicamentoDosagem"] + " " + medicine["MedicamentoFrequencia"];
                     length = 35 - length.length;
-                    let list =
-                        index +
-                        1 +
-                        ". " +
-                        medicine["medicineName"] +
-                        " " +
-                        medicine["medicineSize"] +
-                        " ";
+                    let list = index + 1 + ". " + medicine["MedicamentoDesc"] + " " + medicine["MedicamentoDosagem"] + " ";
                     for (let i = 0; i <= length; i++) {
                         list += "_";
                     }
-                    list += " " + medicine["medicineFrequency"];
+                    list += " " + medicine["MedicamentoFrequencia"];
+                    if (medicine["MedicamentoObs"] != "") {
+                        list += "\n  Obs: " + medicine["MedicamentoObs"];
+                        obs++;
+                    }
                     if (index != result["medicines"].length - 1) {
                         list += "\n";
                     }
                     $(".medicinesList").append(list);
                 });
-                $(".medicinesList").attr("rows", result["medicines"].length);
+                $(".medicinesList").attr("rows", result["medicines"].length + obs);
 
                 $("#detailPrescription").modal("show");
             },
@@ -547,13 +554,7 @@ $(document).ready(() => {
         $.ajax({
             type: "POST",
             url: "/plataforma/tabelaHistorico",
-            data:
-                "js=true&page=" +
-                page +
-                "&paginationStyle=" +
-                paginationStyle +
-                "&" +
-                data,
+            data: "js=true&page=" + page + "&paginationStyle=" + paginationStyle + "&" + data,
             success: function (result) {
                 $(".tableDiv").html(result);
                 if (page != 1) {
@@ -570,6 +571,7 @@ $(document).ready(() => {
 
                 if (!result) {
                     $(".paginationMenu").remove();
+                    $(".tableDiv").html("Nenhuma receita encontrada!");
                 }
             },
             error: function (error) {
@@ -593,24 +595,19 @@ $(document).ready(() => {
                     $(".messageTemplateSelect").html("");
                     $(".templatesList").html("");
                     Object.values(result).forEach((template) => {
-                        let page =
-                            `
-                <div class="template row mb-2" id="` +
-                            template.templateId +
-                            `">
-                    <div class="row">
-                        <h1 class="title">` +
-                            template.templateName +
-                            `</h1></div>
-                        <div class="row">
-                        <p class="medicinesDesc">
-            `;
+                        let page = `
+                            <div class="template row mb-2" id="` + template["ModeloID"] + `">
+                            <div class="row">
+                                <h1 class="title">` + template["ModeloNome"] + `</h1></div>
+                            <div class="row">
+                            <p class="medicinesDesc">
+                        `;
 
-                        for (let i = 0; i < template.templateMedicines.length; i++) {
-                            if (i != template.templateMedicines.length - 1) {
-                                page += template.templateMedicines[i].medicineName + ";";
+                        for (let i = 0; i < template.medicines.length; i++) {
+                            if (i != template.medicines.length - 1) {
+                                page += template.medicines[i].MedicamentoDesc + ";";
                             } else {
-                                page += template.templateMedicines[i].medicineName;
+                                page += template.medicines[i].MedicamentoDesc;
                             }
                         }
 
@@ -642,19 +639,19 @@ $(document).ready(() => {
                     $(".templatesCards").html("");
                     Object.values(result).forEach((template) => {
                         let page = `
-                            <div class="templateCard card col-md-3 mb-2"  id="` + template.templateId + `">
+                            <div class="templateCard card col-md-3 mb-2"  id="` + template["ModeloID"] + `">
                                 <div class="row">
-                                    <h1 class="title card-header text-center">` + template.templateName + `</h1></div>
+                                    <h1 class="title card-header text-center">` + template["ModeloNome"] + `</h1></div>
                                     <div class="row">
                                     <ul class="list-group list-group-flush">
                         `;
 
-                        for (let i = 0; i < template.templateMedicines.length; i++) {
+                        for (let i = 0; i < template.medicines.length; i++) {
                             page += '<li class="list-group-item listItem">';
-                            if (i != template.templateMedicines.length - 1) {
-                                page += template.templateMedicines[i].medicineName + ";";
+                            if (i != template.medicines.length - 1) {
+                                page += template.medicines[i].MedicamentoDesc + ";";
                             } else {
-                                page += template.templateMedicines[i].medicineName;
+                                page += template.medicines[i].MedicamentoDesc;
                             }
                             page += '</li>'
                         }
@@ -694,45 +691,38 @@ $(document).ready(() => {
             data: key,
             dataType: "JSON",
             success: function (result) {
-                if (result["pacientName"]) {
-                    $(".pacientName").val(result["pacientName"]);
-                    $(".pacientCPF").val(result["pacientCPF"]);
-                    $(".issueDate").val(result["issueDate"]);
-                    $(".doctorName").val(result["doctorName"]);
+                if (result["PacienteNome"]) {
+                    $(".pacientName").val(result["PacienteNome"]);
+                    $(".pacientCPF").val(result["PacienteCPF"]);
+                    $(".issueDate").val(result["ReceitaData"]);
+                    $(".doctorName").val(result["MedicoNome"]);
 
                     $(".medicinesList").html("");
+                    let obs = 0;
                     Object.values(result["medicines"]).forEach((medicine, index) => {
-                        let length =
-                            index +
-                            1 +
-                            ". " +
-                            medicine["medicineName"] +
-                            " " +
-                            medicine["medicineSize"] +
-                            " " +
-                            medicine["medicineFrequency"];
+                        let length = index + 1 + ". " + medicine["MedicamentoDesc"] + " " + medicine["MedicamentoDosagem"] + " " + medicine["MedicamentoFrequencia"];
                         length = 35 - length.length;
-                        let list =
-                            index +
-                            1 +
-                            ". " +
-                            medicine["medicineName"] +
-                            " " +
-                            medicine["medicineSize"] +
-                            " ";
+                        let list = index + 1 + ". " + medicine["MedicamentoDesc"] + " " + medicine["MedicamentoDosagem"] + " ";
                         for (let i = 0; i <= length; i++) {
                             list += "_";
                         }
-                        list += " " + medicine["medicineFrequency"];
+                        list += " " + medicine["MedicamentoFrequencia"];
+                        if (medicine["MedicamentoObs"] != "") {
+                            list += "\n  Obs: " + medicine["MedicamentoObs"];
+                            obs++;
+                        }
                         if (index != result["medicines"].length - 1) {
                             list += "\n";
                         }
                         $(".medicinesList").append(list);
                     });
-                    $(".medicinesList").attr("rows", result["medicines"].length);
+                    $(".medicinesList").attr("rows", result["medicines"].length + obs);
+                    $(".btnDispensePrescription").removeClass("d-none");
                 } else {
                     $(".modalBody").addClass("hidden");
+                    $(".notFound").text(result["message"]);
                     $(".notFound").removeClass("hidden");
+                    $(".btnDispensePrescription").addClass("d-none");
                 }
             },
             error: function (error) {
@@ -750,12 +740,15 @@ $(document).ready(() => {
             dataType: "JSON",
             success: function (result) {
                 removeMedicineForm();
-                result = result.templateMedicines
+                result = result.medicines;
                 for (let i = 0; i < Object.values(result).length; i++) {
-                    let medicineName = result[i].medicineName;
-                    let medicineSize = result[i].medicineSize;
-                    let medicineFrequency = result[i].medicineFrequency;
-                    let medicineObs = result[i].medicineObs;
+                    let medicineName = result[i].MedicamentoDesc;
+                    let medicineSize = result[i].MedicamentoDosagem;
+                    let medicineFrequency = result[i].MedicamentoFrequencia;
+                    let medicineObs = null;
+                    if (result[i].MedicamentoObs) {
+                        medicineObs = result[i].MedicamentoObs;
+                    }
 
                     $(".medicineNameInput").eq(i).val(medicineName);
                     $(".medicineSizeInput").eq(i).val(medicineSize);
@@ -783,15 +776,18 @@ $(document).ready(() => {
             success: function (result) {
 
                 removeMedicineForm();
-                $("#template .modal-title").html("Modelo <b>" + result.templateName + "</b>")
-                $(".templateNameModalInput").val(result.templateName)
-                result = result.templateMedicines
+                $(".templateId").val(result.ModeloID);
+                $("#template .modal-title").html("Modelo <b>" + result.ModeloNome + "</b>")
+                $(".templateNameModalInput").val(result.ModeloNome)
+                result = result.medicines
                 for (let i = 0; i < Object.values(result).length; i++) {
-                    let medicineName = result[i].medicineName;
-                    let medicineSize = result[i].medicineSize;
-                    let medicineFrequency = result[i].medicineFrequency;
-                    let medicineObs = result[i].medicineObs;
-
+                    let medicineName = result[i].MedicamentoDesc;
+                    let medicineSize = result[i].MedicamentoDosagem;
+                    let medicineFrequency = result[i].MedicamentoFrequencia;
+                    let medicineObs = null;
+                    if (result[i].MedicamentoObs) {
+                        medicineObs = result[i].MedicamentoObs;
+                    }
                     $(".medicineNameInput").eq(i).val(medicineName);
                     $(".medicineSizeInput").eq(i).val(medicineSize);
                     $(".medicineFrequencyInput").eq(i).val(medicineFrequency);
@@ -816,6 +812,23 @@ $(document).ready(() => {
             data: id,
             success: function (result) {
                 alert(result)
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
+
+    function dispensePrescription(cpf) {
+        cpf = "cpf=" + cpf;
+        $.ajax({
+            type: "POST",
+            url: "/plataforma/dispensaReceita",
+            data: cpf,
+            success: function () {
+                alert("Receita Dispensada");
+
+                $("#detailPrescription").modal("hide");
             },
             error: function (error) {
                 console.log(error);
@@ -893,13 +906,13 @@ $(document).ready(() => {
             data: data,
             dataType: "JSON",
             success: function (result) {
-                console.log(result);
-                alert("Receita emitida com sucesso!");
-
-                data = { id: "P01" }
-                let value = genQrCode(data);
-
-                sendSMS(value);
+                if (result["code"] == 0) {
+                    error(result["input"], result["message"]);
+                } else if (result["code"] == 1) {
+                    data = { id: result["prescriptionId"] }
+                    let value = genQrCode(data);
+                    sendSMS(value);
+                }
             },
             error: function (error) {
                 console.log(error);
@@ -907,22 +920,55 @@ $(document).ready(() => {
         });
     }
 
-    function sendSMS(text) {
-        let tel = "15998568975";
-        let apiKey = "brbb13b31812760c430d33468b4ef0f1bd4d774b8d1b5602f0bd1adab3abf201423d50"
-        encodeQrCode(text, apiKey).then(link => {
-            let url = "https://api.mobizon.com.br/service/Message/SendSmsMessage?recipient=%2B55" + tel + "&text=" + link + "&output=json&apiKey=" + apiKey;
+    function sendSMS(link) {
+        let tel = $(".phoneInput").val();
+        tel = tel.replace("(", "");
+        tel = tel.replace(")", "");
+        tel = tel.replace("-", "");
 
-            $.getJSON(url, (data) => {
-                alert("Receita Emitida")
+        let apiKey = "br66191885328ef25cc1b12e1e9590766f1c020b127d114cf2002be7bb946b83cc30fc";
+
+        encodeQrCode(link, apiKey).then(text => {
+            genTextSMS(text).then((encodedText) => {
+                encodedText = encodeURIComponent(encodedText);
+                let url = "https://api.mobizon.com.br/service/Message/SendSmsMessage?recipient=%2B55" + tel + "&text=" + encodedText + "&output=json&apiKey=" + apiKey;
+
+                $.getJSON(url, () => {
+                    alert("Receita Emitida")
+                });
             });
-        })
+        });
+    }
 
+    function genTextSMS(link) {
+        return new Promise(resolve => {
+            $.ajax({
+                type: "POST",
+                url: "/plataforma/procuraFarmacia",
+                dataType: "JSON",
+                success: function (result) {
+                    let text = "Prontinho, agora só apresentar seu CPF ou abrir o link do código QR: " + link + " para uma das farmácias parceiras, em sua cidade, abaixo :D\n\n";
 
+                    Object.values(result).forEach((pharmacy, index) => {
+                        text += "Farmacia: " + pharmacy["FarmaciaNome"] + "\n";
+                        text += "Endereco: " + pharmacy["EnderecoBairro"] + ", " + pharmacy["EnderecoLogradouro"] + ", " + pharmacy["EnderecoNumero"];
+
+                        if (index < result.length - 1) {
+                            text += "\n\n";
+                        }
+                    })
+
+                    resolve(text);
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+            })
+        });
     }
 
     function encodeQrCode(text, apiKey) {
-        text = encodeURIComponent(text)
+        text = encodeURIComponent(text);
         url = "https://api.mobizon.com.br/service/link/create?data%5BfullLink%5D=" + text + "&output=json&api=v1&apiKey=" + apiKey;
 
         return new Promise((resolve) => {
@@ -942,7 +988,7 @@ $(document).ready(() => {
             success: function (result) {
                 if (result) {
                     $(".phoneInput").val(result["phone"]);
-                    $(".medicineNameInput").focus();
+                    $(".medicineNameInput").eq(0).focus();
                 } else {
                     $(".phoneInput").val("");
                 }
@@ -964,8 +1010,12 @@ $(document).ready(() => {
             data: data,
             dataType: "JSON",
             success: function (result) {
-                console.log(result);
-                alert("Template salvo com sucesso!");
+                if (result["code"] == 1) {
+                    alert(result["message"])
+                    $("#saveTemplate").modal("hide");
+                } else if (result["code"] == 0) {
+                    error(result["input"], result["message"]);
+                }
             },
             error: function (error) {
                 console.log(error);
