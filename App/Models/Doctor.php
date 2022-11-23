@@ -46,7 +46,7 @@ class Doctor extends Model
 
     public function getDoctorById()
     {
-        $query = "SELECT MedicoNome FROM MEDICO WHERE MedicoId = :Pid";
+        $query = "SELECT MedicoNome, EnderecoID FROM MEDICO WHERE MedicoId = :Pid";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Pid", $this->__get("id"));

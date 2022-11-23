@@ -67,6 +67,8 @@ class Prescription extends Model
             $query .= " AND PacienteCPF = :PpacientCPF";
         }
 
+        $query .= " ORDER BY ReceitaID DESC";
+
         $stmt = $this->db->prepare($query);
 
         if ($this->__get("doctorId")) {
@@ -99,6 +101,18 @@ class Prescription extends Model
     public function getPrescriptionById()
     {
         $query = "SELECT DATE_FORMAT(ReceitaData, '%d/%m/%Y') as ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE ReceitaId = :Pid AND ReceitaAtiva = 1";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":Pid", $this->__get("id"));
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getPrescriptionHistoryById()
+    {
+        $query = "SELECT DATE_FORMAT(ReceitaData, '%d/%m/%Y') as ReceitaData, PacienteCPF, MedicoID FROM RECEITA WHERE ReceitaId = :Pid";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Pid", $this->__get("id"));

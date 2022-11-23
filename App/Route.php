@@ -132,6 +132,12 @@ class Route extends Bootstrap
             'action' => 'getPacient'
         );
 
+        $routes['getPharmacy'] = array(
+            'route' => '/plataforma/procuraFarmacia',
+            'controller' => 'userAreaController',
+            'action' => 'getPharmacy'
+        );
+
         // prescriptionController
 
         $routes['medicines'] = array(

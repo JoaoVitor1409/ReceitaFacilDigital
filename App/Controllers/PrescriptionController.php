@@ -16,7 +16,7 @@ class PrescriptionController extends Action
 
             $prescription = Container::getModel("Prescription");
             $prescription->__set("id", $prescriptionCode);
-            $prescription = $prescription->getPrescriptionById()[0];
+            $prescription = $prescription->getPrescriptionHistoryById()[0];
 
             $pacient = Container::getModel("Pacient");
             $pacient->__set("cpf", $prescription["PacienteCPF"]);

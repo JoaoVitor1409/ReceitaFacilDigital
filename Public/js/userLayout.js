@@ -721,7 +721,6 @@ $(document).ready(() => {
                     $(".medicinesList").attr("rows", result["medicines"].length + obs);
                     $(".btnDispensePrescription").removeClass("d-none");
                 } else {
-                    console.log(result["message"]);
                     $(".modalBody").addClass("hidden");
                     $(".notFound").text(result["message"]);
                     $(".notFound").removeClass("hidden");
@@ -914,8 +913,6 @@ $(document).ready(() => {
                 } else if (result["code"] == 1) {
                     data = { id: result["prescriptionId"] }
                     let value = genQrCode(data);
-                    console.log(value);
-
                     sendSMS(value);
                 }
             },
@@ -925,26 +922,55 @@ $(document).ready(() => {
         });
     }
 
-    function sendSMS(text) {
+    function sendSMS(link) {
         let tel = $(".phoneInput").val();
         tel = tel.replace("(", "");
         tel = tel.replace(")", "");
         tel = tel.replace("-", "");
-        alert(tel);
-        let apiKey = "brbb13b31812760c430d33468b4ef0f1bd4d774b8d1b5602f0bd1adab3abf201423d50"
-        encodeQrCode(text, apiKey).then(link => {
-            let url = "https://api.mobizon.com.br/service/Message/SendSmsMessage?recipient=%2B55" + tel + "&text=" + link + "&output=json&apiKey=" + apiKey;
 
-            $.getJSON(url, (data) => {
-                alert("Receita Emitida")
+        let apiKey = "br66191885328ef25cc1b12e1e9590766f1c020b127d114cf2002be7bb946b83cc30fc";
+
+        encodeQrCode(link, apiKey).then(text => {
+            genTextSMS(text).then((encodedText) => {
+                encodedText = encodeURIComponent(encodedText);
+                let url = "https://api.mobizon.com.br/service/Message/SendSmsMessage?recipient=%2B55" + tel + "&text=" + encodedText + "&output=json&apiKey=" + apiKey;
+
+                $.getJSON(url, () => {
+                    alert("Receita Emitida")
+                });
             });
-        })
+        });
+    }
 
+    function genTextSMS(link) {
+        return new Promise(resolve => {
+            $.ajax({
+                type: "POST",
+                url: "/plataforma/procuraFarmacia",
+                dataType: "JSON",
+                success: function (result) {
+                    let text = "Prontinho, agora só apresentar seu CPF ou abrir o link do código QR: " + link + " para uma das farmácias parceiras, em sua cidade, abaixo :D\n\n";
 
+                    Object.values(result).forEach((pharmacy, index) => {
+                        text += "Farmacia: " + pharmacy["FarmaciaNome"] + "\n";
+                        text += "Endereco: " + pharmacy["EnderecoBairro"] + ", " + pharmacy["EnderecoLogradouro"] + ", " + pharmacy["EnderecoNumero"];
+
+                        if (index < result.length - 1) {
+                            text += "\n\n";
+                        }
+                    })
+
+                    resolve(text);
+                },
+                error: function (error) {
+                    console.log(error);
+                },
+            })
+        });
     }
 
     function encodeQrCode(text, apiKey) {
-        text = encodeURIComponent(text)
+        text = encodeURIComponent(text);
         url = "https://api.mobizon.com.br/service/link/create?data%5BfullLink%5D=" + text + "&output=json&api=v1&apiKey=" + apiKey;
 
         return new Promise((resolve) => {
@@ -989,7 +1015,7 @@ $(document).ready(() => {
                 if (result["code"] == 1) {
                     alert(result["message"])
                     $("#saveTemplate").modal("hide");
-                } else if (result["code"] == 0) {                    
+                } else if (result["code"] == 0) {
                     error(result["input"], result["message"]);
                 }
             },

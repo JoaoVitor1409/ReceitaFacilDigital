@@ -14,6 +14,8 @@ class Pharmacy extends Model
     private $password;
     private $active;
     private $adressId;
+    private $adressState;
+    private $adressCity;
 
     public function __get($attribute)
     {
@@ -59,6 +61,18 @@ class Pharmacy extends Model
 
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":Ptel", $this->__get("tel"));
+        $stmt->execute();
+
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getPharmacyByAdress()
+    {
+        $query = "SELECT FarmaciaNome, FarmaciaTelefone, EnderecoBairro, EnderecoLogradouro, EnderecoNumero FROM FARMACIA f INNER JOIN ENDERECO e WHERE f.EnderecoID = e.EnderecoId AND e.EnderecoUF = :PadressState AND e.EnderecoCidade = :PadressCity AND f.FarmaciaAtivo = 1";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":PadressState", $this->__get("adressState"));
+        $stmt->bindValue(":PadressCity", $this->__get("adressCity"));
         $stmt->execute();
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);

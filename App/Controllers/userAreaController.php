@@ -284,4 +284,23 @@ class UserAreaController extends Action
             echo json_encode(["phone" => $pacient[0]["PacienteCelular"]]);
         }
     }
+
+    public function getPharmacy()
+    {
+        session_start();
+        $doctor = Container::getModel("Doctor");
+        $doctor->__set("id", $_SESSION["rfd"]["user"]["id"]);
+        $adressId = $doctor->getDoctorById()[0]["EnderecoID"];
+
+        $adress = Container::getModel("Adress");
+        $adress->__set("id", $adressId);
+        $adressData = $adress->getAdressById()[0];
+
+        $pharmacy = Container::getModel("Pharmacy");
+        $pharmacy->__set("adressState", $adressData["EnderecoUF"]);
+        $pharmacy->__set("adressCity", $adressData["EnderecoCidade"]);
+        $pharmacys = $pharmacy->getPharmacyByAdress();
+
+        echo json_encode($pharmacys);
+    }
 }
