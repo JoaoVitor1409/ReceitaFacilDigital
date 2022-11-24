@@ -1,7 +1,8 @@
 {
     "name": "vendor/miniframework",
     "require" : {
-        "php" : ">= 7.0"
+        "php" : ">= 7.0",
+        "phpmailer/phpmailer": "^6.6"
     },
     "authors" :[{
         "name" : "João Vitor Martins de Siqueira",

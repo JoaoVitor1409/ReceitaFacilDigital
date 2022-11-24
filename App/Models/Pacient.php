@@ -44,6 +44,19 @@ class Pacient extends Model
         return $this;
     }
 
+    public function updatePassword()
+    {
+        $query = "UPDATE PACIENTE SET PacienteSenha = :Ppassword WHERE PacienteID = :Pid";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":Ppassword", $this->__get("password"));
+        $stmt->bindValue(":Pid", $this->__get("id"));
+
+        $stmt->execute();
+
+        return $this;
+    }
+
     public function getPacientByCPF()
     {
         $query = "SELECT PacienteID, PacienteNome, PacienteCelular FROM PACIENTE WHERE PacienteCPF = :Pcpf";

@@ -44,6 +44,19 @@ class Doctor extends Model
         return $this;
     }
 
+    public function updatePassword()
+    {
+        $query = "UPDATE MEDICO SET MedicoSenha = :Ppassword WHERE MedicoID = :Pid";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":Ppassword", $this->__get("password"));
+        $stmt->bindValue(":Pid", $this->__get("id"));
+
+        $stmt->execute();
+
+        return $this;
+    }
+
     public function getDoctorById()
     {
         $query = "SELECT MedicoNome, EnderecoID FROM MEDICO WHERE MedicoId = :Pid";
