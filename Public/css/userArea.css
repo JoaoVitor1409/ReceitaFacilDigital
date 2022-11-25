@@ -475,7 +475,6 @@ ul.ui-autocomplete {
   font-size: 1.2em;
 }
 
-
 /* SEARCH PRESCRIPTION END*/
 
 /* CREATE PRESCRIPTION */
@@ -593,6 +592,77 @@ input::-webkit-calendar-picker-indicator {
 
 /* TEMPLATES END */
 
+/* SETTINGS */
+
+.formUserChanges .inputs input {
+  padding: 2%;
+  border: none;
+  box-shadow: none;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.formUserChanges .inputs input::placeholder {
+  color: #8e9398;
+}
+
+.formUserChanges .inputs input:focus,
+.formUserChanges .inputs select:focus {
+  margin: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.formUserChanges .inputs span {
+  color: #8e9398;
+  font-size: 1.5em;
+  margin-right: -1px;
+  border: none;
+}
+
+.formUserChanges .inputs .viewPassDiv {
+  background-color: #fff;
+  border-radius: 10px;
+  border: none;
+  padding: 2%;
+  cursor: pointer;
+}
+
+.formUserChanges .inputs .viewPass {
+  background-color: #fff;
+  border: none;
+}
+
+.formUserChanges .inputs .viewPass span {
+  cursor: pointer;
+}
+
+.formUserChanges .saveChanges {
+  background-color: #222743;
+  color: #f0f0f0;
+  padding: 1% 0;
+  font-size: 1.1em;
+  border-radius: 10px;
+  border: none;
+  transition: 0.2s;
+}
+
+.formUserChanges .inputs .inputError{
+  border: 3px solid #f00;
+}
+
+.formUserChanges .inputs .inputErrorPassword {
+  border-top: 3px solid #f00;
+  border-bottom: 3px solid #f00;
+  border-left: 3px solid #f00;
+}
+.formUserChanges .inputs .inputIconErrorPassword {
+  border-top: 3px solid #f00;
+  border-right: 3px solid #f00;
+  border-bottom: 3px solid #f00;
+}
+
+/* SETTINGS END */
+
 /* RESPONSIBILITY */
 
 @media screen and (max-width: 1010px) {
@@ -639,7 +709,8 @@ input::-webkit-calendar-picker-indicator {
   .formSaveTemplate input[type="text"],
   .formAddPrescription input,
   .formTemplate .templateNameModalInput,
-  .formTemplate input {
+  .formTemplate input,
+  .formUserChanges .inputs input {
     font-size: 0.8em;
   }
 
@@ -651,7 +722,8 @@ input::-webkit-calendar-picker-indicator {
   .formSearchTemplate .formSearchPrescription .searchBtnCPF,
   .modal .formSaveTemplate .btnSaveTemplate,
   .formAddPrescription .btns button,
-  .formTemplate button {
+  .formTemplate button,
+  .formUserChanges .saveChanges {
     font-size: 1em;
   }
 
@@ -669,6 +741,10 @@ input::-webkit-calendar-picker-indicator {
 
   .cardSrcOption .btnSrcOption h1 {
     font-size: 1.1em;
+  }
+
+  .formUserChanges .inputs span {
+    font-size: 1.3em;
   }
 }
 
@@ -708,7 +784,8 @@ input::-webkit-calendar-picker-indicator {
   .formSaveTemplate input[type="text"],
   .formAddPrescription input,
   .formTemplate .templateNameModalInput,
-  .formTemplate input {
+  .formTemplate input,
+  .formUserChanges .inputs input {
     font-size: 0.7em;
   }
 
@@ -720,7 +797,8 @@ input::-webkit-calendar-picker-indicator {
   .formSearchTemplate .formSearchPrescription .searchBtnCPF,
   .modal .formSaveTemplate .btnSaveTemplate,
   .formAddPrescription .btns button,
-  .formTemplate button {
+  .formTemplate button,
+  .formUserChanges .saveChanges {
     font-size: 0.9em;
   }
 
@@ -742,6 +820,10 @@ input::-webkit-calendar-picker-indicator {
 
   .modal .inputArea {
     margin-bottom: 2%;
+  }
+
+  .formUserChanges .inputs span {
+    font-size: 1.2em;
   }
 }
 
@@ -781,7 +863,8 @@ input::-webkit-calendar-picker-indicator {
   .formSaveTemplate input[type="text"],
   .formAddPrescription input,
   .formTemplate .templateNameModalInput,
-  .formTemplate input {
+  .formTemplate input,
+  .formUserChanges .inputs input {
     font-size: 0.6em;
   }
 
@@ -790,7 +873,8 @@ input::-webkit-calendar-picker-indicator {
   .formSearchTemplates .searchBtnTemplates,
   .createTemplateBtn,
   .formAddPrescription .btns button,
-  .formTemplate button {
+  .formTemplate button,
+  .formUserChanges .saveChanges {
     font-size: 0.7em;
   }
 
@@ -830,7 +914,8 @@ input::-webkit-calendar-picker-indicator {
   .formSaveTemplate input[type="text"],
   .formAddPrescription input,
   .formTemplate .templateNameModalInput,
-  .formTemplate input {
+  .formTemplate input,
+  .formUserChanges .inputs input {
     font-size: 0.8em;
   }
 
@@ -839,7 +924,8 @@ input::-webkit-calendar-picker-indicator {
   .formSearchTemplates .searchBtnTemplates,
   .createTemplateBtn,
   .formAddPrescription .btns button,
-  .formTemplate button {
+  .formTemplate button,
+  .formUserChanges .saveChanges {
     font-size: 1em;
   }
 
@@ -861,6 +947,10 @@ input::-webkit-calendar-picker-indicator {
 
   .cardSrcOption .btnSrcOption {
     width: 100%;
+  }
+
+  .formUserChanges .inputs span {
+    font-size: 1.3em;
   }
 }
 
@@ -900,7 +990,8 @@ input::-webkit-calendar-picker-indicator {
   .formSaveTemplate input[type="text"],
   .formAddPrescription input,
   .formTemplate .templateNameModalInput,
-  .formTemplate input {
+  .formTemplate input,
+  .formUserChanges .inputs input {
     font-size: 0.7em;
   }
 
@@ -909,7 +1000,8 @@ input::-webkit-calendar-picker-indicator {
   .formSearchTemplates .searchBtnTemplates,
   .createTemplateBtn,
   .formAddPrescription .btns button,
-  .formTemplate button {
+  .formTemplate button,
+  .formUserChanges .saveChanges {
     font-size: 0.9em;
   }
 
@@ -972,7 +1064,8 @@ input::-webkit-calendar-picker-indicator {
   .formSaveTemplate input[type="text"],
   .formAddPrescription input,
   .formTemplate .templateNameModalInput,
-  .formTemplate input {
+  .formTemplate input,
+  .formUserChanges .inputs input {
     font-size: 0.8em;
   }
 
@@ -981,7 +1074,8 @@ input::-webkit-calendar-picker-indicator {
   .formSearchTemplates .searchBtnTemplates,
   .createTemplateBtn,
   .formAddPrescription .btns button,
-  .formTemplate button {
+  .formTemplate button,
+  .formUserChanges .saveChanges {
     font-size: 0.9em;
   }
 
@@ -1030,7 +1124,8 @@ input::-webkit-calendar-picker-indicator {
   .formSearchTemplates input,
   .formAddPrescription input,
   .formTemplate .templateNameModalInput,
-  .formTemplate input {
+  .formTemplate input,
+  .formUserChanges .inputs input {
     font-size: 0.7em;
   }
 
@@ -1039,7 +1134,8 @@ input::-webkit-calendar-picker-indicator {
   .formSearchTemplates .searchBtnTemplates,
   .createTemplateBtn,
   .formAddPrescription .btns button,
-  .formTemplate button {
+  .formTemplate button,
+  .formUserChanges .saveChanges {
     font-size: 0.8em;
   }
 
@@ -1085,6 +1181,10 @@ input::-webkit-calendar-picker-indicator {
     height: 60px;
   }
 
+  .formUserChanges .inputs span {
+    font-size: 1em;
+  }
+
   .error {
     font-size: 0.6em;
   }
@@ -1115,7 +1215,8 @@ input::-webkit-calendar-picker-indicator {
   .formSearchTemplate input,
   .formSearchTemplates input,
   .formAddPrescription input,
-  .formTemplate input {
+  .formTemplate input,
+  .formUserChanges .inputs input {
     font-size: 0.6em;
   }
 
@@ -1124,7 +1225,8 @@ input::-webkit-calendar-picker-indicator {
   .formSearchTemplates .searchBtnTemplates,
   .createTemplateBtn,
   .formAddPrescription .btns button,
-  .formTemplate button {
+  .formTemplate button,
+  .formUserChanges .saveChanges {
     font-size: 0.7em;
   }
 
@@ -1206,6 +1308,10 @@ input::-webkit-calendar-picker-indicator {
 
   .error {
     font-size: 0.5em;
+  }
+
+  .formUserChanges .inputs span {
+    font-size: 0.9em;
   }
 }
 

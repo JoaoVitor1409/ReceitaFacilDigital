@@ -303,4 +303,61 @@ class UserAreaController extends Action
 
         echo json_encode($pharmacys);
     }
+
+    public function updateUser()
+    {
+        session_start();
+        $email = $_POST["email"];
+        $password = md5($_POST["password"]);
+        $newPassword = $password;
+        if ($_POST["newPassword"]) {
+            $newPassword = md5($_POST["newPassword"]);
+        }
+        
+
+        if (isset($_POST["phone"])) {
+            $phone = $_POST["phone"];
+        }
+
+        if (isset($_POST["tel"])) {
+            $phone = $_POST["tel"];
+        }
+
+        $sessionUser = $_SESSION["rfd"]["user"];
+        $result = ["code" => 1, "message" => "Usuário atualizado com sucesso"];
+
+        $user = Container::getModel("User");
+        $user->__set("email", $sessionUser["email"]);
+        $user->__set("password", $password);
+        $user = $user->authenticate();
+
+        if (!$user->__get("id")) {
+            $result = ["code" => 0, "message" => "Senha Atual incorreta", "input" => "password"];
+            echo json_encode($result);
+            return;
+        }
+
+        if ($sessionUser["type"] == "pacient") {
+            $user = Container::getModel("Pacient");
+            $user->__set("phone", $phone);
+        } else if ($sessionUser["type"] == "doctor") {
+            $user = Container::getModel("Doctor");
+            $user->__set("phone", $phone);
+        } else if ($sessionUser["type"] == "pharmacy") {
+            $user = Container::getModel("Pharmacy");
+            $user->__set("tel", $phone);
+        }
+
+        $user->__set("id", $sessionUser["id"]);
+        $user->__set("email", $email);
+        $user->__set("password", $newPassword);
+        $user->update();
+
+        $_SESSION["rfd"]["user"]["email"] = $email;
+        $_SESSION["rfd"]["user"]["phone"] = $phone;
+
+
+
+        echo json_encode($result);
+    }
 }

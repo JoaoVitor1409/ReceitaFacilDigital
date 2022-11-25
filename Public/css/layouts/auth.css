@@ -120,15 +120,15 @@ form .inputs .viewPass {
     border: none;
 }
 
+form .inputs .viewPass span {
+    cursor: pointer;
+}
+
 form .inputs span {
     color: #8E9398;
     font-size: 1.5em;
     margin-right: -1px;
     border: none;
-}
-
-form .inputs .viewPass span {
-    cursor: pointer;
 }
 
 form .inputs .inputError {
