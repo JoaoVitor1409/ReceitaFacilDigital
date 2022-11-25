@@ -29,10 +29,17 @@ class AuthController extends Action
             $_SESSION['rfd']['user'] = [
                 'id' => $user->__get('id'),
                 'name' => $user->__get('name'),
+                'email' => $user->__get('email'),
                 'type' => $user->__get('type'),
             ];
             if ($user->__get('type') == 'pacient') {
                 $_SESSION['rfd']['user'] += ['cpf' => $user->__get('cpf')];
+            }
+
+            if ($user->__get('type') != 'pharmacy') {
+                $_SESSION['rfd']['user'] += ['phone' => $user->__get('phone')];
+            }else{
+                $_SESSION['rfd']['user'] += ['phone' => $user->__get('tel')];
             }
 
             $result = ["code" => 1];

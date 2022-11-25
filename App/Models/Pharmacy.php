@@ -44,6 +44,21 @@ class Pharmacy extends Model
         return $this;
     }
 
+    public function update()
+    {
+        $query = "UPDATE Farmacia SET FarmaciaEmail = :Pemail, FarmaciaTelefone = :Ptel, FarmaciaSenha = :Ppassword WHERE FarmaciaID = :Pid";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(":Pemail", $this->__get("email"));
+        $stmt->bindValue(":Ptel", $this->__get("tel"));
+        $stmt->bindValue(":Ppassword", $this->__get("password"));
+        $stmt->bindValue(":Pid", $this->__get("id"));
+
+        $stmt->execute();
+
+        return $this;
+    }
+
     public function updatePassword()
     {
         $query = "UPDATE FARMACIA SET FarmaciaSenha = :Ppassword WHERE FarmaciaID = :Pid";

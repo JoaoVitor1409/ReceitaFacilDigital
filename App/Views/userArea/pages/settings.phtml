@@ -1,1 +1,96 @@
-<h1>Tela de Configurações</h1>
+<div class="d-none type" id="<?= $_SESSION['rfd']['user']['type']?>">
+
+</div>
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h1 class="title">Configurações do perfil</h1>
+    </div>
+</div>
+<div class="row justify-content-center mt-3">
+    <form class="formUserChanges col-md-9 row justify-content-center" id="formUserChanges" method="POST">
+        <div class="row inputs mb-3">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-8 inputArea">
+                    <div class="input-group">
+                        <input type="email" name="email" class="form-control emailInput" id="email" placeholder="Email" value="<?= $_SESSION['rfd']['user']['email'] ?>" required>
+                    </div>
+                    <div class="errorDiv text-start d-none emailError">
+                        <p class="emailErrorMsg error text-danger"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php if ($_SESSION["rfd"]["user"]["type"] != "pharmacy") { ?>
+            <div class="row inputs mb-3">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-8 inputArea">
+                        <div class="input-group">
+                            <input type="phone" name="phone" class="form-control phoneInput" id="phone" placeholder="Celular" value="<?= $_SESSION['rfd']['user']['phone'] ?>" required>
+                        </div>
+                        <div class="errorDiv text-start d-none phoneError">
+                            <p class="phoneErrorMsg error text-danger"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+
+        <?php if ($_SESSION["rfd"]["user"]["type"] == "pharmacy") { ?>
+            <div class="row inputs mb-3">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-8 inputArea">
+                        <div class="input-group">
+                            <input type="tel" name="tel" class="form-control telInput" id="tel" placeholder="Telefone" value="<?= $_SESSION['rfd']['user']['phone'] ?>" required>
+                        </div>
+                        <div class="errorDiv text-start d-none telError">
+                            <p class="telErrorMsg error text-danger"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+
+        <div class="row inputs mb-3">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-8 inputArea">
+                    <div class="input-group">
+                        <input type="password" name="password" class="form-control passwordInput" id="password" placeholder="Senha Atual" required>
+                        <div class="viewPassDiv passwordIconView" id="1">
+                            <div class="input-group-text d-flex justify-content-center align-items-center viewPass">
+                                <span class="material-icons-outlined viewPassIcon">visibility</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="errorDiv text-start d-none passwordError">
+                        <p class="passwordErrorMsg error text-danger"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row inputs mb-3">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-8 inputArea">
+                    <div class="input-group">
+                        <input type="password" name="newPassword" class="form-control newPasswordInput" id="newPassword" placeholder="Nova senha" required>
+                        <div class="viewPassDiv newPasswordIconView" id="2">
+                            <div class="input-group-text d-flex justify-content-center align-items-center viewPass">
+                                <span class="material-icons-outlined viewPassIcon">visibility</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="errorDiv text-start d-none newPasswordError">
+                        <p class="newPasswordErrorMsg error text-danger"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-3">
+            <button type="submit" class="saveChanges col-md-9 col-10 d-flex align-items-center justify-content-center">
+                Salvar
+            </button>
+        </div>
+    </form>
+</div>

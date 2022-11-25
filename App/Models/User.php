@@ -11,6 +11,7 @@ class User extends Model
     private $name;
     private $email;
     private $phone;
+    private $tel;
     private $type;
 
     public function __get($attribute)
@@ -25,9 +26,9 @@ class User extends Model
 
     public function authenticate()
     {
-        $query = "SELECT PacienteID, PacienteCPF, PacienteNome FROM PACIENTE WHERE PacienteEmail = :Pemail AND PacienteSenha = :Ppassword AND PacienteAtivo = 1";
-        $query2 = "SELECT MedicoID, MedicoNome FROM MEDICO WHERE MedicoEmail = :Pemail AND MedicoSenha = :Ppassword AND MedicoAtivo = 1";
-        $query3 = "SELECT FarmaciaID, FarmaciaNome FROM FARMACIA WHERE FarmaciaEmail = :Pemail AND FarmaciaSenha = :Ppassword AND FarmaciaAtivo = 1";
+        $query = "SELECT PacienteID, PacienteCPF, PacienteNome, PacienteCelular FROM PACIENTE WHERE PacienteEmail = :Pemail AND PacienteSenha = :Ppassword AND PacienteAtivo = 1";
+        $query2 = "SELECT MedicoID, MedicoNome, MedicoCelular FROM MEDICO WHERE MedicoEmail = :Pemail AND MedicoSenha = :Ppassword AND MedicoAtivo = 1";
+        $query3 = "SELECT FarmaciaID, FarmaciaNome, FarmaciaTelefone FROM FARMACIA WHERE FarmaciaEmail = :Pemail AND FarmaciaSenha = :Ppassword AND FarmaciaAtivo = 1";
 
         $stmt = $this->db->prepare($query);
         $stmt2 = $this->db->prepare($query2);
@@ -53,16 +54,19 @@ class User extends Model
             $this->__set("id", $pacient["PacienteID"]);
             $this->__set("cpf", $pacient["PacienteCPF"]);
             $this->__set("name", $pacient["PacienteNome"]);
+            $this->__set("phone", $pacient["PacienteCelular"]);
             $this->__set("type", "pacient");
         }
         if ($doctor) {
             $this->__set("id", $doctor["MedicoID"]);
             $this->__set("name", $doctor["MedicoNome"]);
+            $this->__set("phone", $doctor["MedicoCelular"]);
             $this->__set("type", "doctor");
         }
         if ($pharmacy) {
             $this->__set("id", $pharmacy["FarmaciaID"]);
             $this->__set("name", $pharmacy["FarmaciaNome"]);
+            $this->__set("tel", $pharmacy["FarmaciaTelefone"]);
             $this->__set("type", "pharmacy");
         }
 

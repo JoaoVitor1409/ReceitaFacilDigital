@@ -138,6 +138,12 @@ class Route extends Bootstrap
             'action' => 'getPharmacy'
         );
 
+        $routes['updateUser'] = array(
+            'route' => '/plataforma/atualizaUsuario',
+            'controller' => 'userAreaController',
+            'action' => 'updateUser'
+        );
+
         // prescriptionController
 
         $routes['medicines'] = array(

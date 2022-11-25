@@ -17,6 +17,7 @@ $(document).ready(() => {
         $(this).mask("0#");
     });
 
+
     // Datalists
 
     // Medicine Size Type
@@ -418,6 +419,75 @@ $(document).ready(() => {
 
         return false;
     });
+
+    // See password
+    let isPass = [true, true];
+    $(document).on("click", ".viewPassDiv", function () {
+        let input = $(this).siblings("input");
+        let id = $(this).attr("id");
+        if (isPass[id - 1]) {
+            $(input).attr("type", "text");
+            isPass[id - 1] = false;
+            $("#" + id + " > div > .viewPassIcon").html("visibility_off");
+        } else {
+            $(input).attr("type", "password");
+            isPass[id - 1] = true;
+            $("#" + id + " > div > .viewPassIcon").html("visibility");
+        }
+    });
+
+    // Save Changes of User
+
+    $(document).on("focusout", ".emailInput", () => removeError("email"));
+    $(document).on("focusout", ".phoneInput", () => removeError("phone"));
+    $(document).on("focusout", ".passwordInput", () => removeError("password"));
+    $(document).on("focusout", ".newPasswordInput", () => removeError("newPassword"));
+
+    $(document).on("click", ".saveChanges", function () {
+        let type = $(".type").attr("id");
+        removeError("email");
+        removeError("phone");
+        removeError("password");
+        removeError("newPassword");
+
+        if ($(".emailInput").val().length == 0 || !emailValidation()) {
+            error("email", "Email não é válido");
+            $(".emailInput").focus();
+            return false;
+        }
+
+        if (type == "doctor") {
+            if ($(".phoneInput").val().length < 14) {
+                error("phone", "Número de celular não é valido");
+                $(".phoneInput").focus();
+                return false;
+            }
+        }
+        if (type == "pharmacy") {
+            if ($(".telInput").val().length < 13) {
+                error("tel", "Número de telefone não é valido");
+                $(".telInput").focus();
+                return false;
+            }
+        }
+
+        if ($(".passwordInput").val().length == 0) {
+            error("password", "Senha Atual não pode ser vazia");
+            $(".passwordInput").focus();
+            return false;
+        }
+
+        if ($(".passwordInput").val() == $(".newPasswordInput").val()) {
+            error("newPassword", "Nova senha não pode ser a mesma que a atual   ");
+            $(".newPasswordInput").focus();
+            return false;
+        }
+
+        saveUserChanges();
+        return false;
+    });
+
+
 
     // Load screens
 
@@ -1023,8 +1093,34 @@ $(document).ready(() => {
         });
     }
 
+    function saveUserChanges() {
+        let data = $(".formUserChanges").serialize();
+
+        $.ajax({
+            type: "POST",
+            url: "/plataforma/atualizaUsuario",
+            data: data,
+            dataType: "JSON",
+            success: function (result) {
+                console.log(result);
+                if (result["code"] == 1) {
+                    alert(result["message"]);
+                    $(".passwordInput").val("");
+                    $(".newPasswordInput").val("");
+
+                } else if (result["code"] == 0) {
+                    error(result["input"], result["message"]);
+                    $("." + result["input"]).focus();
+                }
+            },
+            error: function (error) {
+                console.log(error);
+            },
+        });
+    }
+
     function error(input, msg, index = 0) {
-        let password = input == "password" || input == "passwordModal" ? "Password" : "";
+        let password = input == "password" || input == "passwordModal" || input == "newPassword" ? "Password" : "";
 
         $("." + input + "Input").eq(index).addClass("inputError" + password);
         $("." + input + "Icon").eq(index).addClass("inputIconError");
@@ -1036,7 +1132,7 @@ $(document).ready(() => {
     }
 
     function removeError(input) {
-        let password = input == "password" || input == "passwordModal" ? "Password" : "";
+        let password = input == "password" || input == "passwordModal" || input == "newPassword" ? "Password" : "";
 
         $("." + input + "Input").removeClass("inputError" + password);
         $("." + input + "Icon").removeClass("inputIconError");
@@ -1044,5 +1140,25 @@ $(document).ready(() => {
         $("." + input + "IconView").removeClass("inputIconError" + password);
 
         $("." + input + "Error").addClass("d-none");
+    }
+    function emailValidation() {
+        let email = $(".emailInput").val();
+        usuario = email.substring(0, email.indexOf("@"));
+        dominio = email.substring(email.indexOf("@") + 1, email.length);
+
+        if ((usuario.length >= 1) &&
+            (dominio.length >= 3) &&
+            (usuario.search("@") == -1) &&
+            (dominio.search("@") == -1) &&
+            (usuario.search(" ") == -1) &&
+            (dominio.search(" ") == -1) &&
+            (dominio.search(".") != -1) &&
+            (dominio.indexOf(".") >= 1) &&
+            (dominio.lastIndexOf(".") < dominio.length - 1)) {
+            return true;
+        }
+        else {
+            return false
+        }
     }
 });
